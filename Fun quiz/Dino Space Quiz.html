@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dino Space Quiz! 🦕🚀</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #050a1a;
+    --surface: rgba(255,255,255,0.06);
+    --border: rgba(255,255,255,0.12);
+    --yellow: oklch(85% 0.18 88);
+    --pink:   oklch(72% 0.22 340);
+    --cyan:   oklch(80% 0.16 200);
+    --green:  oklch(78% 0.18 145);
+    --purple: oklch(68% 0.20 290);
+    --text:   #f0eeff;
+    --muted:  rgba(240,238,255,0.55);
+  }
+  html, body { width: 100%; min-height: 100%; }
+  body { background: var(--bg); font-family: 'Nunito', sans-serif; color: var(--text); overflow-x: hidden; }
+
+  #starfield { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .star { position: absolute; border-radius: 50%; background: white; animation: twinkle var(--d, 3s) ease-in-out infinite var(--delay, 0s); }
+  @keyframes twinkle {
+    0%, 100% { opacity: var(--min-op, 0.2); transform: scale(1); }
+    50%       { opacity: 1; transform: scale(1.4); }
+  }
+  .milky-way {
+    position: absolute; width: 160%; height: 260px; top: 30%; left: -30%;
+    background: radial-gradient(ellipse at center, rgba(140,100,255,0.07) 0%, rgba(100,180,255,0.05) 40%, transparent 70%);
+    transform: rotate(-18deg); filter: blur(30px);
+  }
+
+  #app { position: relative; z-index: 1; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
+
+  .screen { width: 100%; max-width: 720px; animation: fadeUp 0.5s cubic-bezier(.22,1,.36,1) both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* INTRO */
+  .intro-wrap { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+  .intro-mascots { font-size: 100px; line-height: 1; display: flex; gap: 16px; animation: bounce 2s ease-in-out infinite; }
+  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+  .intro-title {
+    font-family: 'Fredoka One', cursive; font-size: clamp(40px, 8vw, 72px); line-height: 1.05;
+    background: linear-gradient(135deg, var(--yellow) 0%, var(--pink) 50%, var(--cyan) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    filter: drop-shadow(0 0 30px rgba(255,180,100,0.25));
+  }
+  .intro-sub { font-size: 22px; font-weight: 700; color: var(--muted); }
+  .intro-facts { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 4px; }
+  .fact-pill {
+    background: var(--surface); border: 1.5px solid var(--border); border-radius: 999px;
+    padding: 8px 18px; font-size: 15px; font-weight: 700; color: var(--muted);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-start {
+    margin-top: 8px; padding: 20px 56px; border-radius: 999px; border: none; cursor: pointer;
+    font-family: 'Fredoka One', cursive; font-size: 28px;
+    background: linear-gradient(135deg, var(--yellow), var(--pink)); color: #1a0a00;
+    box-shadow: 0 0 40px rgba(255,200,80,0.35), 0 4px 24px rgba(0,0,0,0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn-start:hover { transform: scale(1.06); box-shadow: 0 0 60px rgba(255,200,80,0.5), 0 8px 32px rgba(0,0,0,0.5); }
+  .btn-start:active { transform: scale(0.97); }
+
+  /* QUIZ HEADER */
+  .quiz-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+  .q-counter { font-family: 'Fredoka One', cursive; font-size: 20px; color: var(--muted); }
+  .q-counter span { color: var(--text); font-size: 24px; }
+  .progress-bar-track { flex: 1; height: 10px; background: rgba(255,255,255,0.1); border-radius: 999px; margin: 0 16px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--cyan), var(--purple)); transition: width 0.5s cubic-bezier(.22,1,.36,1); box-shadow: 0 0 10px var(--cyan); }
+  .score-badge { background: var(--surface); border: 1.5px solid var(--border); border-radius: 999px; padding: 6px 16px; font-family: 'Fredoka One', cursive; font-size: 18px; color: var(--yellow); white-space: nowrap; }
+
+  /* QUESTION CARD */
+  .q-card {
+    background: rgba(255,255,255,0.04); border: 1.5px solid var(--border); border-radius: 28px;
+    padding: 32px 28px 28px; margin-bottom: 20px; text-align: center; position: relative; overflow: hidden;
+  }
+  .q-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(140,100,255,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .q-emoji {
+    font-size: 72px; line-height: 1; margin-bottom: 16px; display: block;
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
+    animation: pop 0.4s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  @keyframes pop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .q-text { font-family: 'Fredoka One', cursive; font-size: clamp(22px, 4.5vw, 32px); line-height: 1.25; color: var(--text); }
+  .cat-badge {
+    display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 4px 14px;
+    font-size: 13px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 10px;
+  }
+  .cat-badge.dino { background: rgba(255,200,60,0.18); color: var(--yellow); border: 1px solid rgba(255,200,60,0.3); }
+  .cat-badge.space { background: rgba(100,180,255,0.15); color: var(--cyan); border: 1px solid rgba(100,180,255,0.3); }
+
+  /* ANSWER GRID */
+  .answer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .answer-btn {
+    background: var(--surface); border: 2px solid var(--border); border-radius: 22px;
+    padding: 20px 16px; cursor: pointer;
+    display: flex; align-items: center; gap: 14px;
+    transition: transform 0.15s, border-color 0.15s, background 0.15s, box-shadow 0.15s;
+    position: relative; overflow: hidden; text-align: left;
+  }
+  .answer-btn:not([disabled]):hover {
+    transform: translateY(-4px) scale(1.02);
+    border-color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.10);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .answer-btn:not([disabled]):active { transform: scale(0.97); }
+  .answer-btn[disabled] { cursor: default; }
+
+  .answer-btn.correct {
+    border-color: var(--green) !important;
+    background: rgba(100,220,120,0.15) !important;
+    box-shadow: 0 0 30px rgba(100,220,120,0.25) !important;
+    animation: correctPop 0.35s cubic-bezier(.34,1.56,.64,1);
+  }
+  .answer-btn.wrong {
+    border-color: var(--pink) !important;
+    background: rgba(255,80,140,0.12) !important;
+    animation: shake 0.4s ease;
+  }
+  .answer-btn.dim { opacity: 0.3; }
+
+  @keyframes correctPop { from { transform: scale(0.95); } to { transform: scale(1); } }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(6px); }
+  }
+
+  .answer-letter {
+    width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One', cursive; font-size: 20px;
+    background: rgba(255,255,255,0.1); color: var(--text);
+    transition: background 0.2s;
+  }
+  .answer-btn.correct .answer-letter { background: rgba(100,220,120,0.4); }
+  .answer-btn.wrong   .answer-letter { background: rgba(255,80,140,0.35); }
+
+  .answer-label { font-family: 'Fredoka One', cursive; font-size: 19px; color: var(--text); line-height: 1.25; }
+
+  .result-toast {
+    text-align: center; margin-top: 16px; font-family: 'Fredoka One', cursive;
+    font-size: clamp(16px,3vw,22px); min-height: 36px; animation: fadeUp 0.3s ease both;
+    line-height: 1.4; padding: 0 8px;
+  }
+  .result-toast.correct { color: var(--green); }
+  .result-toast.wrong   { color: var(--pink); }
+
+  .btn-next {
+    display: block; width: 100%; margin-top: 16px; padding: 16px; border-radius: 999px;
+    border: none; cursor: pointer; font-family: 'Fredoka One', cursive; font-size: 22px;
+    background: linear-gradient(135deg, var(--cyan), var(--purple)); color: #fff;
+    box-shadow: 0 0 30px rgba(100,200,255,0.2), 0 4px 16px rgba(0,0,0,0.4);
+    transition: transform 0.15s, opacity 0.3s, box-shadow 0.15s;
+    opacity: 0; pointer-events: none;
+  }
+  .btn-next.visible { opacity: 1; pointer-events: all; animation: fadeUp 0.4s 0.2s cubic-bezier(.22,1,.36,1) both; }
+  .btn-next:hover { transform: scale(1.03); box-shadow: 0 0 50px rgba(100,200,255,0.35), 0 8px 24px rgba(0,0,0,0.5); }
+  .btn-next:active { transform: scale(0.97); }
+
+  /* SCORE SCREEN */
+  .score-screen { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 24px; }
+  .score-planet { font-size: 120px; line-height: 1; animation: orbit 6s linear infinite; filter: drop-shadow(0 0 30px rgba(255,200,80,0.4)); }
+  @keyframes orbit { 0% { transform: rotate(0deg) translateX(10px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(10px) rotate(-360deg); } }
+  .score-title {
+    font-family: 'Fredoka One', cursive; font-size: clamp(36px, 7vw, 60px);
+    background: linear-gradient(135deg, var(--yellow), var(--pink));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .score-number { font-family: 'Fredoka One', cursive; font-size: clamp(56px, 12vw, 100px); color: var(--text); line-height: 1; }
+  .score-number .denom { font-size: 0.5em; color: var(--muted); }
+  .score-message { font-size: 22px; font-weight: 800; color: var(--muted); max-width: 420px; line-height: 1.4; }
+  .stars-row { display: flex; gap: 12px; justify-content: center; }
+  .star-icon { font-size: 52px; filter: grayscale(1) opacity(0.3); transition: filter 0.4s, transform 0.4s; }
+  .star-icon.lit { filter: none; animation: starPop 0.5s cubic-bezier(.34,1.56,.64,1) both; }
+  @keyframes starPop { from { transform: scale(0.2) rotate(-30deg); opacity: 0; } to { transform: scale(1) rotate(0deg); opacity: 1; } }
+  .score-breakdown { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .breakdown-pill { background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; padding: 12px 20px; font-family: 'Fredoka One', cursive; font-size: 17px; color: var(--muted); }
+  .breakdown-pill strong { color: var(--text); }
+  .btn-retry {
+    padding: 18px 48px; border-radius: 999px; border: none; cursor: pointer;
+    font-family: 'Fredoka One', cursive; font-size: 24px;
+    background: linear-gradient(135deg, var(--yellow), var(--pink)); color: #1a0a00;
+    box-shadow: 0 0 40px rgba(255,200,80,0.3), 0 4px 20px rgba(0,0,0,0.4);
+    transition: transform 0.15s, box-shadow 0.15s; margin-top: 8px;
+  }
+  .btn-retry:hover { transform: scale(1.06); }
+  .btn-retry:active { transform: scale(0.97); }
+
+  .confetti-piece {
+    position: fixed; width: 10px; height: 14px; border-radius: 3px; top: -20px;
+    animation: fall var(--fall-d, 4s) linear var(--fall-delay, 0s) both;
+    pointer-events: none; z-index: 999;
+  }
+  @keyframes fall {
+    0%   { transform: translateX(0) rotate(0deg) translateY(0); opacity: 1; }
+    80%  { opacity: 1; }
+    100% { transform: translateX(var(--dx, 30px)) rotate(var(--rot, 360deg)) translateY(110vh); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+<div id="starfield"></div>
+<div id="app"></div>
+
+<script>
+const sf = document.getElementById('starfield');
+sf.innerHTML = '<div class="milky-way"></div>';
+for (let i = 0; i < 200; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() < 0.7 ? Math.random()*2+1 : Math.random()*3+2;
+  s.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*5}s;--delay:${-Math.random()*6}s;--min-op:${0.1+Math.random()*0.3};`;
+  sf.appendChild(s);
+}
+</script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+const ALL_QUESTIONS = [
+  // ── DINOSAUR ──────────────────────────────────────────────────────────────
+  { id:'d01', category:'dino', emoji:'🦕', question:'Which dinosaur had the LONGEST neck?',
+    options:['Brachiosaurus','T-Rex','Ankylosaurus','Velociraptor'], answer:0,
+    funFact:'Brachiosaurus had a neck as long as a school bus! 🚌' },
+
+  { id:'d02', category:'dino', emoji:'🦖', question:'Which dinosaur had THREE horns on its face?',
+    options:['T-Rex','Stegosaurus','Triceratops','Diplodocus'], answer:2,
+    funFact:'Triceratops means "three-horned face" in Greek! 🎉' },
+
+  { id:'d03', category:'dino', emoji:'🐉', question:'Which dinosaur had SPIKY PLATES on its back?',
+    options:['Stegosaurus','Brachiosaurus','Spinosaurus','Iguanodon'], answer:0,
+    funFact:'Stegosaurus plates might have changed color to talk to friends! 🌈' },
+
+  { id:'d04', category:'dino', emoji:'💨', question:'Which dinosaur was the FASTEST runner?',
+    options:['Velociraptor','Brachiosaurus','Diplodocus','Ankylosaurus'], answer:0,
+    funFact:'Velociraptor could run as fast as a cat! 🐱💨' },
+
+  { id:'d05', category:'dino', emoji:'🦷', question:'Which dinosaur had the BIGGEST teeth?',
+    options:['T-Rex','Triceratops','Brachiosaurus','Pterodactyl'], answer:0,
+    funFact:'T-Rex teeth were as long as a banana! 🍌' },
+
+  { id:'d06', category:'dino', emoji:'🔨', question:'Which dinosaur had a CLUB on its tail?',
+    options:['Ankylosaurus','T-Rex','Velociraptor','Diplodocus'], answer:0,
+    funFact:'Ankylosaurus could knock a T-Rex off its feet with its tail! 💪' },
+
+  { id:'d07', category:'dino', emoji:'🦅', question:'Which dinosaur could FLY through the sky?',
+    options:['T-Rex','Brachiosaurus','Pterodactyl','Ankylosaurus'], answer:2,
+    funFact:'Pterodactyls had wings made of skin — like a giant bat! 🦇' },
+
+  { id:'d08', category:'dino', emoji:'🥩', question:'Which dinosaur was the BIGGEST meat-eater?',
+    options:['Diplodocus','T-Rex','Triceratops','Stegosaurus'], answer:1,
+    funFact:'T-Rex could swallow you whole in one bite! 😱' },
+
+  { id:'d09', category:'dino', emoji:'🐦', question:'Which dinosaur had FEATHERS like a bird?',
+    options:['Triceratops','Ankylosaurus','Archaeopteryx','Diplodocus'], answer:2,
+    funFact:'Archaeopteryx is the link between birds and dinosaurs! 🐦' },
+
+  { id:'d10', category:'dino', emoji:'🐊', question:'Which dinosaur had the LONGEST tail?',
+    options:['T-Rex','Diplodocus','Triceratops','Velociraptor'], answer:1,
+    funFact:'Diplodocus could crack its tail like a giant whip! 💥' },
+
+  { id:'d11', category:'dino', emoji:'🥦', question:'Which dinosaur ONLY ate plants?',
+    options:['T-Rex','Velociraptor','Brachiosaurus','Spinosaurus'], answer:2,
+    funFact:'Brachiosaurus had to eat ALL day long to stay full! 🌿' },
+
+  { id:'d12', category:'dino', emoji:'🐔', question:'Which dinosaur was as SMALL as a chicken?',
+    options:['T-Rex','Compsognathus','Brachiosaurus','Ankylosaurus'], answer:1,
+    funFact:'Compsognathus was one of the tiniest dinosaurs ever found! 🐣' },
+
+  { id:'d13', category:'dino', emoji:'🌿', question:'What do we call dinosaurs that ONLY eat plants?',
+    options:['Carnivores','Omnivores','Herbivores','Predators'], answer:2,
+    funFact:'Herbivores ate millions of leaves every single day! 🍃' },
+
+  { id:'d14', category:'dino', emoji:'🥩', question:'What do we call dinosaurs that eat MEAT?',
+    options:['Herbivores','Carnivores','Grazers','Flower-eaters'], answer:1,
+    funFact:'Carnivores had to be fast hunters to catch their dinner! 🏃' },
+
+  { id:'d15', category:'dino', emoji:'⛵', question:'Which dinosaur had a tall SAIL on its back?',
+    options:['Brachiosaurus','Triceratops','Spinosaurus','Stegosaurus'], answer:2,
+    funFact:"Spinosaurus's sail could be as tall as a grown-up human! 🧍" },
+
+  { id:'d16', category:'dino', emoji:'🦵', question:'Which dinosaur walked on just TWO legs?',
+    options:['Stegosaurus','Triceratops','T-Rex','Brachiosaurus'], answer:2,
+    funFact:'T-Rex used its huge tail to help it balance while walking! 🦎' },
+
+  { id:'d17', category:'dino', emoji:'💪', question:'Which dinosaur had the TINIEST arms?',
+    options:['Brachiosaurus','Triceratops','Ankylosaurus','T-Rex'], answer:3,
+    funFact:"T-Rex arms were so short, it couldn't even touch its own mouth! 😂" },
+
+  { id:'d18', category:'dino', emoji:'🛡️', question:'Which dinosaur had ARMOR like a tank?',
+    options:['Velociraptor','Pterodactyl','Ankylosaurus','Spinosaurus'], answer:2,
+    funFact:'Ankylosaurus armor was as hard as a helmet! ⛑️' },
+
+  { id:'d19', category:'dino', emoji:'🌊', question:'Which dinosaur lived in the SEA?',
+    options:['T-Rex','Mosasaurus','Brachiosaurus','Triceratops'], answer:1,
+    funFact:'Mosasaurus was like a giant sea lizard — bigger than a whale! 🐋' },
+
+  { id:'d20', category:'dino', emoji:'🪨', question:'What are dinosaur bones found in rock called?',
+    options:['Crystals','Fossils','Pebbles','Shells'], answer:1,
+    funFact:"Some fossils are over 200 million years old! That's super ancient! 🏺" },
+
+  { id:'d21', category:'dino', emoji:'🦴', question:'Which dinosaur had a DOME-shaped head?',
+    options:['Velociraptor','Pachycephalosaurus','T-Rex','Stegosaurus'], answer:1,
+    funFact:'Pachycephalosaurus head-butted rivals to show who was strongest! 🤜' },
+
+  { id:'d22', category:'dino', emoji:'⚡', question:'Which dinosaur had the SHARPEST claws?',
+    options:['Brachiosaurus','Stegosaurus','Velociraptor','Diplodocus'], answer:2,
+    funFact:'Velociraptor claws were like curved steak knives! 🔪' },
+
+  { id:'d23', category:'dino', emoji:'🎺', question:'Which dinosaur made sounds through a CREST on its head?',
+    options:['T-Rex','Parasaurolophus','Stegosaurus','Diplodocus'], answer:1,
+    funFact:'Parasaurolophus could toot like a giant trombone! 🎵' },
+
+  { id:'d24', category:'dino', emoji:'🔭', question:'What do scientists who study dinosaurs do?',
+    options:['Cook food','Dig up fossils','Fly rockets','Paint pictures'], answer:1,
+    funFact:'Fossil hunters travel all over the world to find dinosaur bones! 🌍' },
+
+  { id:'d25', category:'dino', emoji:'🌊', question:'Which dinosaur could SWIM in the ocean?',
+    options:['T-Rex','Velociraptor','Plesiosaur','Stegosaurus'], answer:2,
+    funFact:'Plesiosaurs had flippers like turtles to swim through the sea! 🐢' },
+
+  { id:'d26', category:'dino', emoji:'🏋️', question:'Which dinosaur was the HEAVIEST ever?',
+    options:['Velociraptor','Compsognathus','Argentinosaurus','Pterodactyl'], answer:2,
+    funFact:'Argentinosaurus weighed as much as 80 elephants! 🐘🐘🐘' },
+
+  { id:'d27', category:'dino', emoji:'🌱', question:'What did plant-eating dinosaurs eat?',
+    options:['Meat','Plants and leaves','Fish','Rocks'], answer:1,
+    funFact:'Some dinosaurs swallowed stones to help grind up their food! 😲' },
+
+  { id:'d28', category:'dino', emoji:'🌋', question:'How long ago did dinosaurs go extinct?',
+    options:['100 years ago','1,000 years ago','66 million years ago','Yesterday'], answer:2,
+    funFact:'A giant space rock crashed into Earth and wiped out the dinosaurs! ☄️' },
+
+  { id:'d29', category:'dino', emoji:'🥚', question:'Did dinosaurs lay EGGS?',
+    options:['Yes!','No','Sometimes','Never'], answer:0,
+    funFact:'Some dinosaur eggs were as big as a football! 🏈' },
+
+  { id:'d30', category:'dino', emoji:'🧠', question:'Which dinosaur had the SMALLEST brain?',
+    options:['T-Rex','Stegosaurus','Velociraptor','Ankylosaurus'], answer:1,
+    funFact:"Stegosaurus's brain was about the size of a walnut! 🥜" },
+
+  { id:'d31', category:'dino', emoji:'🏔️', question:'Which dinosaur was the TALLEST?',
+    options:['T-Rex','Velociraptor','Sauroposeidon','Ankylosaurus'], answer:2,
+    funFact:'Sauroposeidon could look into a 6th-floor window! 🏢' },
+
+  { id:'d32', category:'dino', emoji:'🎓', question:'What is the name for a scientist who studies dinosaurs?',
+    options:['Astronomer','Paleontologist','Biologist','Chef'], answer:1,
+    funFact:'Paleontologist — what a big, cool word! 🤓' },
+
+  { id:'d33', category:'dino', emoji:'🚌', question:'Which dinosaur was about the size of a BUS?',
+    options:['Velociraptor','Compsognathus','Brachiosaurus','Pterodactyl'], answer:2,
+    funFact:'Brachiosaurus was one of the biggest dinosaurs that ever lived! 🚌' },
+
+  { id:'d34', category:'dino', emoji:'👀', question:'Which of these is a REAL dinosaur name?',
+    options:['Dragonsaurus','Cloudsaurus','Ankylosaurus','Rainbowsaurus'], answer:2,
+    funFact:'Ankylosaurus means "fused lizard" because its bones were all joined together! 🦎' },
+
+  { id:'d35', category:'dino', emoji:'🌍', question:'Which came FIRST — dinosaurs or humans?',
+    options:['Humans came first','Dinosaurs came first','They lived together','Cats came first'], answer:1,
+    funFact:'Dinosaurs ruled Earth for over 160 million years before humans arrived! ⏳' },
+
+  { id:'d36', category:'dino', emoji:'🦶', question:'Which dinosaur had BIG flat feet like an elephant?',
+    options:['Velociraptor','Brachiosaurus','T-Rex','Pterodactyl'], answer:1,
+    funFact:'Brachiosaurus footprints were as big as a bathtub! 🛁' },
+
+  { id:'d37', category:'dino', emoji:'🐟', question:'Which dinosaur loved to eat FISH?',
+    options:['T-Rex','Ankylosaurus','Spinosaurus','Triceratops'], answer:2,
+    funFact:'Spinosaurus had a crocodile-like mouth perfect for catching fish! 🎣' },
+
+  { id:'d38', category:'dino', emoji:'🌿', question:'Which of these dinosaurs ate ONLY plants?',
+    options:['T-Rex','Velociraptor','Triceratops','Spinosaurus'], answer:2,
+    funFact:'Despite its scary horns, Triceratops was totally plant-powered! 🥦' },
+
+  { id:'d39', category:'dino', emoji:'👑', question:'Which dinosaur is sometimes called the "King of the Dinosaurs"?',
+    options:['Stegosaurus','Diplodocus','T-Rex','Ankylosaurus'], answer:2,
+    funFact:"T-Rex's name means \"Tyrant Lizard King\"! 👑" },
+
+  { id:'d40', category:'dino', emoji:'🌈', question:'What color were dinosaurs?',
+    options:['Always green','Always grey',"We don't know for sure!",'Always red'], answer:2,
+    funFact:'Scientists think some dinosaurs may have been colorful like parrots! 🦜' },
+
+  { id:'d41', category:'dino', emoji:'📏', question:'Which dinosaur name means "SWIFT THIEF"?',
+    options:['T-Rex','Brachiosaurus','Velociraptor','Diplodocus'], answer:2,
+    funFact:'"Veloci" means swift and "raptor" means thief in Latin! ⚡' },
+
+  { id:'d42', category:'dino', emoji:'🤜', question:'Which dinosaur had a BONY DOME head it used to headbutt rivals?',
+    options:['Stegosaurus','Diplodocus','Pachycephalosaurus','Ankylosaurus'], answer:2,
+    funFact:'Pachycephalosaurus skull was 25cm thick — super hard! 💪' },
+
+  { id:'d43', category:'dino', emoji:'🌊', question:'What was the giant swimming reptile that lived with dinosaurs?',
+    options:['Brachiosaurus','Plesiosaur','Pterodactyl','Stegosaurus'], answer:1,
+    funFact:'Plesiosaurs had four big flippers and a very long neck! 🦭' },
+
+  { id:'d44', category:'dino', emoji:'🎶', question:'Which dinosaur is named after Argentina?',
+    options:['T-Rex','Brachiosaurus','Argentinosaurus','Velociraptor'], answer:2,
+    funFact:"Its bones were found in Argentina — that's how it got its name! 🇦🇷" },
+
+  { id:'d45', category:'dino', emoji:'🏃', question:'Which dinosaur walked on FOUR legs?',
+    options:['T-Rex','Spinosaurus','Stegosaurus','Velociraptor'], answer:2,
+    funFact:'Stegosaurus had back legs longer than its front legs! 🦵' },
+
+  { id:'d46', category:'dino', emoji:'🔪', question:'Which dinosaur had VERY LONG front claws?',
+    options:['T-Rex','Therizinosaurus','Ankylosaurus','Pterodactyl'], answer:1,
+    funFact:'Therizinosaurus claws were nearly 1 metre long — longer than your arm! 💅' },
+
+  { id:'d47', category:'dino', emoji:'🌋', question:'What do scientists think caused dinosaurs to die out?',
+    options:['Too much rain','A giant meteor hit Earth','They got too cold','They ate all the food'], answer:1,
+    funFact:'A massive space rock hit Earth 66 million years ago — boom! ☄️' },
+
+  { id:'d48', category:'dino', emoji:'🦈', question:'Which was LONGER — T-Rex or Spinosaurus?',
+    options:['They were the same','T-Rex was longer','Spinosaurus was longer','Velociraptor was longest'], answer:2,
+    funFact:'Spinosaurus could be up to 18 metres long — even bigger than T-Rex! 📏' },
+
+  { id:'d49', category:'dino', emoji:'🐾', question:'What type of skin did most dinosaurs have?',
+    options:['Smooth like a fish','Fluffy like a dog','Scaly like a lizard','Slimy like a frog'], answer:2,
+    funFact:'We know this because some fossils show skin impressions! 🪨' },
+
+  { id:'d50', category:'dino', emoji:'🌙', question:'Did any dinosaurs hunt at NIGHT?',
+    options:['Never — all slept at night','Yes, some dinosaurs had big eyes for the dark','Only T-Rex hunted at night','No dinosaurs had eyes'], answer:1,
+    funFact:'Some small dinosaurs had huge eyes perfect for seeing in the dark! 🌙' },
+
+  // ── SPACE ─────────────────────────────────────────────────────────────────
+  { id:'s01', category:'space', emoji:'🪐', question:'Which planet is the BIGGEST in our solar system?',
+    options:['Mars','Jupiter','Saturn','Earth'], answer:1,
+    funFact:'Jupiter is so big, 1,300 Earths could fit inside it! 🌍' },
+
+  { id:'s02', category:'space', emoji:'☀️', question:'Which planet is CLOSEST to the Sun?',
+    options:['Earth','Venus','Mars','Mercury'], answer:3,
+    funFact:'One year on Mercury is only 88 days long! ⚡' },
+
+  { id:'s03', category:'space', emoji:'💍', question:'Which planet has beautiful RINGS around it?',
+    options:['Mars','Earth','Saturn','Jupiter'], answer:2,
+    funFact:"Saturn's rings are made of billions of chunks of ice and rock! ❄️" },
+
+  { id:'s04', category:'space', emoji:'🔢', question:'How many planets are in our Solar System?',
+    options:['Four','Six','Eight','Ten'], answer:2,
+    funFact:'Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune! 🪐' },
+
+  { id:'s05', category:'space', emoji:'☀️', question:'What is the big bright ball in the daytime sky?',
+    options:['The Moon','A star far away','The Sun','A planet'], answer:2,
+    funFact:'The Sun is actually a huge ball of burning gas! 🔥' },
+
+  { id:'s06', category:'space', emoji:'🌙', question:'What is the big glowing thing in the night sky?',
+    options:['The Sun','A comet','The Moon','A meteor'], answer:2,
+    funFact:'The Moon takes 27 days to go all the way around the Earth! 🌍' },
+
+  { id:'s07', category:'space', emoji:'🌍', question:'Which planet do WE live on?',
+    options:['Mars','Earth','Venus','Jupiter'], answer:1,
+    funFact:'Earth is the only planet we know that has life on it! 🌿' },
+
+  { id:'s08', category:'space', emoji:'🔴', question:'Which planet is called the RED planet?',
+    options:['Venus','Jupiter','Mars','Saturn'], answer:2,
+    funFact:"Mars is red because it's covered in rusty red dust! 🏜️" },
+
+  { id:'s09', category:'space', emoji:'🌌', question:'What is the name of our galaxy?',
+    options:['Andromeda','The Milky Way','The Big Dipper','The Star Road'], answer:1,
+    funFact:'Our Milky Way has over 200 billion stars in it! ✨' },
+
+  { id:'s10', category:'space', emoji:'🔬', question:'Which planet is the SMALLEST in our solar system?',
+    options:['Earth','Venus','Mars','Mercury'], answer:3,
+    funFact:'Mercury is smaller than some moons in our solar system! 🌑' },
+
+  { id:'s11', category:'space', emoji:'👨‍🚀', question:'What do astronauts wear in space?',
+    options:['A swimsuit','A spacesuit','A raincoat','Pyjamas'], answer:1,
+    funFact:'A spacesuit weighs as much as 130 kg — heavier than a big adult! ⚖️' },
+
+  { id:'s12', category:'space', emoji:'📅', question:'How long does Earth take to go around the Sun?',
+    options:['1 day','1 month','1 year','10 years'], answer:2,
+    funFact:"That's why we have one birthday every year! 🎂" },
+
+  { id:'s13', category:'space', emoji:'🌕', question:'How many moons does Earth have?',
+    options:['Zero','One','Two','Three'], answer:1,
+    funFact:'Our Moon is the fifth biggest moon in the whole solar system! 🌑' },
+
+  { id:'s14', category:'space', emoji:'⭐', question:'What is a SHOOTING STAR really?',
+    options:['A falling star','A rock burning up in the sky','A lost planet','A broken comet'], answer:1,
+    funFact:'Shooting stars burn up so fast they glow bright for just a second! ✨' },
+
+  { id:'s15', category:'space', emoji:'🔭', question:'What do we use to look at faraway stars?',
+    options:['A microscope','A telescope','Magnifying glass','Special goggles'], answer:1,
+    funFact:'The Hubble Space Telescope can see galaxies billions of light-years away! 🌌' },
+
+  { id:'s16', category:'space', emoji:'🏁', question:'Which planet is FARTHEST from the Sun?',
+    options:['Saturn','Uranus','Jupiter','Neptune'], answer:3,
+    funFact:'It takes Neptune 165 years to go around the Sun just once! 🐌' },
+
+  { id:'s17', category:'space', emoji:'🔥', question:'What is the Sun made of?',
+    options:['Rock and dirt','Hot gas and fire','Water and ice','Metal'], answer:1,
+    funFact:"The Sun is SO hot, it's 15 million degrees in the middle! 🌡️" },
+
+  { id:'s18', category:'space', emoji:'🌀', question:'Which planet spins completely on its SIDE?',
+    options:['Mars','Saturn','Uranus','Neptune'], answer:2,
+    funFact:'Uranus rolls around the Sun like a bowling ball! 🎳' },
+
+  { id:'s19', category:'space', emoji:'⭐', question:'What do we call a group of stars that make a picture?',
+    options:['A constellation','A galaxy','A nebula','A cluster'], answer:0,
+    funFact:'The Big Dipper and Orion are famous constellations! ✨' },
+
+  { id:'s20', category:'space', emoji:'🚀', question:'Which spacecraft carried humans to the Moon first?',
+    options:['Space Shuttle','Apollo','Voyager','Sputnik'], answer:1,
+    funFact:'Apollo 11 landed on the Moon on July 20, 1969! 🌕' },
+
+  { id:'s21', category:'space', emoji:'🌙', question:'Which planet has the most MOONS?',
+    options:['Jupiter','Saturn','Earth','Venus'], answer:1,
+    funFact:"Saturn has over 140 moons — that's a lot of moons! 🌑🌑🌑" },
+
+  { id:'s22', category:'space', emoji:'📏', question:'Which is BIGGER — the Sun or the Earth?',
+    options:['They are the same size','Earth is bigger','The Sun is much bigger','The Moon is biggest'], answer:2,
+    funFact:'Over 1 million Earths could fit inside the Sun! 😲' },
+
+  { id:'s23', category:'space', emoji:'🔴', question:'What color is Mars?',
+    options:['Blue','Green','Red','Yellow'], answer:2,
+    funFact:'Mars gets its red color from iron oxide — basically, rust! 🔧' },
+
+  { id:'s24', category:'space', emoji:'🌀', question:'What is the GREAT RED SPOT on Jupiter?',
+    options:['A volcano','A storm bigger than Earth','A dried-up sea','A mountain'], answer:1,
+    funFact:'The Great Red Spot storm has been going for over 300 years! 🌪️' },
+
+  { id:'s25', category:'space', emoji:'🌙', question:'What is the Moon made of?',
+    options:['Cheese','Rock and dust','Water','Ice cream'], answer:1,
+    funFact:'The Moon has mountains, valleys and millions of craters! 🏔️' },
+
+  { id:'s26', category:'space', emoji:'🚀', question:'How long does it take to travel from Earth to the Moon?',
+    options:['1 hour','About 3 days','1 week','1 year'], answer:1,
+    funFact:'The Apollo astronauts traveled to the Moon in about 3 days! 🌕' },
+
+  { id:'s27', category:'space', emoji:'🕳️', question:'What are the bowl-shaped holes on the Moon called?',
+    options:['Valleys','Mountains','Craters','Caves'], answer:2,
+    funFact:"Craters are made when asteroids crash into the Moon's surface! 💥" },
+
+  { id:'s28', category:'space', emoji:'🪐', question:'Which planet has a moon called Titan?',
+    options:['Jupiter','Mars','Saturn','Neptune'], answer:2,
+    funFact:"Titan is Saturn's biggest moon and has its own thick atmosphere! 🌫️" },
+
+  { id:'s29', category:'space', emoji:'🪨', question:'What is an ASTEROID?',
+    options:['A tiny star','A rock floating in space','A baby planet','A space cloud'], answer:1,
+    funFact:'There is a whole asteroid belt between Mars and Jupiter! 🌌' },
+
+  { id:'s30', category:'space', emoji:'🌡️', question:'Which is the HOTTEST planet?',
+    options:['Mercury','Mars','Venus','Jupiter'], answer:2,
+    funFact:"Venus is hotter than Mercury even though it's farther from the Sun! 🔥" },
+
+  { id:'s31', category:'space', emoji:'☄️', question:'What is a COMET made of?',
+    options:['A broken planet','A ball of ice and rock in space','A tiny star','A lost asteroid'], answer:1,
+    funFact:'Comets grow a glowing tail when they fly close to the Sun! ✨' },
+
+  { id:'s32', category:'space', emoji:'🔇', question:'Can you hear sounds in space?',
+    options:['Yes, very loudly','Yes, quietly','No — space is totally silent','Only explosions'], answer:2,
+    funFact:'Sound needs air to travel, and space has no air! 🔕' },
+
+  { id:'s33', category:'space', emoji:'💥', question:'What do we call the explosion of a dying star?',
+    options:['A supernova','A black hole','A nebula','A comet'], answer:0,
+    funFact:'A supernova can be brighter than a whole galaxy for a few weeks! 🌟' },
+
+  { id:'s34', category:'space', emoji:'💙', question:'Which planet is BLUE because of its gas?',
+    options:['Saturn','Mars','Neptune','Venus'], answer:2,
+    funFact:"Neptune's beautiful blue color comes from methane gas! 💙" },
+
+  { id:'s35', category:'space', emoji:'🕳️', question:'What is a BLACK HOLE?',
+    options:['A hole in the ground','A place where gravity is super strong','A dark planet','A type of dead star'], answer:1,
+    funFact:"A black hole's gravity is so strong, even light can't escape! 💫" },
+
+  { id:'s36', category:'space', emoji:'💑', question:"Which planet is sometimes called Earth's TWIN?",
+    options:['Mars','Jupiter','Venus','Saturn'], answer:2,
+    funFact:"Venus is almost the same size as Earth — they're like sisters! 👯" },
+
+  { id:'s37', category:'space', emoji:'🌑', question:'What do we call it when the Moon blocks the Sun?',
+    options:['A lunar eclipse','A solar eclipse','A moonset','A shadow party'], answer:1,
+    funFact:'During a solar eclipse, day goes dark as night for a few minutes! 🌑' },
+
+  { id:'s38', category:'space', emoji:'🐕', question:'What was the first animal sent to space?',
+    options:['A monkey','A dog','A cat','A rabbit'], answer:1,
+    funFact:'A dog named Laika was the first animal to orbit Earth in 1957! 🐾' },
+
+  { id:'s39', category:'space', emoji:'🏠', question:'What is the International Space Station?',
+    options:['A rocket ship','A floating home for astronauts','A big planet','A satellite dish'], answer:1,
+    funFact:'The ISS travels at 28,000 km/h — fast enough to circle Earth in 90 minutes! ⚡' },
+
+  { id:'s40', category:'space', emoji:'🌙', question:'Who was the FIRST person to walk on the Moon?',
+    options:['Buzz Aldrin','Yuri Gagarin','Neil Armstrong','Sally Ride'], answer:2,
+    funFact:'Neil Armstrong said "One small step for man, one giant leap for mankind!" 🚀' },
+
+  { id:'s41', category:'space', emoji:'🚀', question:'What do we call someone who travels to space?',
+    options:['A pilot','An astronaut','A scientist','A sailor'], answer:1,
+    funFact:'Astronauts train for years before flying to space! 👨‍🚀' },
+
+  { id:'s42', category:'space', emoji:'🌅', question:'Which direction does the Sun rise?',
+    options:['North','South','East','West'], answer:2,
+    funFact:'The Sun rises in the east and sets in the west every single day! 🌄' },
+
+  { id:'s43', category:'space', emoji:'⏳', question:'How long does light from the Sun take to reach Earth?',
+    options:['1 second','8 minutes','1 hour','1 day'], answer:1,
+    funFact:'Even light — the fastest thing ever — takes 8 whole minutes from the Sun! 💡' },
+
+  { id:'s44', category:'space', emoji:'🍽️', question:'What do astronauts eat in space?',
+    options:['Normal food from a plate','Special food sealed in pouches',"They don't eat",'Only soup'], answer:1,
+    funFact:'Astronauts have to be careful — crumbs can float into equipment! 😅' },
+
+  { id:'s45', category:'space', emoji:'🌌', question:'What is the closest star to Earth besides our Sun?',
+    options:['Sirius','Proxima Centauri','Betelgeuse','Vega'], answer:1,
+    funFact:'Proxima Centauri is still 4.2 light-years away — unimaginably far! 🔭' },
+
+  { id:'s46', category:'space', emoji:'⬆️', question:'What is GRAVITY?',
+    options:['A magic spell','A force that pulls things down','A type of weather','A space vehicle'], answer:1,
+    funFact:"Gravity is why you don't float off into space when you jump! 🦘" },
+
+  { id:'s47', category:'space', emoji:'🌏', question:'How many Earths could fit inside Jupiter?',
+    options:['About 10','About 100','About 1,300','About 10,000'], answer:2,
+    funFact:'Jupiter is absolutely enormous — the biggest planet in our solar system! 🪐' },
+
+  { id:'s48', category:'space', emoji:'🔵', question:'What color is the sky on Mars?',
+    options:['Blue like Earth','Black','Pinkish-red','Green'], answer:2,
+    funFact:"Mars's sky is pink because of all the red dust floating in the air! 🌫️" },
+
+  { id:'s49', category:'space', emoji:'🌑', question:'What do we call it when the Earth blocks sunlight from reaching the Moon?',
+    options:['A solar eclipse','A lunar eclipse','A shadow storm','A moonquake'], answer:1,
+    funFact:'During a lunar eclipse the Moon turns a beautiful blood-red color! 🌕' },
+
+  { id:'s50', category:'space', emoji:'🌌', question:'What shape is the Milky Way galaxy?',
+    options:['A ball','A cube','A spiral','A triangle'], answer:2,
+    funFact:'Our Milky Way is a barred spiral galaxy with beautiful curving arms! 🌀' },
+];
+
+const LETTERS = ['A','B','C','D'];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function pickQuestions() {
+  const dinos = shuffle(ALL_QUESTIONS.filter(q => q.category === 'dino'));
+  const spaces = shuffle(ALL_QUESTIONS.filter(q => q.category === 'space'));
+  return shuffle([...dinos.slice(0,5), ...spaces.slice(0,5)]);
+}
+
+function getStars(score, total) {
+  const pct = score / total;
+  if (pct === 1) return 3;
+  if (pct >= 0.6) return 2;
+  if (pct >= 0.3) return 1;
+  return 0;
+}
+
+function getMsg(score) {
+  if (score === 10) return { msg: "PERFECT SCORE! You're a legendary Dino Space Champion! 🏆", icon: "🏆" };
+  if (score >= 7) return { msg: "Wow, you're a dino-space superstar! 🌟", icon: "⭐" };
+  if (score >= 4) return { msg: "Great job, dino astronaut! You're learning so fast! 🚀", icon: "🦕" };
+  return { msg: "Keep exploring, little explorer! Try again! 🔭", icon: "🌱" };
+}
+
+function Confetti() {
+  const pieces = Array.from({length: 60}, (_, i) => ({
+    id: i,
+    color: ['#FFD060','#FF6EB4','#60E0FF','#A0FF80','#C080FF','#FF8060'][i % 6],
+    left: Math.random()*100,
+    dx: (Math.random()-0.5)*140,
+    rot: Math.random()*720 - 360,
+    dur: 2.5 + Math.random()*2.5,
+    delay: Math.random()*1.5,
+  }));
+  return (
+    <>
+      {pieces.map(p => (
+        <div key={p.id} className="confetti-piece" style={{
+          background: p.color, left: `${p.left}%`,
+          '--dx': `${p.dx}px`, '--rot': `${p.rot}deg`,
+          '--fall-d': `${p.dur}s`, '--fall-delay': `${p.delay}s`,
+        }} />
+      ))}
+    </>
+  );
+}
+
+function IntroScreen({ onStart }) {
+  return (
+    <div className="screen">
+      <div className="intro-wrap">
+        <div className="intro-mascots"><span>🦕</span><span>🚀</span><span>🦖</span></div>
+        <div className="intro-title">Dino Space Quiz!</div>
+        <div className="intro-sub">Answer 10 questions — how many can you get? 🌟</div>
+        <div className="intro-facts">
+          <div className="fact-pill">🦕 Dinosaurs</div>
+          <div className="fact-pill">🪐 Planets</div>
+          <div className="fact-pill">⭐ Stars</div>
+          <div className="fact-pill">🎲 Different every time!</div>
+        </div>
+        <button className="btn-start" onClick={onStart}>Let's Go! 🚀</button>
+      </div>
+    </div>
+  );
+}
+
+function QuizScreen({ questions, onFinish }) {
+  const [qIndex, setQIndex] = useState(0);
+  const [selected, setSelected] = useState(null);
+  const [score, setScore] = useState(0);
+  const [dinoScore, setDinoScore] = useState(0);
+  const [spaceScore, setSpaceScore] = useState(0);
+  const [animKey, setAnimKey] = useState(0);
+
+  const q = questions[qIndex];
+  const answered = selected !== null;
+  const isCorrect = selected === q.answer;
+
+  function handleSelect(idx) {
+    if (answered) return;
+    setSelected(idx);
+    if (idx === q.answer) {
+      setScore(s => s + 1);
+      if (q.category === 'dino') setDinoScore(s => s + 1);
+      else setSpaceScore(s => s + 1);
+    }
+  }
+
+  function handleNext() {
+    if (qIndex + 1 >= questions.length) {
+      onFinish({ score, dinoScore, spaceScore });
+    } else {
+      setQIndex(i => i + 1);
+      setSelected(null);
+      setAnimKey(k => k + 1);
+    }
+  }
+
+  const pct = (qIndex / questions.length) * 100;
+
+  return (
+    <div className="screen" key={animKey}>
+      <div className="quiz-header">
+        <div className="q-counter"><span>{qIndex+1}</span>/{questions.length}</div>
+        <div className="progress-bar-track">
+          <div className="progress-bar-fill" style={{width:`${pct}%`}}></div>
+        </div>
+        <div className="score-badge">⭐ {score}</div>
+      </div>
+
+      <div className="q-card">
+        <div style={{display:'flex',justifyContent:'center',marginBottom:8}}>
+          <span className={`cat-badge ${q.category}`}>
+            {q.category === 'dino' ? '🦕 Dinosaur' : '🚀 Space'}
+          </span>
+        </div>
+        <span className="q-emoji">{q.emoji}</span>
+        <div className="q-text">{q.question}</div>
+      </div>
+
+      <div className="answer-grid">
+        {q.options.map((opt, i) => {
+          let cls = 'answer-btn';
+          if (answered) {
+            if (i === q.answer) cls += ' correct';
+            else if (i === selected) cls += ' wrong';
+            else cls += ' dim';
+          }
+          return (
+            <button key={i} className={cls} onClick={() => handleSelect(i)} disabled={answered}>
+              <div className="answer-letter">{LETTERS[i]}</div>
+              <div className="answer-label">{opt}</div>
+            </button>
+          );
+        })}
+      </div>
+
+      {answered && (
+        <div className={`result-toast ${isCorrect ? 'correct' : 'wrong'}`}>
+          {isCorrect
+            ? `✅ Correct! ${q.funFact}`
+            : `❌ Oops! The answer was ${q.options[q.answer]}! ${q.funFact}`}
+        </div>
+      )}
+
+      <button className={`btn-next ${answered ? 'visible' : ''}`} onClick={handleNext}>
+        {qIndex + 1 >= questions.length ? 'See My Score! 🎉' : 'Next Question →'}
+      </button>
+    </div>
+  );
+}
+
+function ScoreScreen({ score, dinoScore, spaceScore, total, onRetry }) {
+  const stars = getStars(score, total);
+  const { msg, icon } = getMsg(score);
+  const [starsLit, setStarsLit] = useState(0);
+
+  useEffect(() => {
+    let i = 0;
+    const t = setInterval(() => { i++; setStarsLit(i); if (i >= 3) clearInterval(t); }, 400);
+    return () => clearInterval(t);
+  }, []);
+
+  return (
+    <div className="screen">
+      {score >= 7 && <Confetti />}
+      <div className="score-screen">
+        <div className="score-planet">{icon}</div>
+        <div className="score-title">
+          {score === total ? 'PERFECT!' : score >= 7 ? 'Awesome!' : score >= 4 ? 'Well done!' : 'Good try!'}
+        </div>
+        <div className="score-number">{score}<span className="denom">/{total}</span></div>
+        <div className="stars-row">
+          {[0,1,2].map(i => (
+            <span key={i} className={`star-icon ${i < stars && i < starsLit ? 'lit' : ''}`}>⭐</span>
+          ))}
+        </div>
+        <div className="score-message">{msg}</div>
+        <div className="score-breakdown">
+          <div className="breakdown-pill">🦕 Dino: <strong>{dinoScore}/5</strong></div>
+          <div className="breakdown-pill">🚀 Space: <strong>{spaceScore}/5</strong></div>
+        </div>
+        <button className="btn-retry" onClick={onRetry}>Play Again! 🔄</button>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [screen, setScreen] = useState('intro');
+  const [results, setResults] = useState(null);
+  const [questions, setQuestions] = useState([]);
+
+  function startQuiz() {
+    setQuestions(pickQuestions());
+    setScreen('quiz');
+  }
+
+  function handleFinish(res) { setResults(res); setScreen('score'); }
+  function handleRetry() { setResults(null); setScreen('intro'); }
+
+  return (
+    <div>
+      {screen === 'intro' && <IntroScreen onStart={startQuiz} />}
+      {screen === 'quiz' && <QuizScreen questions={questions} onFinish={handleFinish} />}
+      {screen === 'score' && results && (
+        <ScoreScreen score={results.score} dinoScore={results.dinoScore} spaceScore={results.spaceScore} total={10} onRetry={handleRetry} />
+      )}
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('app'));
+root.render(<App />);
+</script>
+</body>
+</html>
