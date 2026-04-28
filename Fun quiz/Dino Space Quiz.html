@@ -69,7 +69,7 @@
   .score-badge { background:var(--surface); border:1.5px solid var(--border); border-radius:999px; padding:6px 16px; font-family:'Fredoka One',cursive; font-size:18px; color:var(--yellow); white-space:nowrap; }
 
   /* QUESTION CARD */
-  .q-card { background:rgba(255,255,255,0.04); border:1.5px solid var(--border); border-radius:28px; padding:28px 24px 24px; margin-bottom:20px; text-align:center; position:relative; overflow:hidden; }
+  .q-card { background:rgba(255,255,255,0.04); border:1.5px solid var(--border); border-radius:28px; padding:28px 24px 24px; margin-bottom:20px; text-align:center; position:relative; overflow:hidden; min-height:160px; display:flex; flex-direction:column; justify-content:center; gap:10px; }
   .q-card::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 0%,rgba(140,100,255,0.08) 0%,transparent 65%); pointer-events:none; }
   .q-badges { display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
   .cat-badge { display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:4px 14px; font-size:12px; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; }
@@ -77,9 +77,7 @@
   .diff-badge.easy   { background:rgba(100,220,120,0.15); color:var(--green);  border:1px solid rgba(100,220,120,0.3); }
   .diff-badge.medium { background:rgba(255,200,60,0.15);  color:var(--yellow); border:1px solid rgba(255,200,60,0.3); }
   .diff-badge.hard   { background:rgba(255,80,140,0.12);  color:var(--pink);   border:1px solid rgba(255,80,140,0.3); }
-  .q-emoji { font-size:68px; line-height:1; margin-bottom:14px; display:block; filter:drop-shadow(0 0 20px rgba(255,255,255,0.2)); animation:pop 0.4s cubic-bezier(.34,1.56,.64,1) both; }
-  @keyframes pop { from { transform:scale(0.5); opacity:0; } to { transform:scale(1); opacity:1; } }
-  .q-text { font-family:'Fredoka One',cursive; font-size:clamp(20px,4vw,30px); line-height:1.25; color:var(--text); }
+  .q-text { font-family:'Fredoka One',cursive; font-size:clamp(20px,4vw,30px); line-height:1.25; color:var(--text); min-height:80px; display:flex; align-items:center; justify-content:center; }
 
   /* ANSWERS */
   .answer-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
@@ -422,9 +420,17 @@ function getMsg(score) {
   return {msg:"Keep exploring, little explorer! Try again! 🔭",icon:"🌱"};
 }
 
-function Confetti() {
-  const pieces = Array.from({length:60},(_,i)=>({id:i,color:['#FFD060','#FF6EB4','#60E0FF','#A0FF80','#C080FF','#FF8060'][i%6],left:Math.random()*100,dx:(Math.random()-0.5)*140,rot:Math.random()*720-360,dur:2.5+Math.random()*2.5,delay:Math.random()*1.5}));
-  return <>{pieces.map(p=><div key={p.id} className="confetti-piece" style={{background:p.color,left:`${p.left}%`,'--dx':`${p.dx}px`,'--rot':`${p.rot}deg`,'--fall-d':`${p.dur}s`,'--fall-delay':`${p.delay}s`}}/>)}</>;
+function Confetti({score, total}) {
+  const perfect = score===total;
+  const count = perfect ? 220 : 100;
+  const spread = perfect ? 220 : 160;
+  const minDur = perfect ? 1.8 : 2.2;
+  const maxDur = perfect ? 3.2 : 4.0;
+  const maxDelay = perfect ? 0.8 : 1.5;
+  const sizeW = perfect ? 14 : 10;
+  const sizeH = perfect ? 18 : 14;
+  const pieces = Array.from({length:count},(_,i)=>({id:i,color:['#FFD060','#FF6EB4','#60E0FF','#A0FF80','#C080FF','#FF8060'][i%6],left:Math.random()*100,dx:(Math.random()-0.5)*spread,rot:Math.random()*720-360,dur:minDur+Math.random()*(maxDur-minDur),delay:Math.random()*maxDelay}));
+  return <>{pieces.map(p=><div key={p.id} className="confetti-piece" style={{background:p.color,left:`${p.left}%`,width:`${sizeW}px`,height:`${sizeH}px`,'--dx':`${p.dx}px`,'--rot':`${p.rot}deg`,'--fall-d':`${p.dur}s`,'--fall-delay':`${p.delay}s`}}/>)}</>;
 }
 
 function IntroScreen({onNext}) {
@@ -532,7 +538,6 @@ function QuizScreen({questions, onFinish}) {
             {q.difficulty==='easy'?'⭐ Easy':q.difficulty==='medium'?'🔥 Medium':'💥 Hard'}
           </span>
         </div>
-        <span className="q-emoji">{q.emoji}</span>
         <div className="q-text">{q.question}</div>
       </div>
       <div className="answer-grid">
@@ -576,7 +581,7 @@ function ScoreScreen({score, topicScores, selectedTopics, total, onRetry}) {
 
   return (
     <div className="screen">
-      {score>=7 && <Confetti/>}
+      {score>=7 && <Confetti score={score} total={total}/>}
       <div className="score-screen">
         <div className="score-planet">{icon}</div>
         <div className="score-title">{score===total?'PERFECT!':score>=7?'Awesome!':score>=4?'Well done!':'Good try!'}</div>
