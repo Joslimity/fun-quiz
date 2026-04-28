@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dino Space Quiz! 🦕🚀</title>
+<title>Fun Quiz! 🦕🚀🌊🦁🫀🌦️</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
@@ -26,204 +26,115 @@
   body { background: var(--bg); font-family: 'Nunito', sans-serif; color: var(--text); overflow-x: hidden; }
 
   #starfield { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-  .star { position: absolute; border-radius: 50%; background: white; animation: twinkle var(--d, 3s) ease-in-out infinite var(--delay, 0s); }
-  @keyframes twinkle {
-    0%, 100% { opacity: var(--min-op, 0.2); transform: scale(1); }
-    50%       { opacity: 1; transform: scale(1.4); }
-  }
-  .milky-way {
-    position: absolute; width: 160%; height: 260px; top: 30%; left: -30%;
-    background: radial-gradient(ellipse at center, rgba(140,100,255,0.07) 0%, rgba(100,180,255,0.05) 40%, transparent 70%);
-    transform: rotate(-18deg); filter: blur(30px);
-  }
+  .star { position: absolute; border-radius: 50%; background: white; animation: twinkle var(--d,3s) ease-in-out infinite var(--delay,0s); }
+  @keyframes twinkle { 0%,100% { opacity:var(--min-op,0.2); transform:scale(1); } 50% { opacity:1; transform:scale(1.4); } }
+  .milky-way { position:absolute; width:160%; height:260px; top:30%; left:-30%; background:radial-gradient(ellipse at center,rgba(140,100,255,0.07) 0%,rgba(100,180,255,0.05) 40%,transparent 70%); transform:rotate(-18deg); filter:blur(30px); }
 
-  #app { position: relative; z-index: 1; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
-
-  .screen { width: 100%; max-width: 720px; animation: fadeUp 0.5s cubic-bezier(.22,1,.36,1) both; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+  #app { position:relative; z-index:1; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px 16px; }
+  .screen { width:100%; max-width:720px; animation:fadeUp 0.5s cubic-bezier(.22,1,.36,1) both; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
 
   /* INTRO */
-  .intro-wrap { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-  .intro-mascots { font-size: 100px; line-height: 1; display: flex; gap: 16px; animation: bounce 2s ease-in-out infinite; }
-  @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
-  .intro-title {
-    font-family: 'Fredoka One', cursive; font-size: clamp(40px, 8vw, 72px); line-height: 1.05;
-    background: linear-gradient(135deg, var(--yellow) 0%, var(--pink) 50%, var(--cyan) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    filter: drop-shadow(0 0 30px rgba(255,180,100,0.25));
-  }
-  .intro-sub { font-size: 22px; font-weight: 700; color: var(--muted); }
-  .intro-facts { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 4px; }
-  .fact-pill {
-    background: var(--surface); border: 1.5px solid var(--border); border-radius: 999px;
-    padding: 8px 18px; font-size: 15px; font-weight: 700; color: var(--muted);
-    display: flex; align-items: center; gap: 6px;
-  }
-  .btn-start {
-    margin-top: 8px; padding: 20px 56px; border-radius: 999px; border: none; cursor: pointer;
-    font-family: 'Fredoka One', cursive; font-size: 28px;
-    background: linear-gradient(135deg, var(--yellow), var(--pink)); color: #1a0a00;
-    box-shadow: 0 0 40px rgba(255,200,80,0.35), 0 4px 24px rgba(0,0,0,0.4);
-    transition: transform 0.15s, box-shadow 0.15s;
-  }
-  .btn-start:hover { transform: scale(1.06); box-shadow: 0 0 60px rgba(255,200,80,0.5), 0 8px 32px rgba(0,0,0,0.5); }
-  .btn-start:active { transform: scale(0.97); }
+  .intro-wrap { text-align:center; display:flex; flex-direction:column; align-items:center; gap:20px; }
+  .intro-mascots { font-size:80px; line-height:1; display:flex; gap:12px; animation:bounce 2s ease-in-out infinite; }
+  @keyframes bounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-14px); } }
+  .intro-title { font-family:'Fredoka One',cursive; font-size:clamp(36px,8vw,66px); line-height:1.05; background:linear-gradient(135deg,var(--yellow) 0%,var(--pink) 50%,var(--cyan) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; filter:drop-shadow(0 0 30px rgba(255,180,100,0.25)); }
+  .intro-sub { font-size:20px; font-weight:700; color:var(--muted); }
+  .btn-start { margin-top:8px; padding:20px 56px; border-radius:999px; border:none; cursor:pointer; font-family:'Fredoka One',cursive; font-size:28px; background:linear-gradient(135deg,var(--yellow),var(--pink)); color:#1a0a00; box-shadow:0 0 40px rgba(255,200,80,0.35),0 4px 24px rgba(0,0,0,0.4); transition:transform 0.15s,box-shadow 0.15s; }
+  .btn-start:hover { transform:scale(1.06); box-shadow:0 0 60px rgba(255,200,80,0.5),0 8px 32px rgba(0,0,0,0.5); }
+  .btn-start:active { transform:scale(0.97); }
+
+  /* TOPIC SELECTION */
+  .topics-wrap { display:flex; flex-direction:column; align-items:center; gap:22px; text-align:center; }
+  .topics-title { font-family:'Fredoka One',cursive; font-size:clamp(28px,6vw,48px); background:linear-gradient(135deg,var(--yellow),var(--pink)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .topics-sub { font-size:18px; font-weight:700; color:var(--muted); }
+  .topics-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; width:100%; }
+  .topic-card { background:var(--surface); border:2px solid var(--border); border-radius:22px; padding:22px 10px 18px; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:8px; position:relative; transition:transform 0.15s,border-color 0.15s,background 0.15s,box-shadow 0.15s; user-select:none; }
+  .topic-card:hover:not(.topic-card--disabled) { transform:translateY(-4px); }
+  .topic-card--disabled { opacity:0.35; cursor:not-allowed; }
+  .topic-emoji-lg { font-size:44px; line-height:1; }
+  .topic-label { font-family:'Fredoka One',cursive; font-size:16px; color:var(--text); line-height:1.2; }
+  .topic-check { position:absolute; top:8px; right:8px; width:22px; height:22px; border-radius:50%; background:var(--green); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:900; color:#003010; }
+  .btn-go { margin-top:4px; padding:18px 48px; border-radius:999px; border:none; cursor:pointer; font-family:'Fredoka One',cursive; font-size:26px; background:linear-gradient(135deg,var(--cyan),var(--purple)); color:#fff; box-shadow:0 0 30px rgba(100,200,255,0.25),0 4px 20px rgba(0,0,0,0.4); transition:transform 0.15s,box-shadow 0.15s,opacity 0.2s; }
+  .btn-go:disabled { opacity:0.35; cursor:not-allowed; }
+  .btn-go:not(:disabled):hover { transform:scale(1.05); }
+  .btn-go:not(:disabled):active { transform:scale(0.97); }
 
   /* QUIZ HEADER */
-  .quiz-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
-  .q-counter { font-family: 'Fredoka One', cursive; font-size: 20px; color: var(--muted); }
-  .q-counter span { color: var(--text); font-size: 24px; }
-  .progress-bar-track { flex: 1; height: 10px; background: rgba(255,255,255,0.1); border-radius: 999px; margin: 0 16px; overflow: hidden; }
-  .progress-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--cyan), var(--purple)); transition: width 0.5s cubic-bezier(.22,1,.36,1); box-shadow: 0 0 10px var(--cyan); }
-  .score-badge { background: var(--surface); border: 1.5px solid var(--border); border-radius: 999px; padding: 6px 16px; font-family: 'Fredoka One', cursive; font-size: 18px; color: var(--yellow); white-space: nowrap; }
+  .quiz-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:28px; }
+  .q-counter { font-family:'Fredoka One',cursive; font-size:20px; color:var(--muted); }
+  .q-counter span { color:var(--text); font-size:24px; }
+  .progress-bar-track { flex:1; height:10px; background:rgba(255,255,255,0.1); border-radius:999px; margin:0 16px; overflow:hidden; }
+  .progress-bar-fill { height:100%; border-radius:999px; background:linear-gradient(90deg,var(--cyan),var(--purple)); transition:width 0.5s cubic-bezier(.22,1,.36,1); box-shadow:0 0 10px var(--cyan); }
+  .score-badge { background:var(--surface); border:1.5px solid var(--border); border-radius:999px; padding:6px 16px; font-family:'Fredoka One',cursive; font-size:18px; color:var(--yellow); white-space:nowrap; }
 
   /* QUESTION CARD */
-  .q-card {
-    background: rgba(255,255,255,0.04); border: 1.5px solid var(--border); border-radius: 28px;
-    padding: 32px 28px 28px; margin-bottom: 20px; text-align: center; position: relative; overflow: hidden;
-  }
-  .q-card::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(140,100,255,0.08) 0%, transparent 65%);
-    pointer-events: none;
-  }
-  .q-emoji {
-    font-size: 72px; line-height: 1; margin-bottom: 16px; display: block;
-    filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
-    animation: pop 0.4s cubic-bezier(.34,1.56,.64,1) both;
-  }
-  @keyframes pop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-  .q-text { font-family: 'Fredoka One', cursive; font-size: clamp(22px, 4.5vw, 32px); line-height: 1.25; color: var(--text); }
-  .q-badges { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
-  .cat-badge {
-    display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 4px 14px;
-    font-size: 13px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
-  }
-  .cat-badge.dino  { background: rgba(255,200,60,0.18);  color: var(--yellow); border: 1px solid rgba(255,200,60,0.3); }
-  .cat-badge.space { background: rgba(100,180,255,0.15); color: var(--cyan);   border: 1px solid rgba(100,180,255,0.3); }
-  .diff-badge {
-    display: inline-flex; align-items: center; gap: 4px; border-radius: 999px; padding: 4px 12px;
-    font-size: 12px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
-  }
-  .diff-badge.easy   { background: rgba(100,220,120,0.15); color: var(--green);  border: 1px solid rgba(100,220,120,0.3); }
-  .diff-badge.medium { background: rgba(255,200,60,0.15);  color: var(--yellow); border: 1px solid rgba(255,200,60,0.3); }
-  .diff-badge.hard   { background: rgba(255,80,140,0.12);  color: var(--pink);   border: 1px solid rgba(255,80,140,0.3); }
+  .q-card { background:rgba(255,255,255,0.04); border:1.5px solid var(--border); border-radius:28px; padding:28px 24px 24px; margin-bottom:20px; text-align:center; position:relative; overflow:hidden; }
+  .q-card::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 0%,rgba(140,100,255,0.08) 0%,transparent 65%); pointer-events:none; }
+  .q-badges { display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
+  .cat-badge { display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:4px 14px; font-size:12px; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; }
+  .diff-badge { display:inline-flex; align-items:center; gap:4px; border-radius:999px; padding:4px 12px; font-size:12px; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; }
+  .diff-badge.easy   { background:rgba(100,220,120,0.15); color:var(--green);  border:1px solid rgba(100,220,120,0.3); }
+  .diff-badge.medium { background:rgba(255,200,60,0.15);  color:var(--yellow); border:1px solid rgba(255,200,60,0.3); }
+  .diff-badge.hard   { background:rgba(255,80,140,0.12);  color:var(--pink);   border:1px solid rgba(255,80,140,0.3); }
+  .q-emoji { font-size:68px; line-height:1; margin-bottom:14px; display:block; filter:drop-shadow(0 0 20px rgba(255,255,255,0.2)); animation:pop 0.4s cubic-bezier(.34,1.56,.64,1) both; }
+  @keyframes pop { from { transform:scale(0.5); opacity:0; } to { transform:scale(1); opacity:1; } }
+  .q-text { font-family:'Fredoka One',cursive; font-size:clamp(20px,4vw,30px); line-height:1.25; color:var(--text); }
 
-  /* ANSWER GRID */
-  .answer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-
-  .answer-btn {
-    background: var(--surface); border: 2px solid var(--border); border-radius: 22px;
-    padding: 20px 16px; cursor: pointer;
-    display: flex; align-items: center; gap: 14px;
-    transition: transform 0.15s, border-color 0.15s, background 0.15s, box-shadow 0.15s;
-    position: relative; overflow: hidden; text-align: left;
-  }
-  .answer-btn:not([disabled]):hover {
-    transform: translateY(-4px) scale(1.02);
-    border-color: rgba(255,255,255,0.3);
-    background: rgba(255,255,255,0.10);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-  }
-  .answer-btn:not([disabled]):active { transform: scale(0.97); }
-  .answer-btn[disabled] { cursor: default; }
-
-  .answer-btn.correct {
-    border-color: var(--green) !important;
-    background: rgba(100,220,120,0.15) !important;
-    box-shadow: 0 0 30px rgba(100,220,120,0.25) !important;
-    animation: correctPop 0.35s cubic-bezier(.34,1.56,.64,1);
-  }
-  .answer-btn.wrong {
-    border-color: var(--pink) !important;
-    background: rgba(255,80,140,0.12) !important;
-    animation: shake 0.4s ease;
-  }
-  .answer-btn.dim { opacity: 0.3; }
-
-  @keyframes correctPop { from { transform: scale(0.95); } to { transform: scale(1); } }
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); }
-    40% { transform: translateX(8px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(6px); }
-  }
-
-  .answer-letter {
-    width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Fredoka One', cursive; font-size: 20px;
-    background: rgba(255,255,255,0.1); color: var(--text);
-    transition: background 0.2s;
-  }
-  .answer-btn.correct .answer-letter { background: rgba(100,220,120,0.4); }
-  .answer-btn.wrong   .answer-letter { background: rgba(255,80,140,0.35); }
-
-  .answer-label { font-family: 'Fredoka One', cursive; font-size: 19px; color: var(--text); line-height: 1.25; }
-
-  .result-toast {
-    text-align: center; margin-top: 16px; font-family: 'Fredoka One', cursive;
-    font-size: clamp(16px,3vw,22px); min-height: 36px; animation: fadeUp 0.3s ease both;
-    line-height: 1.4; padding: 0 8px;
-  }
-  .result-toast.correct { color: var(--green); }
-  .result-toast.wrong   { color: var(--pink); }
-
-  .btn-next {
-    display: block; width: 100%; margin-top: 16px; padding: 16px; border-radius: 999px;
-    border: none; cursor: pointer; font-family: 'Fredoka One', cursive; font-size: 22px;
-    background: linear-gradient(135deg, var(--cyan), var(--purple)); color: #fff;
-    box-shadow: 0 0 30px rgba(100,200,255,0.2), 0 4px 16px rgba(0,0,0,0.4);
-    transition: transform 0.15s, opacity 0.3s, box-shadow 0.15s;
-    opacity: 0; pointer-events: none;
-  }
-  .btn-next.visible { opacity: 1; pointer-events: all; animation: fadeUp 0.4s 0.2s cubic-bezier(.22,1,.36,1) both; }
-  .btn-next:hover { transform: scale(1.03); box-shadow: 0 0 50px rgba(100,200,255,0.35), 0 8px 24px rgba(0,0,0,0.5); }
-  .btn-next:active { transform: scale(0.97); }
+  /* ANSWERS */
+  .answer-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .answer-btn { background:var(--surface); border:2px solid var(--border); border-radius:22px; padding:18px 14px; cursor:pointer; display:flex; align-items:center; gap:12px; transition:transform 0.15s,border-color 0.15s,background 0.15s,box-shadow 0.15s; position:relative; overflow:hidden; text-align:left; }
+  .answer-btn:not([disabled]):hover { transform:translateY(-4px) scale(1.02); border-color:rgba(255,255,255,0.3); background:rgba(255,255,255,0.10); box-shadow:0 8px 32px rgba(0,0,0,0.3); }
+  .answer-btn:not([disabled]):active { transform:scale(0.97); }
+  .answer-btn[disabled] { cursor:default; }
+  .answer-btn.correct { border-color:var(--green)!important; background:rgba(100,220,120,0.15)!important; box-shadow:0 0 30px rgba(100,220,120,0.25)!important; animation:correctPop 0.35s cubic-bezier(.34,1.56,.64,1); }
+  .answer-btn.wrong   { border-color:var(--pink)!important; background:rgba(255,80,140,0.12)!important; animation:shake 0.4s ease; }
+  .answer-btn.dim { opacity:0.3; }
+  @keyframes correctPop { from { transform:scale(0.95); } to { transform:scale(1); } }
+  @keyframes shake { 0%,100% { transform:translateX(0); } 20% { transform:translateX(-8px); } 40% { transform:translateX(8px); } 60% { transform:translateX(-6px); } 80% { transform:translateX(6px); } }
+  .answer-letter { width:38px; height:38px; border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:'Fredoka One',cursive; font-size:19px; background:rgba(255,255,255,0.1); color:var(--text); transition:background 0.2s; }
+  .answer-btn.correct .answer-letter { background:rgba(100,220,120,0.4); }
+  .answer-btn.wrong   .answer-letter { background:rgba(255,80,140,0.35); }
+  .answer-label { font-family:'Fredoka One',cursive; font-size:17px; color:var(--text); line-height:1.25; }
+  .result-toast { text-align:center; margin-top:14px; font-family:'Fredoka One',cursive; font-size:clamp(15px,3vw,20px); min-height:34px; animation:fadeUp 0.3s ease both; line-height:1.4; padding:0 8px; }
+  .result-toast.correct { color:var(--green); }
+  .result-toast.wrong   { color:var(--pink); }
+  .btn-next { display:block; width:100%; margin-top:14px; padding:15px; border-radius:999px; border:none; cursor:pointer; font-family:'Fredoka One',cursive; font-size:21px; background:linear-gradient(135deg,var(--cyan),var(--purple)); color:#fff; box-shadow:0 0 30px rgba(100,200,255,0.2),0 4px 16px rgba(0,0,0,0.4); transition:transform 0.15s,opacity 0.3s,box-shadow 0.15s; opacity:0; pointer-events:none; }
+  .btn-next.visible { opacity:1; pointer-events:all; animation:fadeUp 0.4s 0.2s cubic-bezier(.22,1,.36,1) both; }
+  .btn-next:hover { transform:scale(1.03); }
+  .btn-next:active { transform:scale(0.97); }
 
   /* SCORE SCREEN */
-  .score-screen { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 24px; }
-  .score-planet { font-size: 120px; line-height: 1; animation: orbit 6s linear infinite; filter: drop-shadow(0 0 30px rgba(255,200,80,0.4)); }
-  @keyframes orbit { 0% { transform: rotate(0deg) translateX(10px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(10px) rotate(-360deg); } }
-  .score-title {
-    font-family: 'Fredoka One', cursive; font-size: clamp(36px, 7vw, 60px);
-    background: linear-gradient(135deg, var(--yellow), var(--pink));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-  .score-number { font-family: 'Fredoka One', cursive; font-size: clamp(56px, 12vw, 100px); color: var(--text); line-height: 1; }
-  .score-number .denom { font-size: 0.5em; color: var(--muted); }
-  .score-message { font-size: 22px; font-weight: 800; color: var(--muted); max-width: 420px; line-height: 1.4; }
-  .stars-row { display: flex; gap: 12px; justify-content: center; }
-  .star-icon { font-size: 52px; filter: grayscale(1) opacity(0.3); transition: filter 0.4s, transform 0.4s; }
-  .star-icon.lit { filter: none; animation: starPop 0.5s cubic-bezier(.34,1.56,.64,1) both; }
-  @keyframes starPop { from { transform: scale(0.2) rotate(-30deg); opacity: 0; } to { transform: scale(1) rotate(0deg); opacity: 1; } }
-  .score-breakdown { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
-  .breakdown-pill { background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; padding: 12px 20px; font-family: 'Fredoka One', cursive; font-size: 17px; color: var(--muted); }
-  .breakdown-pill strong { color: var(--text); }
-  .btn-retry {
-    padding: 18px 48px; border-radius: 999px; border: none; cursor: pointer;
-    font-family: 'Fredoka One', cursive; font-size: 24px;
-    background: linear-gradient(135deg, var(--yellow), var(--pink)); color: #1a0a00;
-    box-shadow: 0 0 40px rgba(255,200,80,0.3), 0 4px 20px rgba(0,0,0,0.4);
-    transition: transform 0.15s, box-shadow 0.15s; margin-top: 8px;
-  }
-  .btn-retry:hover { transform: scale(1.06); }
-  .btn-retry:active { transform: scale(0.97); }
+  .score-screen { text-align:center; display:flex; flex-direction:column; align-items:center; gap:22px; }
+  .score-planet { font-size:110px; line-height:1; animation:orbit 6s linear infinite; filter:drop-shadow(0 0 30px rgba(255,200,80,0.4)); }
+  @keyframes orbit { 0% { transform:rotate(0deg) translateX(10px) rotate(0deg); } 100% { transform:rotate(360deg) translateX(10px) rotate(-360deg); } }
+  .score-title { font-family:'Fredoka One',cursive; font-size:clamp(34px,7vw,58px); background:linear-gradient(135deg,var(--yellow),var(--pink)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .score-number { font-family:'Fredoka One',cursive; font-size:clamp(54px,12vw,96px); color:var(--text); line-height:1; }
+  .score-number .denom { font-size:0.5em; color:var(--muted); }
+  .score-message { font-size:20px; font-weight:800; color:var(--muted); max-width:420px; line-height:1.4; }
+  .stars-row { display:flex; gap:12px; justify-content:center; }
+  .star-icon { font-size:50px; filter:grayscale(1) opacity(0.3); transition:filter 0.4s,transform 0.4s; }
+  .star-icon.lit { filter:none; animation:starPop 0.5s cubic-bezier(.34,1.56,.64,1) both; }
+  @keyframes starPop { from { transform:scale(0.2) rotate(-30deg); opacity:0; } to { transform:scale(1) rotate(0deg); opacity:1; } }
+  .score-breakdown { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+  .breakdown-pill { background:var(--surface); border:1.5px solid var(--border); border-radius:16px; padding:10px 18px; font-family:'Fredoka One',cursive; font-size:16px; color:var(--muted); }
+  .breakdown-pill strong { color:var(--text); }
+  .btn-retry { padding:16px 44px; border-radius:999px; border:none; cursor:pointer; font-family:'Fredoka One',cursive; font-size:22px; background:linear-gradient(135deg,var(--yellow),var(--pink)); color:#1a0a00; box-shadow:0 0 40px rgba(255,200,80,0.3),0 4px 20px rgba(0,0,0,0.4); transition:transform 0.15s,box-shadow 0.15s; margin-top:6px; }
+  .btn-retry:hover { transform:scale(1.06); }
+  .btn-retry:active { transform:scale(0.97); }
 
-  .confetti-piece {
-    position: fixed; width: 10px; height: 14px; border-radius: 3px; top: -20px;
-    animation: fall var(--fall-d, 4s) linear var(--fall-delay, 0s) both;
-    pointer-events: none; z-index: 999;
-  }
-  @keyframes fall {
-    0%   { transform: translateX(0) rotate(0deg) translateY(0); opacity: 1; }
-    80%  { opacity: 1; }
-    100% { transform: translateX(var(--dx, 30px)) rotate(var(--rot, 360deg)) translateY(110vh); opacity: 0; }
+  .confetti-piece { position:fixed; width:10px; height:14px; border-radius:3px; top:-20px; animation:fall var(--fall-d,4s) linear var(--fall-delay,0s) both; pointer-events:none; z-index:999; }
+  @keyframes fall { 0% { transform:translateX(0) rotate(0deg) translateY(0); opacity:1; } 80% { opacity:1; } 100% { transform:translateX(var(--dx,30px)) rotate(var(--rot,360deg)) translateY(110vh); opacity:0; } }
+
+  @media (max-width: 480px) {
+    .topics-grid { grid-template-columns: repeat(2,1fr); }
+    .answer-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 <div id="starfield"></div>
 <div id="app"></div>
-
 <script>
 const sf = document.getElementById('starfield');
 sf.innerHTML = '<div class="milky-way"></div>';
@@ -235,705 +146,450 @@ for (let i = 0; i < 200; i++) {
   sf.appendChild(s);
 }
 </script>
-
 <script type="text/babel">
 const { useState, useEffect } = React;
 
+const TOPIC_META = {
+  dino:    { label:'Dinosaurs',    emoji:'🦕', color:'#e8c84a', bg:'rgba(232,200,74,0.14)',  border:'rgba(232,200,74,0.6)'  },
+  space:   { label:'Space',        emoji:'🚀', color:'#60d4f0', bg:'rgba(96,212,240,0.12)',  border:'rgba(96,212,240,0.6)'  },
+  sea:     { label:'Sea Animals',  emoji:'🌊', color:'#4ab8ff', bg:'rgba(74,184,255,0.13)',  border:'rgba(74,184,255,0.6)'  },
+  land:    { label:'Land Animals', emoji:'🦁', color:'#ff9f4a', bg:'rgba(255,159,74,0.13)',  border:'rgba(255,159,74,0.6)'  },
+  body:    { label:'Human Body',   emoji:'🫀', color:'#ff6eb4', bg:'rgba(255,110,180,0.12)', border:'rgba(255,110,180,0.6)' },
+  weather: { label:'Weather',      emoji:'🌦️', color:'#a078ff', bg:'rgba(160,120,255,0.13)', border:'rgba(160,120,255,0.6)' },
+};
+
 const ALL_QUESTIONS = [
-
-  // ── EASY DINOSAUR (50) ────────────────────────────────────────────────────
-  { id:'d01', difficulty:'easy', category:'dino', emoji:'🦕', question:'Which dinosaur had the LONGEST neck?',
-    options:['Brachiosaurus','T-Rex','Ankylosaurus','Velociraptor'], answer:0,
-    funFact:'Brachiosaurus had a neck as long as a school bus! 🚌' },
-  { id:'d02', difficulty:'easy', category:'dino', emoji:'🦖', question:'Which dinosaur had THREE horns on its face?',
-    options:['T-Rex','Stegosaurus','Triceratops','Diplodocus'], answer:2,
-    funFact:'Triceratops means "three-horned face" in Greek! 🎉' },
-  { id:'d03', difficulty:'easy', category:'dino', emoji:'🐉', question:'Which dinosaur had SPIKY PLATES on its back?',
-    options:['Stegosaurus','Brachiosaurus','Spinosaurus','Iguanodon'], answer:0,
-    funFact:'Stegosaurus plates might have changed color to talk to friends! 🌈' },
-  { id:'d04', difficulty:'easy', category:'dino', emoji:'💨', question:'Which dinosaur was the FASTEST runner?',
-    options:['Velociraptor','Brachiosaurus','Diplodocus','Ankylosaurus'], answer:0,
-    funFact:'Velociraptor could run as fast as a cat! 🐱💨' },
-  { id:'d05', difficulty:'easy', category:'dino', emoji:'🦷', question:'Which dinosaur had the BIGGEST teeth?',
-    options:['T-Rex','Triceratops','Brachiosaurus','Pterodactyl'], answer:0,
-    funFact:'T-Rex teeth were as long as a banana! 🍌' },
-  { id:'d06', difficulty:'easy', category:'dino', emoji:'🔨', question:'Which dinosaur had a CLUB on its tail?',
-    options:['Ankylosaurus','T-Rex','Velociraptor','Diplodocus'], answer:0,
-    funFact:'Ankylosaurus could knock a T-Rex off its feet with its tail! 💪' },
-  { id:'d07', difficulty:'easy', category:'dino', emoji:'🦅', question:'Which dinosaur could FLY through the sky?',
-    options:['T-Rex','Brachiosaurus','Pterodactyl','Ankylosaurus'], answer:2,
-    funFact:'Pterodactyls had wings made of skin — like a giant bat! 🦇' },
-  { id:'d08', difficulty:'easy', category:'dino', emoji:'🥩', question:'Which dinosaur was the BIGGEST meat-eater?',
-    options:['Diplodocus','T-Rex','Triceratops','Stegosaurus'], answer:1,
-    funFact:'T-Rex could swallow you whole in one bite! 😱' },
-  { id:'d09', difficulty:'easy', category:'dino', emoji:'🐦', question:'Which dinosaur had FEATHERS like a bird?',
-    options:['Triceratops','Ankylosaurus','Archaeopteryx','Diplodocus'], answer:2,
-    funFact:'Archaeopteryx is the link between birds and dinosaurs! 🐦' },
-  { id:'d10', difficulty:'easy', category:'dino', emoji:'🐊', question:'Which dinosaur had the LONGEST tail?',
-    options:['T-Rex','Diplodocus','Triceratops','Velociraptor'], answer:1,
-    funFact:'Diplodocus could crack its tail like a giant whip! 💥' },
-  { id:'d11', difficulty:'easy', category:'dino', emoji:'🥦', question:'Which dinosaur ONLY ate plants?',
-    options:['T-Rex','Velociraptor','Brachiosaurus','Spinosaurus'], answer:2,
-    funFact:'Brachiosaurus had to eat ALL day long to stay full! 🌿' },
-  { id:'d12', difficulty:'easy', category:'dino', emoji:'🐔', question:'Which dinosaur was as SMALL as a chicken?',
-    options:['T-Rex','Compsognathus','Brachiosaurus','Ankylosaurus'], answer:1,
-    funFact:'Compsognathus was one of the tiniest dinosaurs ever found! 🐣' },
-  { id:'d13', difficulty:'easy', category:'dino', emoji:'🌿', question:'What do we call dinosaurs that ONLY eat plants?',
-    options:['Carnivores','Omnivores','Herbivores','Predators'], answer:2,
-    funFact:'Herbivores ate millions of leaves every single day! 🍃' },
-  { id:'d14', difficulty:'easy', category:'dino', emoji:'🥩', question:'What do we call dinosaurs that eat MEAT?',
-    options:['Herbivores','Carnivores','Grazers','Flower-eaters'], answer:1,
-    funFact:'Carnivores had to be fast hunters to catch their dinner! 🏃' },
-  { id:'d15', difficulty:'easy', category:'dino', emoji:'⛵', question:'Which dinosaur had a tall SAIL on its back?',
-    options:['Brachiosaurus','Triceratops','Spinosaurus','Stegosaurus'], answer:2,
-    funFact:"Spinosaurus's sail could be as tall as a grown-up human! 🧍" },
-  { id:'d16', difficulty:'easy', category:'dino', emoji:'🦵', question:'Which dinosaur walked on just TWO legs?',
-    options:['Stegosaurus','Triceratops','T-Rex','Brachiosaurus'], answer:2,
-    funFact:'T-Rex used its huge tail to help it balance while walking! 🦎' },
-  { id:'d17', difficulty:'easy', category:'dino', emoji:'💪', question:'Which dinosaur had the TINIEST arms?',
-    options:['Brachiosaurus','Triceratops','Ankylosaurus','T-Rex'], answer:3,
-    funFact:"T-Rex arms were so short, it couldn't even touch its own mouth! 😂" },
-  { id:'d18', difficulty:'easy', category:'dino', emoji:'🛡️', question:'Which dinosaur had ARMOR like a tank?',
-    options:['Velociraptor','Pterodactyl','Ankylosaurus','Spinosaurus'], answer:2,
-    funFact:'Ankylosaurus armor was as hard as a helmet! ⛑️' },
-  { id:'d19', difficulty:'easy', category:'dino', emoji:'🌊', question:'Which dinosaur lived in the SEA?',
-    options:['T-Rex','Mosasaurus','Brachiosaurus','Triceratops'], answer:1,
-    funFact:'Mosasaurus was like a giant sea lizard — bigger than a whale! 🐋' },
-  { id:'d20', difficulty:'easy', category:'dino', emoji:'🪨', question:'What are dinosaur bones found in rock called?',
-    options:['Crystals','Fossils','Pebbles','Shells'], answer:1,
-    funFact:"Some fossils are over 200 million years old! That's super ancient! 🏺" },
-  { id:'d21', difficulty:'easy', category:'dino', emoji:'🦴', question:'Which dinosaur had a DOME-shaped head?',
-    options:['Velociraptor','Pachycephalosaurus','T-Rex','Stegosaurus'], answer:1,
-    funFact:'Pachycephalosaurus head-butted rivals to show who was strongest! 🤜' },
-  { id:'d22', difficulty:'easy', category:'dino', emoji:'⚡', question:'Which dinosaur had the SHARPEST claws?',
-    options:['Brachiosaurus','Stegosaurus','Velociraptor','Diplodocus'], answer:2,
-    funFact:'Velociraptor claws were like curved steak knives! 🔪' },
-  { id:'d23', difficulty:'easy', category:'dino', emoji:'🎺', question:'Which dinosaur made sounds through a CREST on its head?',
-    options:['T-Rex','Parasaurolophus','Stegosaurus','Diplodocus'], answer:1,
-    funFact:'Parasaurolophus could toot like a giant trombone! 🎵' },
-  { id:'d24', difficulty:'easy', category:'dino', emoji:'🔭', question:'What do scientists who study dinosaurs do?',
-    options:['Cook food','Dig up fossils','Fly rockets','Paint pictures'], answer:1,
-    funFact:'Fossil hunters travel all over the world to find dinosaur bones! 🌍' },
-  { id:'d25', difficulty:'easy', category:'dino', emoji:'🌊', question:'Which dinosaur could SWIM in the ocean?',
-    options:['T-Rex','Velociraptor','Plesiosaur','Stegosaurus'], answer:2,
-    funFact:'Plesiosaurs had flippers like turtles to swim through the sea! 🐢' },
-  { id:'d26', difficulty:'easy', category:'dino', emoji:'🏋️', question:'Which dinosaur was the HEAVIEST ever?',
-    options:['Velociraptor','Compsognathus','Argentinosaurus','Pterodactyl'], answer:2,
-    funFact:'Argentinosaurus weighed as much as 80 elephants! 🐘🐘🐘' },
-  { id:'d27', difficulty:'easy', category:'dino', emoji:'🌱', question:'What did plant-eating dinosaurs eat?',
-    options:['Meat','Plants and leaves','Fish','Rocks'], answer:1,
-    funFact:'Some dinosaurs swallowed stones to help grind up their food! 😲' },
-  { id:'d28', difficulty:'easy', category:'dino', emoji:'🌋', question:'How long ago did dinosaurs go extinct?',
-    options:['100 years ago','1,000 years ago','66 million years ago','Yesterday'], answer:2,
-    funFact:'A giant space rock crashed into Earth and wiped out the dinosaurs! ☄️' },
-  { id:'d29', difficulty:'easy', category:'dino', emoji:'🥚', question:'Did dinosaurs lay EGGS?',
-    options:['Yes!','No','Sometimes','Never'], answer:0,
-    funFact:'Some dinosaur eggs were as big as a football! 🏈' },
-  { id:'d30', difficulty:'easy', category:'dino', emoji:'🧠', question:'Which dinosaur had the SMALLEST brain?',
-    options:['T-Rex','Stegosaurus','Velociraptor','Ankylosaurus'], answer:1,
-    funFact:"Stegosaurus's brain was about the size of a walnut! 🥜" },
-  { id:'d31', difficulty:'easy', category:'dino', emoji:'🏔️', question:'Which dinosaur was the TALLEST?',
-    options:['T-Rex','Velociraptor','Sauroposeidon','Ankylosaurus'], answer:2,
-    funFact:'Sauroposeidon could look into a 6th-floor window! 🏢' },
-  { id:'d32', difficulty:'easy', category:'dino', emoji:'🎓', question:'What is the name for a scientist who studies dinosaurs?',
-    options:['Astronomer','Paleontologist','Biologist','Chef'], answer:1,
-    funFact:'Paleontologist — what a big, cool word! 🤓' },
-  { id:'d33', difficulty:'easy', category:'dino', emoji:'🚌', question:'Which dinosaur was about the size of a BUS?',
-    options:['Velociraptor','Compsognathus','Brachiosaurus','Pterodactyl'], answer:2,
-    funFact:'Brachiosaurus was one of the biggest dinosaurs that ever lived! 🚌' },
-  { id:'d34', difficulty:'easy', category:'dino', emoji:'👀', question:'Which of these is a REAL dinosaur name?',
-    options:['Dragonsaurus','Cloudsaurus','Ankylosaurus','Rainbowsaurus'], answer:2,
-    funFact:'Ankylosaurus means "fused lizard" because its bones were all joined together! 🦎' },
-  { id:'d35', difficulty:'easy', category:'dino', emoji:'🌍', question:'Which came FIRST — dinosaurs or humans?',
-    options:['Humans came first','Dinosaurs came first','They lived together','Cats came first'], answer:1,
-    funFact:'Dinosaurs ruled Earth for over 160 million years before humans arrived! ⏳' },
-  { id:'d36', difficulty:'easy', category:'dino', emoji:'🦶', question:'Which dinosaur had BIG flat feet like an elephant?',
-    options:['Velociraptor','Brachiosaurus','T-Rex','Pterodactyl'], answer:1,
-    funFact:'Brachiosaurus footprints were as big as a bathtub! 🛁' },
-  { id:'d37', difficulty:'easy', category:'dino', emoji:'🐟', question:'Which dinosaur loved to eat FISH?',
-    options:['T-Rex','Ankylosaurus','Spinosaurus','Triceratops'], answer:2,
-    funFact:'Spinosaurus had a crocodile-like mouth perfect for catching fish! 🎣' },
-  { id:'d38', difficulty:'easy', category:'dino', emoji:'🌿', question:'Which of these dinosaurs ate ONLY plants?',
-    options:['T-Rex','Velociraptor','Triceratops','Spinosaurus'], answer:2,
-    funFact:'Despite its scary horns, Triceratops was totally plant-powered! 🥦' },
-  { id:'d39', difficulty:'easy', category:'dino', emoji:'👑', question:'Which dinosaur is sometimes called the "King of the Dinosaurs"?',
-    options:['Stegosaurus','Diplodocus','T-Rex','Ankylosaurus'], answer:2,
-    funFact:'T-Rex\'s name means "Tyrant Lizard King"! 👑' },
-  { id:'d40', difficulty:'easy', category:'dino', emoji:'🌈', question:'What color were dinosaurs?',
-    options:['Always green','Always grey',"We don't know for sure!",'Always red'], answer:2,
-    funFact:'Scientists think some dinosaurs may have been colorful like parrots! 🦜' },
-  { id:'d41', difficulty:'easy', category:'dino', emoji:'📏', question:'Which dinosaur name means "SWIFT THIEF"?',
-    options:['T-Rex','Brachiosaurus','Velociraptor','Diplodocus'], answer:2,
-    funFact:'"Veloci" means swift and "raptor" means thief in Latin! ⚡' },
-  { id:'d42', difficulty:'easy', category:'dino', emoji:'🤜', question:'Which dinosaur used its DOME head to headbutt rivals?',
-    options:['Stegosaurus','Diplodocus','Pachycephalosaurus','Ankylosaurus'], answer:2,
-    funFact:'Pachycephalosaurus skull was 25cm thick — super hard! 💪' },
-  { id:'d43', difficulty:'easy', category:'dino', emoji:'🌊', question:'What was the giant swimming reptile that lived with dinosaurs?',
-    options:['Brachiosaurus','Plesiosaur','Pterodactyl','Stegosaurus'], answer:1,
-    funFact:'Plesiosaurs had four big flippers and a very long neck! 🦭' },
-  { id:'d44', difficulty:'easy', category:'dino', emoji:'🎶', question:'Which dinosaur is named after Argentina?',
-    options:['T-Rex','Brachiosaurus','Argentinosaurus','Velociraptor'], answer:2,
-    funFact:"Its bones were found in Argentina — that's how it got its name! 🇦🇷" },
-  { id:'d45', difficulty:'easy', category:'dino', emoji:'🏃', question:'Which dinosaur walked on FOUR legs?',
-    options:['T-Rex','Spinosaurus','Stegosaurus','Velociraptor'], answer:2,
-    funFact:'Stegosaurus had back legs longer than its front legs! 🦵' },
-  { id:'d46', difficulty:'easy', category:'dino', emoji:'🔪', question:'Which dinosaur had VERY LONG front claws?',
-    options:['T-Rex','Therizinosaurus','Ankylosaurus','Pterodactyl'], answer:1,
-    funFact:'Therizinosaurus claws were nearly 1 metre long — longer than your arm! 💅' },
-  { id:'d47', difficulty:'easy', category:'dino', emoji:'🌋', question:'What do scientists think caused dinosaurs to die out?',
-    options:['Too much rain','A giant meteor hit Earth','They got too cold','They ate all the food'], answer:1,
-    funFact:'A massive space rock hit Earth 66 million years ago — boom! ☄️' },
-  { id:'d48', difficulty:'easy', category:'dino', emoji:'🦈', question:'Which was LONGER — T-Rex or Spinosaurus?',
-    options:['They were the same','T-Rex was longer','Spinosaurus was longer','Velociraptor was longest'], answer:2,
-    funFact:'Spinosaurus could be up to 18 metres long — even bigger than T-Rex! 📏' },
-  { id:'d49', difficulty:'easy', category:'dino', emoji:'🐾', question:'What type of skin did most dinosaurs have?',
-    options:['Smooth like a fish','Fluffy like a dog','Scaly like a lizard','Slimy like a frog'], answer:2,
-    funFact:'We know this because some fossils show skin impressions! 🪨' },
-  { id:'d50', difficulty:'easy', category:'dino', emoji:'🌙', question:'Did any dinosaurs hunt at NIGHT?',
-    options:['Never — all slept at night','Yes, some had big eyes for the dark','Only T-Rex hunted at night','No dinosaurs had eyes'], answer:1,
-    funFact:'Some small dinosaurs had huge eyes perfect for seeing in the dark! 🌙' },
-
-  // ── EASY SPACE (50) ───────────────────────────────────────────────────────
-  { id:'s01', difficulty:'easy', category:'space', emoji:'🪐', question:'Which planet is the BIGGEST in our solar system?',
-    options:['Mars','Jupiter','Saturn','Earth'], answer:1,
-    funFact:'Jupiter is so big, 1,300 Earths could fit inside it! 🌍' },
-  { id:'s02', difficulty:'easy', category:'space', emoji:'☀️', question:'Which planet is CLOSEST to the Sun?',
-    options:['Earth','Venus','Mars','Mercury'], answer:3,
-    funFact:'One year on Mercury is only 88 days long! ⚡' },
-  { id:'s03', difficulty:'easy', category:'space', emoji:'💍', question:'Which planet has beautiful RINGS around it?',
-    options:['Mars','Earth','Saturn','Jupiter'], answer:2,
-    funFact:"Saturn's rings are made of billions of chunks of ice and rock! ❄️" },
-  { id:'s04', difficulty:'easy', category:'space', emoji:'🔢', question:'How many planets are in our Solar System?',
-    options:['Four','Six','Eight','Ten'], answer:2,
-    funFact:'Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune! 🪐' },
-  { id:'s05', difficulty:'easy', category:'space', emoji:'☀️', question:'What is the big bright ball in the daytime sky?',
-    options:['The Moon','A star far away','The Sun','A planet'], answer:2,
-    funFact:'The Sun is actually a huge ball of burning gas! 🔥' },
-  { id:'s06', difficulty:'easy', category:'space', emoji:'🌙', question:'What is the big glowing thing in the night sky?',
-    options:['The Sun','A comet','The Moon','A meteor'], answer:2,
-    funFact:'The Moon takes 27 days to go all the way around the Earth! 🌍' },
-  { id:'s07', difficulty:'easy', category:'space', emoji:'🌍', question:'Which planet do WE live on?',
-    options:['Mars','Earth','Venus','Jupiter'], answer:1,
-    funFact:'Earth is the only planet we know that has life on it! 🌿' },
-  { id:'s08', difficulty:'easy', category:'space', emoji:'🔴', question:'Which planet is called the RED planet?',
-    options:['Venus','Jupiter','Mars','Saturn'], answer:2,
-    funFact:"Mars is red because it's covered in rusty red dust! 🏜️" },
-  { id:'s09', difficulty:'easy', category:'space', emoji:'🌌', question:'What is the name of our galaxy?',
-    options:['Andromeda','The Milky Way','The Big Dipper','The Star Road'], answer:1,
-    funFact:'Our Milky Way has over 200 billion stars in it! ✨' },
-  { id:'s10', difficulty:'easy', category:'space', emoji:'🔬', question:'Which planet is the SMALLEST in our solar system?',
-    options:['Earth','Venus','Mars','Mercury'], answer:3,
-    funFact:'Mercury is smaller than some moons in our solar system! 🌑' },
-  { id:'s11', difficulty:'easy', category:'space', emoji:'👨‍🚀', question:'What do astronauts wear in space?',
-    options:['A swimsuit','A spacesuit','A raincoat','Pyjamas'], answer:1,
-    funFact:'A spacesuit weighs as much as 130 kg — heavier than a big adult! ⚖️' },
-  { id:'s12', difficulty:'easy', category:'space', emoji:'📅', question:'How long does Earth take to go around the Sun?',
-    options:['1 day','1 month','1 year','10 years'], answer:2,
-    funFact:"That's why we have one birthday every year! 🎂" },
-  { id:'s13', difficulty:'easy', category:'space', emoji:'🌕', question:'How many moons does Earth have?',
-    options:['Zero','One','Two','Three'], answer:1,
-    funFact:'Our Moon is the fifth biggest moon in the whole solar system! 🌑' },
-  { id:'s14', difficulty:'easy', category:'space', emoji:'⭐', question:'What is a SHOOTING STAR really?',
-    options:['A falling star','A rock burning up in the sky','A lost planet','A broken comet'], answer:1,
-    funFact:'Shooting stars burn up so fast they glow bright for just a second! ✨' },
-  { id:'s15', difficulty:'easy', category:'space', emoji:'🔭', question:'What do we use to look at faraway stars?',
-    options:['A microscope','A telescope','Magnifying glass','Special goggles'], answer:1,
-    funFact:'The Hubble Space Telescope can see galaxies billions of light-years away! 🌌' },
-  { id:'s16', difficulty:'easy', category:'space', emoji:'🏁', question:'Which planet is FARTHEST from the Sun?',
-    options:['Saturn','Uranus','Jupiter','Neptune'], answer:3,
-    funFact:'It takes Neptune 165 years to go around the Sun just once! 🐌' },
-  { id:'s17', difficulty:'easy', category:'space', emoji:'🔥', question:'What is the Sun made of?',
-    options:['Rock and dirt','Hot gas','Water and ice','Metal'], answer:1,
-    funFact:"The Sun is SO hot, it's 15 million degrees in the middle! 🌡️" },
-  { id:'s18', difficulty:'easy', category:'space', emoji:'🌀', question:'Which planet spins completely on its SIDE?',
-    options:['Mars','Saturn','Uranus','Neptune'], answer:2,
-    funFact:'Uranus rolls around the Sun like a bowling ball! 🎳' },
-  { id:'s19', difficulty:'easy', category:'space', emoji:'⭐', question:'What do we call a group of stars that make a picture?',
-    options:['A constellation','A galaxy','A nebula','A cluster'], answer:0,
-    funFact:'The Big Dipper and Orion are famous constellations! ✨' },
-  { id:'s20', difficulty:'easy', category:'space', emoji:'🚀', question:'Which spacecraft carried humans to the Moon first?',
-    options:['Space Shuttle','Apollo','Voyager','Sputnik'], answer:1,
-    funFact:'Apollo 11 landed on the Moon on July 20, 1969! 🌕' },
-  { id:'s21', difficulty:'easy', category:'space', emoji:'🌙', question:'Which planet has the most MOONS?',
-    options:['Jupiter','Saturn','Earth','Venus'], answer:1,
-    funFact:"Saturn has over 140 moons — that's a lot of moons! 🌑🌑🌑" },
-  { id:'s22', difficulty:'easy', category:'space', emoji:'📏', question:'Which is BIGGER — the Sun or the Earth?',
-    options:['They are the same size','Earth is bigger','The Sun is much bigger','The Moon is biggest'], answer:2,
-    funFact:'Over 1 million Earths could fit inside the Sun! 😲' },
-  { id:'s23', difficulty:'easy', category:'space', emoji:'🔴', question:'What color is Mars?',
-    options:['Blue','Green','Red','Yellow'], answer:2,
-    funFact:'Mars gets its red color from iron oxide — basically, rust! 🔧' },
-  { id:'s24', difficulty:'easy', category:'space', emoji:'🌀', question:'What is the GREAT RED SPOT on Jupiter?',
-    options:['A volcano','A storm bigger than Earth','A dried-up sea','A mountain'], answer:1,
-    funFact:'The Great Red Spot storm has been going for over 300 years! 🌪️' },
-  { id:'s25', difficulty:'easy', category:'space', emoji:'🌙', question:'What is the Moon made of?',
-    options:['Cheese','Rock and dust','Water','Ice cream'], answer:1,
-    funFact:'The Moon has mountains, valleys and millions of craters! 🏔️' },
-  { id:'s26', difficulty:'easy', category:'space', emoji:'🚀', question:'How long does it take to travel from Earth to the Moon?',
-    options:['1 hour','About 3 days','1 week','1 year'], answer:1,
-    funFact:'The Apollo astronauts traveled to the Moon in about 3 days! 🌕' },
-  { id:'s27', difficulty:'easy', category:'space', emoji:'🕳️', question:'What are the bowl-shaped holes on the Moon called?',
-    options:['Valleys','Mountains','Craters','Caves'], answer:2,
-    funFact:"Craters are made when asteroids crash into the Moon's surface! 💥" },
-  { id:'s28', difficulty:'easy', category:'space', emoji:'🪐', question:'Which planet has a moon called Titan?',
-    options:['Jupiter','Mars','Saturn','Neptune'], answer:2,
-    funFact:"Titan is Saturn's biggest moon and has its own thick atmosphere! 🌫️" },
-  { id:'s29', difficulty:'easy', category:'space', emoji:'🪨', question:'What is an ASTEROID?',
-    options:['A tiny star','A rock floating in space','A baby planet','A space cloud'], answer:1,
-    funFact:'There is a whole asteroid belt between Mars and Jupiter! 🌌' },
-  { id:'s30', difficulty:'easy', category:'space', emoji:'🌡️', question:'Which is the HOTTEST planet?',
-    options:['Mercury','Mars','Venus','Jupiter'], answer:2,
-    funFact:"Venus is hotter than Mercury even though it's farther from the Sun! 🔥" },
-  { id:'s31', difficulty:'easy', category:'space', emoji:'☄️', question:'What is a COMET made of?',
-    options:['A broken planet','A ball of ice and rock','A tiny star','A lost asteroid'], answer:1,
-    funFact:'Comets grow a glowing tail when they fly close to the Sun! ✨' },
-  { id:'s32', difficulty:'easy', category:'space', emoji:'🔇', question:'Can you hear sounds in space?',
-    options:['Yes, very loudly','Yes, quietly','No — space is totally silent','Only explosions'], answer:2,
-    funFact:'Sound needs air to travel, and space has no air! 🔕' },
-  { id:'s33', difficulty:'easy', category:'space', emoji:'💥', question:'What do we call the explosion of a dying star?',
-    options:['A supernova','A black hole','A nebula','A comet'], answer:0,
-    funFact:'A supernova can be brighter than a whole galaxy for a few weeks! 🌟' },
-  { id:'s34', difficulty:'easy', category:'space', emoji:'💙', question:'Which planet is BLUE because of its gas?',
-    options:['Saturn','Mars','Neptune','Venus'], answer:2,
-    funFact:"Neptune's beautiful blue color comes from methane gas! 💙" },
-  { id:'s35', difficulty:'easy', category:'space', emoji:'🕳️', question:'What is a BLACK HOLE?',
-    options:['A hole in the ground','A place where gravity is super strong','A dark planet','A type of dead star'], answer:1,
-    funFact:"A black hole's gravity is so strong, even light can't escape! 💫" },
-  { id:'s36', difficulty:'easy', category:'space', emoji:'💑', question:"Which planet is sometimes called Earth's TWIN?",
-    options:['Mars','Jupiter','Venus','Saturn'], answer:2,
-    funFact:"Venus is almost the same size as Earth — they're like sisters! 👯" },
-  { id:'s37', difficulty:'easy', category:'space', emoji:'🌑', question:'What do we call it when the Moon blocks the Sun?',
-    options:['A lunar eclipse','A solar eclipse','A moonset','A shadow party'], answer:1,
-    funFact:'During a solar eclipse, day goes dark as night for a few minutes! 🌑' },
-  { id:'s38', difficulty:'easy', category:'space', emoji:'🐕', question:'What was the first animal sent to space?',
-    options:['A monkey','A dog','A cat','A rabbit'], answer:1,
-    funFact:'A dog named Laika was the first animal to orbit Earth in 1957! 🐾' },
-  { id:'s39', difficulty:'easy', category:'space', emoji:'🏠', question:'What is the International Space Station?',
-    options:['A rocket ship','A floating home for astronauts','A big planet','A satellite dish'], answer:1,
-    funFact:'The ISS travels at 28,000 km/h — fast enough to circle Earth in 90 minutes! ⚡' },
-  { id:'s40', difficulty:'easy', category:'space', emoji:'🌙', question:'Who was the FIRST person to walk on the Moon?',
-    options:['Buzz Aldrin','Yuri Gagarin','Neil Armstrong','Sally Ride'], answer:2,
-    funFact:'Neil Armstrong said "One small step for man, one giant leap for mankind!" 🚀' },
-  { id:'s41', difficulty:'easy', category:'space', emoji:'🚀', question:'What do we call someone who travels to space?',
-    options:['A pilot','An astronaut','A scientist','A sailor'], answer:1,
-    funFact:'Astronauts train for years before flying to space! 👨‍🚀' },
-  { id:'s42', difficulty:'easy', category:'space', emoji:'🌅', question:'Which direction does the Sun rise?',
-    options:['North','South','East','West'], answer:2,
-    funFact:'The Sun rises in the east and sets in the west every single day! 🌄' },
-  { id:'s43', difficulty:'easy', category:'space', emoji:'⏳', question:'How long does light from the Sun take to reach Earth?',
-    options:['1 second','8 minutes','1 hour','1 day'], answer:1,
-    funFact:'Even light — the fastest thing ever — takes 8 whole minutes from the Sun! 💡' },
-  { id:'s44', difficulty:'easy', category:'space', emoji:'🍽️', question:'What do astronauts eat in space?',
-    options:['Normal food from a plate','Special food sealed in pouches',"They don't eat",'Only soup'], answer:1,
-    funFact:'Astronauts have to be careful — crumbs can float into equipment! 😅' },
-  { id:'s45', difficulty:'easy', category:'space', emoji:'🌌', question:'What is the closest star to Earth besides our Sun?',
-    options:['Sirius','Proxima Centauri','Betelgeuse','Vega'], answer:1,
-    funFact:'Proxima Centauri is still 4.2 light-years away — unimaginably far! 🔭' },
-  { id:'s46', difficulty:'easy', category:'space', emoji:'⬆️', question:'What is GRAVITY?',
-    options:['A magic spell','A force that pulls things down','A type of weather','A space vehicle'], answer:1,
-    funFact:"Gravity is why you don't float off into space when you jump! 🦘" },
-  { id:'s47', difficulty:'easy', category:'space', emoji:'🌏', question:'How many Earths could fit inside Jupiter?',
-    options:['About 10','About 100','About 1,300','About 10,000'], answer:2,
-    funFact:'Jupiter is absolutely enormous — the biggest planet in our solar system! 🪐' },
-  { id:'s48', difficulty:'easy', category:'space', emoji:'🔵', question:'What color is the sky on Mars?',
-    options:['Blue like Earth','Black','Pinkish-red','Green'], answer:2,
-    funFact:"Mars's sky is pink because of all the red dust floating in the air! 🌫️" },
-  { id:'s49', difficulty:'easy', category:'space', emoji:'🌑', question:'What do we call it when the Earth blocks sunlight from reaching the Moon?',
-    options:['A solar eclipse','A lunar eclipse','A shadow storm','A moonquake'], answer:1,
-    funFact:'During a lunar eclipse the Moon turns a beautiful blood-red color! 🌕' },
-  { id:'s50', difficulty:'easy', category:'space', emoji:'🌌', question:'What shape is the Milky Way galaxy?',
-    options:['A ball','A cube','A spiral','A triangle'], answer:2,
-    funFact:'Our Milky Way is a barred spiral galaxy with beautiful curving arms! 🌀' },
-
-  // ── MEDIUM DINOSAUR (20) ──────────────────────────────────────────────────
-  { id:'md01', difficulty:'medium', category:'dino', emoji:'📖', question:'What does the word "dinosaur" actually mean?',
-    options:['Big animal','Terrible lizard','Ancient giant','Earth beast'], answer:1,
-    funFact:'"Deinos" means terrible and "sauros" means lizard in Greek! 🦎' },
-  { id:'md02', difficulty:'medium', category:'dino', emoji:'🔢', question:'How many teeth did T-Rex have?',
-    options:['About 10','About 30','About 60','About 200'], answer:2,
-    funFact:'T-Rex had about 60 serrated teeth — perfect for chomping through bone! 🦷' },
-  { id:'md03', difficulty:'medium', category:'dino', emoji:'🐦', question:'Which living animal is the CLOSEST relative of dinosaurs?',
-    options:['Lizards','Crocodiles','Birds','Snakes'], answer:2,
-    funFact:'Scientists proved that birds are actually living dinosaurs! 🦅' },
-  { id:'md04', difficulty:'medium', category:'dino', emoji:'✌️', question:'How many fingers did T-Rex have on each tiny arm?',
-    options:['1','2','3','5'], answer:1,
-    funFact:"T-Rex had 2 fingers — useless for grabbing but great for... not much! 😂" },
-  { id:'md05', difficulty:'medium', category:'dino', emoji:'👍', question:'Which dinosaur had THUMB SPIKES it used for defense?',
-    options:['Brachiosaurus','Diplodocus','Iguanodon','Stegosaurus'], answer:2,
-    funFact:'Iguanodon had a sharp thumb spike on each hand like a built-in dagger! 🗡️' },
-  { id:'md06', difficulty:'medium', category:'dino', emoji:'🍽️', question:'What do we call a dinosaur that eats BOTH plants AND meat?',
-    options:['Herbivore','Carnivore','Omnivore','Pescatarian'], answer:2,
-    funFact:'Omnivores had the most flexible diet — they could eat almost anything! 🌿🥩' },
-  { id:'md07', difficulty:'medium', category:'dino', emoji:'🪨', question:'What did some dinosaurs swallow to help GRIND UP their food?',
-    options:['Sand','Small stones','Wood chips','Leaves'], answer:1,
-    funFact:'These stomach stones are called gastroliths — built-in blenders! 🌀' },
-  { id:'md08', difficulty:'medium', category:'dino', emoji:'⏰', question:'Which two dinosaurs lived at the SAME time?',
-    options:['T-Rex and Stegosaurus','T-Rex and Triceratops','T-Rex and Brachiosaurus','Velociraptor and Diplodocus'], answer:1,
-    funFact:'T-Rex and Triceratops were both Cretaceous — they were real rivals! ⚔️' },
-  { id:'md09', difficulty:'medium', category:'dino', emoji:'📏', question:'Which dinosaur had the LONGEST claws of any dinosaur?',
-    options:['T-Rex','Velociraptor','Therizinosaurus','Ankylosaurus'], answer:2,
-    funFact:'Therizinosaurus claws were nearly 1 metre long — that is longer than your whole leg! 😲' },
-  { id:'md10', difficulty:'medium', category:'dino', emoji:'🏔️', question:'Which dinosaur period came FIRST?',
-    options:['Jurassic','Cretaceous','Triassic','Permian'], answer:2,
-    funFact:'The three dinosaur periods in order were: Triassic, Jurassic, Cretaceous! ⏳' },
-  { id:'md11', difficulty:'medium', category:'dino', emoji:'🌏', question:'On which continent have dinosaur fossils been found?',
-    options:['Only in Africa','Only in America and Asia','Every single continent including Antarctica','Only Europe and Asia'], answer:2,
-    funFact:'Scientists have found dinosaur fossils on every continent — even Antarctica! 🧊' },
-  { id:'md12', difficulty:'medium', category:'dino', emoji:'⏳', question:'How long did the age of dinosaurs last?',
-    options:['1 million years','10 million years','100 million years','165 million years'], answer:3,
-    funFact:'Dinosaurs ruled Earth for 165 million years — humans have only been here for 300,000! 😮' },
-  { id:'md13', difficulty:'medium', category:'dino', emoji:'🦎', question:'What does "Velociraptor" mean?',
-    options:['Fast lizard','Swift thief','Clever hunter','Quick bird'], answer:1,
-    funFact:'"Veloci" means swift and "raptor" means thief — the swift thief! ⚡' },
-  { id:'md14', difficulty:'medium', category:'dino', emoji:'🎵', question:'Which dinosaur had a HOLLOW crest that worked like a musical instrument?',
-    options:['T-Rex','Stegosaurus','Parasaurolophus','Diplodocus'], answer:2,
-    funFact:'Parasaurolophus could make a deep booming sound by blowing air through its hollow crest! 🎺' },
-  { id:'md15', difficulty:'medium', category:'dino', emoji:'🇬🇧', question:'In which country were the FIRST dinosaur fossils scientifically described?',
-    options:['America','China','England','Australia'], answer:2,
-    funFact:'Megalosaurus was the first dinosaur ever described by scientists, in England in 1824! 🎩' },
-  { id:'md16', difficulty:'medium', category:'dino', emoji:'🦜', question:'Which period did STEGOSAURUS live in?',
-    options:['Triassic','Jurassic','Cretaceous','Permian'], answer:1,
-    funFact:'Stegosaurus lived in the Jurassic — it never met T-Rex, which came much later! 🕰️' },
-  { id:'md17', difficulty:'medium', category:'dino', emoji:'🦆', question:'Which dinosaur is nicknamed the "duck-billed dinosaur"?',
-    options:['Triceratops','Hadrosaur','Ankylosaurus','Spinosaurus'], answer:1,
-    funFact:'Hadrosaurs had wide flat mouths shaped just like a duck bill! 🦆' },
-  { id:'md18', difficulty:'medium', category:'dino', emoji:'🔬', question:'Which period came AFTER the Jurassic?',
-    options:['Triassic','Permian','Cretaceous','Cambrian'], answer:2,
-    funFact:'Triassic → Jurassic → Cretaceous — then the big asteroid ended it all! ☄️' },
-  { id:'md19', difficulty:'medium', category:'dino', emoji:'🦖', question:'Which is TRUE about Pterodactyls?',
-    options:["They're a type of dinosaur","They're flying reptiles, not dinosaurs",'They are related to birds','They lived only in water'], answer:1,
-    funFact:'Pterodactyls were pterosaurs — flying reptiles that lived alongside dinosaurs but are not classified as dinosaurs! 🦇' },
-  { id:'md20', difficulty:'medium', category:'dino', emoji:'🧠', question:'Which dinosaur is thought to have been one of the SMARTEST?',
-    options:['T-Rex','Triceratops','Velociraptor','Diplodocus'], answer:2,
-    funFact:'Velociraptor had a large brain relative to its body size — the smartest of its time! 🤓' },
-
-  // ── MEDIUM SPACE (20) ─────────────────────────────────────────────────────
-  { id:'ms01', difficulty:'medium', category:'space', emoji:'🔴', question:'How many moons does MARS have?',
-    options:['0','1','2','4'], answer:2,
-    funFact:"Mars has two tiny moons called Phobos and Deimos — 'Fear' and 'Dread' in Greek! 😱" },
-  { id:'ms02', difficulty:'medium', category:'space', emoji:'🛸', question:'What was the name of the FIRST ever satellite launched into space?',
-    options:['Apollo','Sputnik','Voyager','Explorer'], answer:1,
-    funFact:'Sputnik was launched by the Soviet Union in 1957 and beeped as it orbited Earth! 📡' },
-  { id:'ms03', difficulty:'medium', category:'space', emoji:'⚡', question:'Which planet spins the FASTEST — completing a day in just 10 hours?',
-    options:['Earth','Saturn','Jupiter','Neptune'], answer:2,
-    funFact:"Jupiter spins so fast its clouds stretch into colourful bands! 🌈" },
-  { id:'ms04', difficulty:'medium', category:'space', emoji:'🌍', question:'What do we call ONE full trip a planet makes around the Sun?',
-    options:['A rotation','An orbit','A moon cycle','A light year'], answer:1,
-    funFact:'Earth completes one orbit every 365 days — that is one year! 📅' },
-  { id:'ms05', difficulty:'medium', category:'space', emoji:'⏳', question:'Which planet has a DAY that is longer than its YEAR?',
-    options:['Mars','Jupiter','Venus','Saturn'], answer:2,
-    funFact:"Venus spins so slowly its day (243 Earth days) is longer than its year (225 Earth days)! 🐢" },
-  { id:'ms06', difficulty:'medium', category:'space', emoji:'🌑', question:'What was PLUTO reclassified as in 2006?',
-    options:['A moon','A dwarf planet','An asteroid','A comet'], answer:1,
-    funFact:"Poor Pluto was demoted from planet to dwarf planet in 2006 — it wasn't big enough! 😢" },
-  { id:'ms07', difficulty:'medium', category:'space', emoji:'🌌', question:'What is the name of the galaxy CLOSEST to the Milky Way?',
-    options:['The Big Dipper','Andromeda','Triangulum','Centaurus A'], answer:1,
-    funFact:"Andromeda is heading towards us and will crash into the Milky Way in 4 billion years! 💥" },
-  { id:'ms08', difficulty:'medium', category:'space', emoji:'☁️', question:'What is a NEBULA?',
-    options:['A shooting star','A cloud of gas and dust in space','A type of galaxy','A dead black hole'], answer:1,
-    funFact:'New stars are born inside nebulae — they are giant star nurseries! ⭐' },
-  { id:'ms09', difficulty:'medium', category:'space', emoji:'🌡️', question:'How hot is the SURFACE of the Sun?',
-    options:['100 degrees','1,000 degrees','5,500 degrees','1 million degrees'], answer:2,
-    funFact:"The Sun's surface is 5,500°C — hot enough to vaporise any metal instantly! 🫠" },
-  { id:'ms10', difficulty:'medium', category:'space', emoji:'🌙', question:'What are the names of the TWO moons of Mars?',
-    options:['Luna and Titan','Phobos and Deimos','Io and Europa','Ganymede and Callisto'], answer:1,
-    funFact:"Phobos means 'Fear' and Deimos means 'Dread' in Greek — scary names! 😨" },
-  { id:'ms11', difficulty:'medium', category:'space', emoji:'🔭', question:'What is the name of the space telescope that orbits Earth and takes deep space photos?',
-    options:['Apollo','Hubble','Voyager','Challenger'], answer:1,
-    funFact:'The Hubble Space Telescope has taken photos of galaxies billions of light-years away! 📸' },
-  { id:'ms12', difficulty:'medium', category:'space', emoji:'⏳', question:'How long does it take MARS to travel around the Sun?',
-    options:['6 months','1 year','About 2 years','10 years'], answer:2,
-    funFact:'One Mars year = 687 Earth days — almost two of our years! 📅' },
-  { id:'ms13', difficulty:'medium', category:'space', emoji:'🌍', question:'What are the four ROCKY planets in our solar system?',
-    options:['Mars, Jupiter, Saturn, Uranus','Mercury, Venus, Earth, Mars','Earth, Mars, Jupiter, Neptune','Venus, Earth, Saturn, Neptune'], answer:1,
-    funFact:'The rocky planets are the four closest to the Sun — they all have solid surfaces! 🪨' },
-  { id:'ms14', difficulty:'medium', category:'space', emoji:'💡', question:'What is a LIGHT-YEAR?',
-    options:['How long it takes to fly to space','The distance light travels in one year','A type of bright star','How bright a star is'], answer:1,
-    funFact:'Light travels at 300,000 km per second — in one year it travels 9.46 trillion km! 🤯' },
-  { id:'ms15', difficulty:'medium', category:'space', emoji:'🧊', question:'Which moon of Jupiter might have a LIQUID OCEAN under its icy surface?',
-    options:['Ganymede','Io','Europa','Callisto'], answer:2,
-    funFact:"Europa's hidden ocean could be twice the size of all Earth's oceans! 🌊" },
-  { id:'ms16', difficulty:'medium', category:'space', emoji:'🌀', question:'Which planet has the FASTEST winds in the solar system — up to 2,100 km/h?',
-    options:['Jupiter','Saturn','Uranus','Neptune'], answer:3,
-    funFact:"Neptune's winds are the fastest in the solar system — 5 times faster than Earth's strongest hurricane! 🌪️" },
-  { id:'ms17', difficulty:'medium', category:'space', emoji:'🤖', question:'What is the name of NASA\'s Mars rover that landed in 2021?',
-    options:['Curiosity','Opportunity','Perseverance','Explorer'], answer:2,
-    funFact:'Perseverance is searching for signs of ancient microbial life on Mars! 🔬' },
-  { id:'ms18', difficulty:'medium', category:'space', emoji:'🌍', question:'What causes SEASONS on Earth?',
-    options:['Earth moving closer to the Sun','Earth being tilted on its axis','The Moon blocking sunlight','The Sun getting hotter and cooler'], answer:1,
-    funFact:"Earth is tilted at 23.5 degrees — that's what gives us summer and winter! ☀️❄️" },
-  { id:'ms19', difficulty:'medium', category:'space', emoji:'🔁', question:'What is it called when Earth spins ONCE on its axis?',
-    options:['An orbit','A year','A day','A revolution'], answer:2,
-    funFact:'Earth spins at about 1,670 km/h at the equator — we just can\'t feel it! 🌀' },
-  { id:'ms20', difficulty:'medium', category:'space', emoji:'🔵', question:'Which planet has the SECOND most moons?',
-    options:['Neptune','Uranus','Jupiter','Saturn'], answer:2,
-    funFact:"Jupiter has 95 known moons — including Ganymede, the biggest moon in the solar system! 🌑" },
-
-  // ── HARD DINOSAUR (10) ────────────────────────────────────────────────────
-  { id:'hd01', difficulty:'hard', category:'dino', emoji:'🏆', question:'What is the name of the most complete T-Rex skeleton ever found?',
-    options:['Rex','Max','Sue','Bob'], answer:2,
-    funFact:'"Sue" was found in South Dakota in 1990 and is 90% complete — she is now in a Chicago museum! 🦴' },
-  { id:'hd02', difficulty:'hard', category:'dino', emoji:'😁', question:'Which dinosaur had over 500 TEETH arranged in rows like a conveyor belt?',
-    options:['T-Rex','Diplodocus','Nigersaurus','Stegosaurus'], answer:2,
-    funFact:'Nigersaurus replaced its teeth every 14 days — it went through thousands in its lifetime! 😁' },
-  { id:'hd03', difficulty:'hard', category:'dino', emoji:'🐣', question:'Which famous fossil is called the "missing link" between dinosaurs and birds?',
-    options:['Triceratops','Velociraptor','Archaeopteryx','Compsognathus'], answer:2,
-    funFact:'Archaeopteryx had feathers like a bird but teeth and claws like a dinosaur — the best of both! 🦅' },
-  { id:'hd04', difficulty:'hard', category:'dino', emoji:'🌍', question:'Roughly how many dinosaur SPECIES have scientists named so far?',
-    options:['About 100','About 500','About 1,000','About 10,000'], answer:2,
-    funFact:'About 1,000 species have been named — and scientists find new ones every year! 🔍' },
-  { id:'hd05', difficulty:'hard', category:'dino', emoji:'🦶', question:'What is the correct ORDER of the three dinosaur time periods?',
-    options:['Jurassic, Triassic, Cretaceous','Cretaceous, Jurassic, Triassic','Triassic, Jurassic, Cretaceous','Jurassic, Cretaceous, Triassic'], answer:2,
-    funFact:'Triassic (252–201 million years ago), Jurassic (201–145 mya), Cretaceous (145–66 mya)! 📖' },
-  { id:'hd06', difficulty:'hard', category:'dino', emoji:'🌋', question:'What is the name of the mass extinction event that wiped out the dinosaurs?',
-    options:['The Great Dying','The K-Pg extinction','The Triassic wipeout','The Jurassic collapse'], answer:1,
-    funFact:'The K-Pg extinction happened 66 million years ago when an asteroid hit Mexico — creating a global winter! ☄️' },
-  { id:'hd07', difficulty:'hard', category:'dino', emoji:'🦷', question:'Stegosaurus and T-Rex never met. How many million years APART did they live?',
-    options:['1 million years','10 million years','50 million years','80 million years'], answer:3,
-    funFact:'Stegosaurus (150 mya) and T-Rex (66 mya) are 80 million years apart — closer in time to us than to each other! 🤯' },
-  { id:'hd08', difficulty:'hard', category:'dino', emoji:'🦕', question:'Which dinosaur family does Velociraptor actually belong to?',
-    options:['Tyrannosaurids','Dromaeosaurids','Sauropods','Hadrosaurs'], answer:1,
-    funFact:'Velociraptors are dromaeosaurids — feathered hunters more closely related to birds than to T-Rex! 🐦' },
-  { id:'hd09', difficulty:'hard', category:'dino', emoji:'🔬', question:'What is the hard material that replaces bone over millions of years to create fossils?',
-    options:['Limestone','Gold','Minerals like silica','Coal'], answer:2,
-    funFact:'Minerals slowly replace bone atom by atom over thousands of years — turning it to rock! 🪨' },
-  { id:'hd10', difficulty:'hard', category:'dino', emoji:'🧬', question:'Birds evolved from which GROUP of dinosaurs?',
-    options:['Sauropods','Ceratopsians','Theropods','Ornithischians'], answer:2,
-    funFact:'Theropods (two-legged meat-eaters like T-Rex and Velociraptor) are the ancestors of all modern birds! 🐦' },
-
-  // ── HARD SPACE (10) ───────────────────────────────────────────────────────
-  { id:'hs01', difficulty:'hard', category:'space', emoji:'🛸', question:'Which spacecraft has travelled the FARTHEST from Earth — now over 23 billion km away?',
-    options:['Apollo 13','Voyager 1','Hubble Telescope','Pioneer 10'], answer:1,
-    funFact:'Voyager 1 was launched in 1977 and has now left our solar system entirely! 🌌' },
-  { id:'hs02', difficulty:'hard', category:'space', emoji:'🎂', question:'How old is our Sun?',
-    options:['1 million years','100 million years','4.6 billion years','13 billion years'], answer:2,
-    funFact:"Our Sun formed 4.6 billion years ago from a collapsing cloud of gas and dust — and it's only halfway through its life! ☀️" },
-  { id:'hs03', difficulty:'hard', category:'space', emoji:'💥', question:'What event is thought to have created the entire universe about 13.8 billion years ago?',
-    options:['The Great Explosion','The Big Bang','The Cosmic Flash','The Star Burst'], answer:1,
-    funFact:'In the Big Bang, the entire universe exploded from something smaller than a grain of sand! 🤯' },
-  { id:'hs04', difficulty:'hard', category:'space', emoji:'🌌', question:'Roughly how many STARS are in the Milky Way galaxy?',
-    options:['About 1 million','About 100 million','About 200 billion','About 1 trillion'], answer:2,
-    funFact:'200 billion stars — and the Milky Way is just ONE of an estimated 2 trillion galaxies! 🌟' },
-  { id:'hs05', difficulty:'hard', category:'space', emoji:'🕳️', question:'What is the name of the BOUNDARY around a black hole where nothing can escape — not even light?',
-    options:['The gravity wall','The dark barrier','The event horizon','The point of no return'], answer:2,
-    funFact:'Once you cross the event horizon of a black hole, there is absolutely no way back — ever! 😰' },
-  { id:'hs06', difficulty:'hard', category:'space', emoji:'⭐', question:'What is a NEUTRON STAR?',
-    options:['A young star just being born','The incredibly dense collapsed core of a dead star','A star with no planets','A very dim far away star'], answer:1,
-    funFact:'A neutron star packs more mass than our Sun into a ball just 20km wide — a teaspoon would weigh a billion tonnes! 😲' },
-  { id:'hs07', difficulty:'hard', category:'space', emoji:'🔄', question:'The ISS orbits Earth every 90 minutes. How many orbits does it complete in ONE day?',
-    options:['4 times','8 times','16 times','24 times'], answer:2,
-    funFact:'The ISS crew sees 16 sunrises and 16 sunsets every single day! 🌅' },
-  { id:'hs08', difficulty:'hard', category:'space', emoji:'🌡️', question:'What is the surface temperature on VENUS — the hottest planet?',
-    options:['100°C','250°C','465°C','800°C'], answer:2,
-    funFact:'At 465°C, Venus is hot enough to melt lead — even though Mercury is closer to the Sun! 🔥' },
-  { id:'hs09', difficulty:'hard', category:'space', emoji:'📡', question:'What year did the first human-made object reach INTERSTELLAR SPACE (beyond our solar system)?',
-    options:['1990','2000','2012','2020'], answer:2,
-    funFact:"Voyager 1 crossed into interstellar space in 2012 — 35 years after it launched! It's still sending signals! 📡" },
-  { id:'hs10', difficulty:'hard', category:'space', emoji:'🌀', question:'What will happen when the Andromeda galaxy collides with the Milky Way?',
-    options:["All stars will crash into each other and explode",'The galaxies will merge and most stars will pass right by each other','Earth will be destroyed immediately','Nothing — they will bounce off each other'], answer:1,
-    funFact:'Space is so vast that even in a galaxy collision, most stars never actually hit each other — they just drift past! 🌌' },
+  // ── EASY DINO ────────────────────────────────────────────────────────────
+  {id:'d01',difficulty:'easy',category:'dino',emoji:'🦕',question:'Which dinosaur had the LONGEST neck?',options:['Brachiosaurus','T-Rex','Ankylosaurus','Velociraptor'],answer:0,funFact:'Brachiosaurus had a neck as long as a school bus! 🚌'},
+  {id:'d02',difficulty:'easy',category:'dino',emoji:'🦖',question:'Which dinosaur had THREE horns on its face?',options:['T-Rex','Stegosaurus','Triceratops','Diplodocus'],answer:2,funFact:'Triceratops means "three-horned face" in Greek! 🎉'},
+  {id:'d03',difficulty:'easy',category:'dino',emoji:'🐉',question:'Which dinosaur had SPIKY PLATES on its back?',options:['Stegosaurus','Brachiosaurus','Spinosaurus','Iguanodon'],answer:0,funFact:'Stegosaurus plates might have changed colour to talk to friends! 🌈'},
+  {id:'d04',difficulty:'easy',category:'dino',emoji:'💨',question:'Which dinosaur was the FASTEST runner?',options:['Velociraptor','Brachiosaurus','Diplodocus','Ankylosaurus'],answer:0,funFact:'Velociraptor could run as fast as a cat! 🐱💨'},
+  {id:'d05',difficulty:'easy',category:'dino',emoji:'🦷',question:'Which dinosaur had the BIGGEST teeth?',options:['T-Rex','Triceratops','Brachiosaurus','Pterodactyl'],answer:0,funFact:'T-Rex teeth were as long as a banana! 🍌'},
+  {id:'d06',difficulty:'easy',category:'dino',emoji:'🔨',question:'Which dinosaur had a CLUB on its tail?',options:['Ankylosaurus','T-Rex','Velociraptor','Diplodocus'],answer:0,funFact:'Ankylosaurus could knock a T-Rex off its feet with its tail! 💪'},
+  {id:'d07',difficulty:'easy',category:'dino',emoji:'🦅',question:'Which dinosaur could FLY through the sky?',options:['T-Rex','Brachiosaurus','Pterodactyl','Ankylosaurus'],answer:2,funFact:'Pterodactyls had wings made of skin — like a giant bat! 🦇'},
+  {id:'d08',difficulty:'easy',category:'dino',emoji:'🥩',question:'Which dinosaur was the BIGGEST meat-eater?',options:['Diplodocus','T-Rex','Triceratops','Stegosaurus'],answer:1,funFact:'T-Rex could swallow you whole in one bite! 😱'},
+  {id:'d09',difficulty:'easy',category:'dino',emoji:'🐦',question:'Which dinosaur had FEATHERS like a bird?',options:['Triceratops','Ankylosaurus','Archaeopteryx','Diplodocus'],answer:2,funFact:'Archaeopteryx is the link between birds and dinosaurs! 🐦'},
+  {id:'d10',difficulty:'easy',category:'dino',emoji:'🐊',question:'Which dinosaur had the LONGEST tail?',options:['T-Rex','Diplodocus','Triceratops','Velociraptor'],answer:1,funFact:'Diplodocus could crack its tail like a giant whip! 💥'},
+  {id:'d11',difficulty:'easy',category:'dino',emoji:'🥦',question:'Which dinosaur ONLY ate plants?',options:['T-Rex','Velociraptor','Brachiosaurus','Spinosaurus'],answer:2,funFact:'Brachiosaurus had to eat ALL day long to stay full! 🌿'},
+  {id:'d12',difficulty:'easy',category:'dino',emoji:'🐔',question:'Which dinosaur was as SMALL as a chicken?',options:['T-Rex','Compsognathus','Brachiosaurus','Ankylosaurus'],answer:1,funFact:'Compsognathus was one of the tiniest dinosaurs ever found! 🐣'},
+  {id:'d13',difficulty:'easy',category:'dino',emoji:'🌿',question:'What do we call dinosaurs that ONLY eat plants?',options:['Carnivores','Omnivores','Herbivores','Predators'],answer:2,funFact:'Herbivores ate millions of leaves every single day! 🍃'},
+  {id:'d14',difficulty:'easy',category:'dino',emoji:'🥩',question:'What do we call dinosaurs that eat MEAT?',options:['Herbivores','Carnivores','Grazers','Flower-eaters'],answer:1,funFact:'Carnivores had to be fast hunters to catch their dinner! 🏃'},
+  {id:'d15',difficulty:'easy',category:'dino',emoji:'⛵',question:'Which dinosaur had a tall SAIL on its back?',options:['Brachiosaurus','Triceratops','Spinosaurus','Stegosaurus'],answer:2,funFact:"Spinosaurus's sail could be as tall as a grown-up human! 🧍"},
+  {id:'d16',difficulty:'easy',category:'dino',emoji:'🦵',question:'Which dinosaur walked on just TWO legs?',options:['Stegosaurus','Triceratops','T-Rex','Brachiosaurus'],answer:2,funFact:'T-Rex used its huge tail to help it balance while walking! 🦎'},
+  {id:'d17',difficulty:'easy',category:'dino',emoji:'💪',question:'Which dinosaur had the TINIEST arms?',options:['Brachiosaurus','Triceratops','Ankylosaurus','T-Rex'],answer:3,funFact:"T-Rex arms were so short, it couldn't even touch its own mouth! 😂"},
+  {id:'d18',difficulty:'easy',category:'dino',emoji:'🛡️',question:'Which dinosaur had ARMOUR like a tank?',options:['Velociraptor','Pterodactyl','Ankylosaurus','Spinosaurus'],answer:2,funFact:'Ankylosaurus armour was as hard as a helmet! ⛑️'},
+  {id:'d19',difficulty:'easy',category:'dino',emoji:'🌊',question:'Which dinosaur lived in the SEA?',options:['T-Rex','Mosasaurus','Brachiosaurus','Triceratops'],answer:1,funFact:'Mosasaurus was like a giant sea lizard — bigger than a whale! 🐋'},
+  {id:'d20',difficulty:'easy',category:'dino',emoji:'🪨',question:'What are dinosaur bones found in rock called?',options:['Crystals','Fossils','Pebbles','Shells'],answer:1,funFact:"Some fossils are over 200 million years old! That's super ancient! 🏺"},
+  {id:'d21',difficulty:'easy',category:'dino',emoji:'🦴',question:'Which dinosaur had a DOME-shaped head?',options:['Velociraptor','Pachycephalosaurus','T-Rex','Stegosaurus'],answer:1,funFact:'Pachycephalosaurus head-butted rivals to show who was strongest! 🤜'},
+  {id:'d22',difficulty:'easy',category:'dino',emoji:'⚡',question:'Which dinosaur had the SHARPEST claws?',options:['Brachiosaurus','Stegosaurus','Velociraptor','Diplodocus'],answer:2,funFact:'Velociraptor claws were like curved steak knives! 🔪'},
+  {id:'d23',difficulty:'easy',category:'dino',emoji:'🎺',question:'Which dinosaur made sounds through a CREST on its head?',options:['T-Rex','Parasaurolophus','Stegosaurus','Diplodocus'],answer:1,funFact:'Parasaurolophus could toot like a giant trombone! 🎵'},
+  {id:'d24',difficulty:'easy',category:'dino',emoji:'🌋',question:'How long ago did dinosaurs go extinct?',options:['100 years ago','1,000 years ago','66 million years ago','Yesterday'],answer:2,funFact:'A giant space rock crashed into Earth and wiped out the dinosaurs! ☄️'},
+  {id:'d25',difficulty:'easy',category:'dino',emoji:'🥚',question:'Did dinosaurs lay EGGS?',options:['Yes!','No','Sometimes','Never'],answer:0,funFact:'Some dinosaur eggs were as big as a football! 🏈'},
+  {id:'d26',difficulty:'easy',category:'dino',emoji:'👑',question:'Which dinosaur is called the "King of the Dinosaurs"?',options:['Stegosaurus','Diplodocus','T-Rex','Ankylosaurus'],answer:2,funFact:"T-Rex's name means \"Tyrant Lizard King\"! 👑"},
+  {id:'d27',difficulty:'easy',category:'dino',emoji:'🌍',question:'Which came FIRST — dinosaurs or humans?',options:['Humans came first','Dinosaurs came first','They lived together','Cats came first'],answer:1,funFact:'Dinosaurs ruled Earth for over 160 million years before humans arrived! ⏳'},
+  {id:'d28',difficulty:'easy',category:'dino',emoji:'🐟',question:'Which dinosaur loved to eat FISH?',options:['T-Rex','Ankylosaurus','Spinosaurus','Triceratops'],answer:2,funFact:'Spinosaurus had a crocodile-like mouth perfect for catching fish! 🎣'},
+  {id:'d29',difficulty:'easy',category:'dino',emoji:'🏋️',question:'Which dinosaur was the HEAVIEST ever?',options:['Velociraptor','Compsognathus','Argentinosaurus','Pterodactyl'],answer:2,funFact:'Argentinosaurus weighed as much as 80 elephants! 🐘🐘🐘'},
+  {id:'d30',difficulty:'easy',category:'dino',emoji:'🌈',question:'What colour were dinosaurs?',options:['Always green','Always grey',"We don't know for sure!",'Always red'],answer:2,funFact:'Scientists think some dinosaurs may have been colourful like parrots! 🦜'},
+  // ── MEDIUM DINO ───────────────────────────────────────────────────────────
+  {id:'md01',difficulty:'medium',category:'dino',emoji:'📖',question:'What does the word "dinosaur" actually mean?',options:['Big animal','Terrible lizard','Ancient giant','Earth beast'],answer:1,funFact:'"Deinos" means terrible and "sauros" means lizard in Greek! 🦎'},
+  {id:'md02',difficulty:'medium',category:'dino',emoji:'🔢',question:'How many teeth did T-Rex have?',options:['About 10','About 30','About 60','About 200'],answer:2,funFact:'T-Rex had about 60 serrated teeth — perfect for chomping through bone! 🦷'},
+  {id:'md03',difficulty:'medium',category:'dino',emoji:'🐦',question:'Which living animal is the CLOSEST relative of dinosaurs?',options:['Lizards','Crocodiles','Birds','Snakes'],answer:2,funFact:'Scientists proved that birds are actually living dinosaurs! 🦅'},
+  {id:'md04',difficulty:'medium',category:'dino',emoji:'✌️',question:'How many fingers did T-Rex have on each tiny arm?',options:['1','2','3','5'],answer:1,funFact:"T-Rex had 2 fingers — useless for grabbing but great for... not much! 😂"},
+  {id:'md05',difficulty:'medium',category:'dino',emoji:'👍',question:'Which dinosaur had THUMB SPIKES it used for defence?',options:['Brachiosaurus','Diplodocus','Iguanodon','Stegosaurus'],answer:2,funFact:'Iguanodon had a sharp thumb spike on each hand like a built-in dagger! 🗡️'},
+  {id:'md06',difficulty:'medium',category:'dino',emoji:'🍽️',question:'What do we call a dinosaur that eats BOTH plants AND meat?',options:['Herbivore','Carnivore','Omnivore','Pescatarian'],answer:2,funFact:'Omnivores had the most flexible diet — they could eat almost anything! 🌿🥩'},
+  {id:'md07',difficulty:'medium',category:'dino',emoji:'⏰',question:'Which two dinosaurs actually lived at the SAME time?',options:['T-Rex and Stegosaurus','T-Rex and Triceratops','T-Rex and Brachiosaurus','Velociraptor and Diplodocus'],answer:1,funFact:'T-Rex and Triceratops were both Cretaceous — they were real rivals! ⚔️'},
+  {id:'md08',difficulty:'medium',category:'dino',emoji:'🏔️',question:'Which dinosaur time period came FIRST?',options:['Jurassic','Cretaceous','Triassic','Permian'],answer:2,funFact:'The three dinosaur periods in order were: Triassic, Jurassic, Cretaceous! ⏳'},
+  {id:'md09',difficulty:'medium',category:'dino',emoji:'⏳',question:'How long did the age of dinosaurs last?',options:['1 million years','10 million years','100 million years','165 million years'],answer:3,funFact:'Dinosaurs ruled Earth for 165 million years — humans have only been here for 300,000! 😮'},
+  {id:'md10',difficulty:'medium',category:'dino',emoji:'🦆',question:'Which dinosaur is nicknamed the "duck-billed dinosaur"?',options:['Triceratops','Hadrosaur','Ankylosaurus','Spinosaurus'],answer:1,funFact:'Hadrosaurs had wide flat mouths shaped just like a duck bill! 🦆'},
+  {id:'md11',difficulty:'medium',category:'dino',emoji:'🔬',question:'Which period came AFTER the Jurassic?',options:['Triassic','Permian','Cretaceous','Cambrian'],answer:2,funFact:'Triassic → Jurassic → Cretaceous — then the big asteroid ended it all! ☄️'},
+  {id:'md12',difficulty:'medium',category:'dino',emoji:'🦖',question:'Pterodactyls were NOT actually dinosaurs. What were they?',options:['A type of dinosaur','Flying reptiles called pterosaurs','Ancient birds','Giant bats'],answer:1,funFact:'Pterodactyls were pterosaurs — flying reptiles that lived alongside dinosaurs but are a separate group! 🦇'},
+  {id:'md13',difficulty:'medium',category:'dino',emoji:'🧠',question:'Which dinosaur is thought to have been one of the SMARTEST?',options:['T-Rex','Triceratops','Velociraptor','Diplodocus'],answer:2,funFact:'Velociraptor had a large brain relative to its body size! 🤓'},
+  {id:'md14',difficulty:'medium',category:'dino',emoji:'🌏',question:'On which CONTINENT have dinosaur fossils been found?',options:['Only in Africa','Only America and Asia','Every continent including Antarctica','Only Europe and Asia'],answer:2,funFact:'Scientists have found dinosaur fossils on every continent — even Antarctica! 🧊'},
+  {id:'md15',difficulty:'medium',category:'dino',emoji:'📏',question:'Which dinosaur had the LONGEST claws of any dinosaur?',options:['T-Rex','Velociraptor','Therizinosaurus','Ankylosaurus'],answer:2,funFact:'Therizinosaurus claws were nearly 1 metre long — longer than your whole leg! 😲'},
+  // ── HARD DINO ─────────────────────────────────────────────────────────────
+  {id:'hd01',difficulty:'hard',category:'dino',emoji:'🏆',question:'What is the name of the most complete T-Rex skeleton ever found?',options:['Rex','Max','Sue','Bob'],answer:2,funFact:'"Sue" was found in South Dakota in 1990 and is 90% complete — she is now in a Chicago museum! 🦴'},
+  {id:'hd02',difficulty:'hard',category:'dino',emoji:'😁',question:'Which dinosaur had over 500 TEETH arranged in rows like a conveyor belt?',options:['T-Rex','Diplodocus','Nigersaurus','Stegosaurus'],answer:2,funFact:'Nigersaurus replaced its teeth every 14 days — it went through thousands in its lifetime! 😁'},
+  {id:'hd03',difficulty:'hard',category:'dino',emoji:'🐣',question:'Which famous fossil is called the "missing link" between dinosaurs and birds?',options:['Triceratops','Velociraptor','Archaeopteryx','Compsognathus'],answer:2,funFact:'Archaeopteryx had feathers like a bird but teeth and claws like a dinosaur! 🦅'},
+  {id:'hd04',difficulty:'hard',category:'dino',emoji:'🦶',question:'What is the correct ORDER of the three dinosaur time periods?',options:['Jurassic, Triassic, Cretaceous','Cretaceous, Jurassic, Triassic','Triassic, Jurassic, Cretaceous','Jurassic, Cretaceous, Triassic'],answer:2,funFact:'Triassic (252–201 mya), Jurassic (201–145 mya), Cretaceous (145–66 mya)! 📖'},
+  {id:'hd05',difficulty:'hard',category:'dino',emoji:'😮',question:'Stegosaurus and T-Rex never met. How many million years APART did they live?',options:['1 million','10 million','50 million','80 million'],answer:3,funFact:'Stegosaurus (150 mya) and T-Rex (66 mya) are 80 million years apart — closer in time to us than to each other! 🤯'},
+  // ── EASY SPACE ────────────────────────────────────────────────────────────
+  {id:'s01',difficulty:'easy',category:'space',emoji:'🪐',question:'Which planet is the BIGGEST in our solar system?',options:['Mars','Jupiter','Saturn','Earth'],answer:1,funFact:'Jupiter is so big, 1,300 Earths could fit inside it! 🌍'},
+  {id:'s02',difficulty:'easy',category:'space',emoji:'☀️',question:'Which planet is CLOSEST to the Sun?',options:['Earth','Venus','Mars','Mercury'],answer:3,funFact:'One year on Mercury is only 88 days long! ⚡'},
+  {id:'s03',difficulty:'easy',category:'space',emoji:'💍',question:'Which planet has beautiful RINGS around it?',options:['Mars','Earth','Saturn','Jupiter'],answer:2,funFact:"Saturn's rings are made of billions of chunks of ice and rock! ❄️"},
+  {id:'s04',difficulty:'easy',category:'space',emoji:'🔢',question:'How many planets are in our Solar System?',options:['Four','Six','Eight','Ten'],answer:2,funFact:'Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune! 🪐'},
+  {id:'s05',difficulty:'easy',category:'space',emoji:'☀️',question:'What is the big bright ball in the daytime sky?',options:['The Moon','A star far away','The Sun','A planet'],answer:2,funFact:'The Sun is actually a huge ball of burning gas! 🔥'},
+  {id:'s06',difficulty:'easy',category:'space',emoji:'🌙',question:'What is the big glowing thing in the night sky?',options:['The Sun','A comet','The Moon','A meteor'],answer:2,funFact:'The Moon takes 27 days to go all the way around the Earth! 🌍'},
+  {id:'s07',difficulty:'easy',category:'space',emoji:'🌍',question:'Which planet do WE live on?',options:['Mars','Earth','Venus','Jupiter'],answer:1,funFact:'Earth is the only planet we know that has life on it! 🌿'},
+  {id:'s08',difficulty:'easy',category:'space',emoji:'🔴',question:'Which planet is called the RED planet?',options:['Venus','Jupiter','Mars','Saturn'],answer:2,funFact:"Mars is red because it's covered in rusty red dust! 🏜️"},
+  {id:'s09',difficulty:'easy',category:'space',emoji:'🌌',question:'What is the name of our galaxy?',options:['Andromeda','The Milky Way','The Big Dipper','The Star Road'],answer:1,funFact:'Our Milky Way has over 200 billion stars in it! ✨'},
+  {id:'s10',difficulty:'easy',category:'space',emoji:'🔬',question:'Which planet is the SMALLEST in our solar system?',options:['Earth','Venus','Mars','Mercury'],answer:3,funFact:'Mercury is smaller than some moons in our solar system! 🌑'},
+  {id:'s11',difficulty:'easy',category:'space',emoji:'👨‍🚀',question:'What do astronauts wear in space?',options:['A swimsuit','A spacesuit','A raincoat','Pyjamas'],answer:1,funFact:'A spacesuit weighs as much as 130 kg — heavier than a big adult! ⚖️'},
+  {id:'s12',difficulty:'easy',category:'space',emoji:'📅',question:'How long does Earth take to go around the Sun?',options:['1 day','1 month','1 year','10 years'],answer:2,funFact:"That's why we have one birthday every year! 🎂"},
+  {id:'s13',difficulty:'easy',category:'space',emoji:'🌕',question:'How many moons does Earth have?',options:['Zero','One','Two','Three'],answer:1,funFact:'Our Moon is the fifth biggest moon in the whole solar system! 🌑'},
+  {id:'s14',difficulty:'easy',category:'space',emoji:'⭐',question:'What is a SHOOTING STAR really?',options:['A falling star','A rock burning up in the sky','A lost planet','A broken comet'],answer:1,funFact:'Shooting stars burn up so fast they glow bright for just a second! ✨'},
+  {id:'s15',difficulty:'easy',category:'space',emoji:'🔭',question:'What do we use to look at faraway stars?',options:['A microscope','A telescope','Magnifying glass','Special goggles'],answer:1,funFact:'The Hubble Space Telescope can see galaxies billions of light-years away! 🌌'},
+  {id:'s16',difficulty:'easy',category:'space',emoji:'🏁',question:'Which planet is FARTHEST from the Sun?',options:['Saturn','Uranus','Jupiter','Neptune'],answer:3,funFact:'It takes Neptune 165 years to go around the Sun just once! 🐌'},
+  {id:'s17',difficulty:'easy',category:'space',emoji:'🔥',question:'What is the Sun made of?',options:['Rock and dirt','Hot gas','Water and ice','Metal'],answer:1,funFact:"The Sun is SO hot, it's 15 million degrees in the middle! 🌡️"},
+  {id:'s18',difficulty:'easy',category:'space',emoji:'🌀',question:'Which planet spins completely on its SIDE?',options:['Mars','Saturn','Uranus','Neptune'],answer:2,funFact:'Uranus rolls around the Sun like a bowling ball! 🎳'},
+  {id:'s19',difficulty:'easy',category:'space',emoji:'⭐',question:'What do we call a group of stars that make a picture?',options:['A constellation','A galaxy','A nebula','A cluster'],answer:0,funFact:'The Big Dipper and Orion are famous constellations! ✨'},
+  {id:'s20',difficulty:'easy',category:'space',emoji:'🚀',question:'Which spacecraft carried humans to the Moon first?',options:['Space Shuttle','Apollo','Voyager','Sputnik'],answer:1,funFact:'Apollo 11 landed on the Moon on July 20, 1969! 🌕'},
+  {id:'s21',difficulty:'easy',category:'space',emoji:'📏',question:'Which is BIGGER — the Sun or the Earth?',options:['They are the same size','Earth is bigger','The Sun is much bigger','The Moon is biggest'],answer:2,funFact:'Over 1 million Earths could fit inside the Sun! 😲'},
+  {id:'s22',difficulty:'easy',category:'space',emoji:'🔴',question:'What colour is Mars?',options:['Blue','Green','Red','Yellow'],answer:2,funFact:'Mars gets its red colour from iron oxide — basically, rust! 🔧'},
+  {id:'s23',difficulty:'easy',category:'space',emoji:'🌙',question:'What is the Moon made of?',options:['Cheese','Rock and dust','Water','Ice cream'],answer:1,funFact:'The Moon has mountains, valleys and millions of craters! 🏔️'},
+  {id:'s24',difficulty:'easy',category:'space',emoji:'🕳️',question:'What are the bowl-shaped holes on the Moon called?',options:['Valleys','Mountains','Craters','Caves'],answer:2,funFact:"Craters are made when asteroids crash into the Moon's surface! 💥"},
+  {id:'s25',difficulty:'easy',category:'space',emoji:'🌡️',question:'Which is the HOTTEST planet?',options:['Mercury','Mars','Venus','Jupiter'],answer:2,funFact:"Venus is hotter than Mercury even though it's farther from the Sun! 🔥"},
+  {id:'s26',difficulty:'easy',category:'space',emoji:'☄️',question:'What is a COMET made of?',options:['A broken planet','A ball of ice and rock','A tiny star','A lost asteroid'],answer:1,funFact:'Comets grow a glowing tail when they fly close to the Sun! ✨'},
+  {id:'s27',difficulty:'easy',category:'space',emoji:'🔇',question:'Can you hear sounds in space?',options:['Yes, very loudly','Yes, quietly','No — space is totally silent','Only explosions'],answer:2,funFact:'Sound needs air to travel, and space has no air! 🔕'},
+  {id:'s28',difficulty:'easy',category:'space',emoji:'🌑',question:'What do we call it when the Moon blocks the Sun?',options:['A lunar eclipse','A solar eclipse','A moonset','A shadow party'],answer:1,funFact:'During a solar eclipse, day goes dark as night for a few minutes! 🌑'},
+  {id:'s29',difficulty:'easy',category:'space',emoji:'🐕',question:'What was the first animal sent to space?',options:['A monkey','A dog','A cat','A rabbit'],answer:1,funFact:'A dog named Laika was the first animal to orbit Earth in 1957! 🐾'},
+  {id:'s30',difficulty:'easy',category:'space',emoji:'🌙',question:'Who was the FIRST person to walk on the Moon?',options:['Buzz Aldrin','Yuri Gagarin','Neil Armstrong','Sally Ride'],answer:2,funFact:'Neil Armstrong said "One small step for man, one giant leap for mankind!" 🚀'},
+  // ── MEDIUM SPACE ──────────────────────────────────────────────────────────
+  {id:'ms01',difficulty:'medium',category:'space',emoji:'🔴',question:'How many moons does MARS have?',options:['0','1','2','4'],answer:2,funFact:"Mars has two tiny moons called Phobos and Deimos — 'Fear' and 'Dread' in Greek! 😱"},
+  {id:'ms02',difficulty:'medium',category:'space',emoji:'🛸',question:'What was the name of the FIRST ever satellite launched into space?',options:['Apollo','Sputnik','Voyager','Explorer'],answer:1,funFact:'Sputnik was launched in 1957 and beeped as it orbited Earth! 📡'},
+  {id:'ms03',difficulty:'medium',category:'space',emoji:'⚡',question:'Which planet spins the FASTEST — completing a day in just 10 hours?',options:['Earth','Saturn','Jupiter','Neptune'],answer:2,funFact:"Jupiter spins so fast its clouds stretch into colourful bands! 🌈"},
+  {id:'ms04',difficulty:'medium',category:'space',emoji:'⏳',question:'Which planet has a DAY that is longer than its YEAR?',options:['Mars','Jupiter','Venus','Saturn'],answer:2,funFact:"Venus spins so slowly its day is longer than its year! 🐢"},
+  {id:'ms05',difficulty:'medium',category:'space',emoji:'🌑',question:'What was PLUTO reclassified as in 2006?',options:['A moon','A dwarf planet','An asteroid','A comet'],answer:1,funFact:"Poor Pluto was demoted from planet to dwarf planet in 2006! 😢"},
+  {id:'ms06',difficulty:'medium',category:'space',emoji:'🌌',question:'What is the name of the galaxy CLOSEST to the Milky Way?',options:['The Big Dipper','Andromeda','Triangulum','Centaurus A'],answer:1,funFact:"Andromeda is heading towards us and will collide with the Milky Way in 4 billion years! 💥"},
+  {id:'ms07',difficulty:'medium',category:'space',emoji:'☁️',question:'What is a NEBULA?',options:['A shooting star','A cloud of gas and dust in space','A type of galaxy','A dead black hole'],answer:1,funFact:'New stars are born inside nebulae — they are giant star nurseries! ⭐'},
+  {id:'ms08',difficulty:'medium',category:'space',emoji:'🌍',question:'What are the four ROCKY planets in our solar system?',options:['Mars, Jupiter, Saturn, Uranus','Mercury, Venus, Earth, Mars','Earth, Mars, Jupiter, Neptune','Venus, Earth, Saturn, Neptune'],answer:1,funFact:'The rocky planets are the four closest to the Sun — they all have solid surfaces! 🪨'},
+  {id:'ms09',difficulty:'medium',category:'space',emoji:'💡',question:'What is a LIGHT-YEAR?',options:['How long it takes to fly to space','The distance light travels in one year','A type of bright star','How bright a star is'],answer:1,funFact:'Light travels at 300,000 km per second — in one year it covers 9.46 trillion km! 🤯'},
+  {id:'ms10',difficulty:'medium',category:'space',emoji:'🧊',question:'Which moon of Jupiter might have a LIQUID OCEAN under its icy surface?',options:['Ganymede','Io','Europa','Callisto'],answer:2,funFact:"Europa's hidden ocean could be twice the size of all Earth's oceans! 🌊"},
+  {id:'ms11',difficulty:'medium',category:'space',emoji:'🌀',question:'Which planet has the FASTEST winds in the solar system — up to 2,100 km/h?',options:['Jupiter','Saturn','Uranus','Neptune'],answer:3,funFact:"Neptune's winds are 5 times faster than Earth's strongest hurricane! 🌪️"},
+  {id:'ms12',difficulty:'medium',category:'space',emoji:'🌍',question:'What causes SEASONS on Earth?',options:['Earth moving closer to the Sun','Earth being tilted on its axis','The Moon blocking sunlight','The Sun getting hotter and cooler'],answer:1,funFact:"Earth is tilted at 23.5 degrees — that's what gives us summer and winter! ☀️❄️"},
+  // ── HARD SPACE ────────────────────────────────────────────────────────────
+  {id:'hs01',difficulty:'hard',category:'space',emoji:'🛸',question:'Which spacecraft has travelled the FARTHEST from Earth — over 23 billion km away?',options:['Apollo 13','Voyager 1','Hubble Telescope','Pioneer 10'],answer:1,funFact:'Voyager 1 was launched in 1977 and has now left our solar system entirely! 🌌'},
+  {id:'hs02',difficulty:'hard',category:'space',emoji:'🎂',question:'How old is our Sun?',options:['1 million years','100 million years','4.6 billion years','13 billion years'],answer:2,funFact:"Our Sun formed 4.6 billion years ago and is only halfway through its life! ☀️"},
+  {id:'hs03',difficulty:'hard',category:'space',emoji:'💥',question:'What event is thought to have created the entire universe about 13.8 billion years ago?',options:['The Great Explosion','The Big Bang','The Cosmic Flash','The Star Burst'],answer:1,funFact:'In the Big Bang, the entire universe exploded from something smaller than a grain of sand! 🤯'},
+  {id:'hs04',difficulty:'hard',category:'space',emoji:'🕳️',question:'What is the name of the BOUNDARY around a black hole where nothing can escape — not even light?',options:['The gravity wall','The dark barrier','The event horizon','The point of no return'],answer:2,funFact:'Once you cross the event horizon, there is absolutely no way back — ever! 😰'},
+  {id:'hs05',difficulty:'hard',category:'space',emoji:'🔄',question:'The ISS orbits Earth every 90 minutes. How many times does it orbit in ONE day?',options:['4 times','8 times','16 times','24 times'],answer:2,funFact:'The ISS crew sees 16 sunrises and 16 sunsets every single day! 🌅'},
+  // ── EASY SEA ──────────────────────────────────────────────────────────────
+  {id:'e_sea01',difficulty:'easy',category:'sea',emoji:'🐋',question:'Which is the BIGGEST animal in the entire ocean?',options:['Blue whale','Whale shark','Giant squid','Orca'],answer:0,funFact:'Blue whales are the largest animals that have EVER lived on Earth — even bigger than dinosaurs! 🐋'},
+  {id:'e_sea02',difficulty:'easy',category:'sea',emoji:'🐙',question:'Which sea animal has EIGHT arms?',options:['Jellyfish','Starfish','Octopus','Crab'],answer:2,funFact:'Octopuses can unscrew jar lids and solve puzzles — they are super smart! 🧠'},
+  {id:'e_sea03',difficulty:'easy',category:'sea',emoji:'🐟',question:'What do fish use to BREATHE underwater?',options:['Lungs','Gills','Noses','Fins'],answer:1,funFact:'Fish gills absorb oxygen from water — just like our lungs absorb it from air! 🫁'},
+  {id:'e_sea04',difficulty:'easy',category:'sea',emoji:'🏎️',question:'Which animal is the FASTEST swimmer in the ocean?',options:['Dolphin','Tuna','Sailfish','Shark'],answer:2,funFact:'Sailfish can swim at 110 km/h — faster than a car on a motorway! 🚗'},
+  {id:'e_sea05',difficulty:'easy',category:'sea',emoji:'🪼',question:'Which sea animal can STING you with its long tentacles?',options:['Crab','Jellyfish','Starfish','Seahorse'],answer:1,funFact:'Some jellyfish stings can still hurt even after they are dead on the beach! 😮'},
+  {id:'e_sea06',difficulty:'easy',category:'sea',emoji:'💎',question:'Which sea creature makes PEARLS inside its shell?',options:['Oyster','Crab','Lobster','Mussel'],answer:0,funFact:'It takes 2–5 years for an oyster to grow a single pearl! 💎'},
+  {id:'e_sea07',difficulty:'easy',category:'sea',emoji:'🐋',question:'What is a baby WHALE called?',options:['A pup','A calf','A kit','A foal'],answer:1,funFact:'Baby blue whales gain about 90 kg every single day — the fastest-growing babies on Earth! 🐋'},
+  {id:'e_sea08',difficulty:'easy',category:'sea',emoji:'⭐',question:'Which sea animal has a body shaped like a STAR?',options:['Starfish','Sea urchin','Sea cucumber','Coral'],answer:0,funFact:'Starfish can regrow a lost arm — and some can grow a whole new body from just one arm! 🌟'},
+  {id:'e_sea09',difficulty:'easy',category:'sea',emoji:'🦔',question:'Which sea animal is covered in SHARP SPINES?',options:['Sea urchin','Dolphin','Whale','Seal'],answer:0,funFact:'Sea urchins use their spines for protection and to help them move! 🦔'},
+  {id:'e_sea10',difficulty:'easy',category:'sea',emoji:'🐬',question:'Which sea animal is known for jumping and playing out of the water?',options:['Whale','Dolphin','Shark','Crab'],answer:1,funFact:'Dolphins sleep with one eye open — half their brain stays awake! 😴'},
+  {id:'e_sea11',difficulty:'easy',category:'sea',emoji:'🐟',question:'What do we call a group of fish swimming together?',options:['A herd','A pack','A school','A flock'],answer:2,funFact:'Fish swim in schools to confuse predators — hard to chase one fish in a big group! 🐟'},
+  {id:'e_sea12',difficulty:'easy',category:'sea',emoji:'🖤',question:'Which sea animal squirts INK to escape from enemies?',options:['Crab','Octopus','Shark','Seahorse'],answer:1,funFact:'Octopus ink also smells bad to confuse the predator! 🖤'},
+  {id:'e_sea13',difficulty:'easy',category:'sea',emoji:'🪸',question:'What do we call the colourful UNDERWATER GARDENS built by coral?',options:['Coral reefs','Sea forests','Ocean gardens','Water jungles'],answer:0,funFact:'The Great Barrier Reef in Australia is so big it can be seen from space! 🚀'},
+  {id:'e_sea14',difficulty:'easy',category:'sea',emoji:'🐴',question:'Which sea animal looks like a tiny HORSE?',options:['Seahorse','Sea lion','Narwhal','Stingray'],answer:0,funFact:'Male seahorses carry the babies — they are one of the only animals where the dad gives birth! 🐴'},
+  {id:'e_sea15',difficulty:'easy',category:'sea',emoji:'🦄',question:'Which sea animal has a long HORN like a unicorn?',options:['Narwhal','Swordfish','Sawfish','Hammerhead shark'],answer:0,funFact:"The narwhal's 'horn' is actually a giant tooth that can grow up to 3 metres long! 🦄"},
+  // ── MEDIUM SEA ────────────────────────────────────────────────────────────
+  {id:'m_sea01',difficulty:'medium',category:'sea',emoji:'💙',question:'Which sea animal has BLUE BLOOD?',options:['Octopus','Shark','Whale','Clownfish'],answer:0,funFact:'Octopus blood is blue because it uses copper to carry oxygen, not iron like ours! 💙'},
+  {id:'m_sea02',difficulty:'medium',category:'sea',emoji:'🌊',question:'What is the name of the DEEPEST part of the ocean?',options:['The Deep Blue','The Mariana Trench','The Atlantic Hole','The Pacific Abyss'],answer:1,funFact:'The Mariana Trench is about 11 km deep — you could fit Mount Everest inside it with 2 km to spare! 🏔️'},
+  {id:'m_sea03',difficulty:'medium',category:'sea',emoji:'😲',question:'How does a STARFISH eat its food?',options:['It swallows prey whole','It pushes its stomach outside its body','It uses arms to crush prey','It filters water'],answer:1,funFact:'A starfish pushes its stomach OUT of its body to digest food, then pulls it back in! 😲'},
+  {id:'m_sea04',difficulty:'medium',category:'sea',emoji:'🐬',question:'What is a group of DOLPHINS called?',options:['A pack','A school','A pod','A herd'],answer:2,funFact:'Dolphins in a pod look after each other — they even babysit each other\'s calves! 🐬'},
+  {id:'m_sea05',difficulty:'medium',category:'sea',emoji:'🦈',question:'What is the LARGEST fish (not mammal) in the ocean?',options:['Great white shark','Blue whale','Whale shark','Giant squid'],answer:2,funFact:'Despite being massive, whale sharks only eat tiny plankton by filtering water! 🦈'},
+  {id:'m_sea06',difficulty:'medium',category:'sea',emoji:'📡',question:'How do DOLPHINS navigate and find food in the dark?',options:['They use their eyes','Echolocation — sound waves','They follow currents','They can smell very well'],answer:1,funFact:'Dolphins send out clicks that bounce back, telling them the size and location of objects! 📡'},
+  {id:'m_sea07',difficulty:'medium',category:'sea',emoji:'🌊',question:'Which fish can WALK on land using its pectoral fins?',options:['Mudskipper','Clownfish','Puffer fish','Anglerfish'],answer:0,funFact:'Mudskippers can breathe through their skin on land and can even climb trees! 🌳'},
+  {id:'m_sea08',difficulty:'medium',category:'sea',emoji:'🐡',question:'Which fish PUFFS up like a balloon to scare predators?',options:['Clownfish','Anglerfish','Puffer fish','Flying fish'],answer:2,funFact:'Puffer fish are also one of the most poisonous animals in the ocean! ☠️'},
+  // ── HARD SEA ──────────────────────────────────────────────────────────────
+  {id:'h_sea01',difficulty:'hard',category:'sea',emoji:'🗺️',question:'What percentage of Earth is covered by OCEAN?',options:['About 50%','About 60%','About 71%','About 85%'],answer:2,funFact:'Over 70% of Earth is ocean — yet we have only explored about 20% of it! 🗺️'},
+  {id:'h_sea02',difficulty:'hard',category:'sea',emoji:'☠️',question:'Which sea creature is considered the MOST VENOMOUS animal on Earth?',options:['Great white shark','Box jellyfish','Blue-ringed octopus','Cone snail'],answer:1,funFact:'A box jellyfish has enough venom to kill 60 adult humans — the most venomous creature alive! ☠️'},
+  {id:'h_sea03',difficulty:'hard',category:'sea',emoji:'✨',question:'What is the name for animals that produce their own LIGHT in the deep ocean?',options:['Bioluminescent','Phosphorescent','Electromatic','Radioactive'],answer:0,funFact:'About 76% of deep sea creatures can make their own light — the deep ocean glows! ✨'},
+  {id:'h_sea04',difficulty:'hard',category:'sea',emoji:'😮',question:'How deep can a SPERM WHALE dive?',options:['200 m','500 m','2,000 m','10,000 m'],answer:2,funFact:'Sperm whales can dive over 2 km deep and hold their breath for up to 90 minutes! 😮'},
+  // ── EASY LAND ─────────────────────────────────────────────────────────────
+  {id:'e_land01',difficulty:'easy',category:'land',emoji:'🦒',question:'Which is the TALLEST animal on Earth?',options:['Elephant','Giraffe','Ostrich','Polar bear'],answer:1,funFact:'Giraffes can reach leaves 6 metres off the ground — as high as a 2-storey building! 🏠'},
+  {id:'e_land02',difficulty:'easy',category:'land',emoji:'🐆',question:'Which is the FASTEST land animal?',options:['Lion','Ostrich','Cheetah','Horse'],answer:2,funFact:'Cheetahs can reach 100 km/h in just 3 seconds — faster than most sports cars! 🏎️'},
+  {id:'e_land03',difficulty:'easy',category:'land',emoji:'🐘',question:'Which is the BIGGEST land animal?',options:['Giraffe','Hippopotamus','African elephant','White rhinoceros'],answer:2,funFact:'African elephants can weigh up to 7 tonnes — as heavy as a fire truck! 🚒'},
+  {id:'e_land04',difficulty:'easy',category:'land',emoji:'🦁',question:'Which animal is known as the "King of the Jungle"?',options:['Cheetah','Leopard','Lion','Tiger'],answer:2,funFact:"Lions actually live on the African savanna, not the jungle — they got the wrong nickname! 😂"},
+  {id:'e_land05',difficulty:'easy',category:'land',emoji:'🦘',question:'What is a baby KANGAROO called?',options:['A joey','A kitten','A cub','A foal'],answer:0,funFact:'Newborn joeys are only the size of a jellybean and crawl into the pouch by themselves! 🫘'},
+  {id:'e_land06',difficulty:'easy',category:'land',emoji:'🦥',question:'Which is the SLOWEST land animal?',options:['Sloth','Tortoise','Snail','Koala'],answer:0,funFact:'Three-toed sloths move so slowly that algae actually grows on their fur! 🌿'},
+  {id:'e_land07',difficulty:'easy',category:'land',emoji:'🐪',question:'Which animal can survive WEEKS in the desert without drinking water?',options:['Kangaroo','Camel','Ostrich','Meerkat'],answer:1,funFact:"Camels store fat (not water!) in their humps — it gives them energy when food is scarce! 🐪"},
+  {id:'e_land08',difficulty:'easy',category:'land',emoji:'🦓',question:'Which animal is famous for its BLACK and WHITE stripes?',options:['Cheetah','Zebra','Hyena','Wildebeest'],answer:1,funFact:"Every zebra's stripe pattern is unique — like a fingerprint! No two zebras look the same! 🦓"},
+  {id:'e_land09',difficulty:'easy',category:'land',emoji:'💤',question:'What is it called when animals sleep through the whole WINTER?',options:['Meditation','Migration','Hibernation','Estimation'],answer:2,funFact:"Some hibernating animals' hearts slow to just one beat per minute during winter sleep! 💤"},
+  {id:'e_land10',difficulty:'easy',category:'land',emoji:'🐅',question:'Which is the LARGEST cat in the world?',options:['Lion','Leopard','Tiger','Cheetah'],answer:2,funFact:'Siberian tigers can weigh up to 300 kg — even bigger than lions! 🐅'},
+  {id:'e_land11',difficulty:'easy',category:'land',emoji:'🐜',question:'Which animal has a very long TONGUE to catch ants?',options:['Giraffe','Giant anteater','Chameleon','Frog'],answer:1,funFact:"The giant anteater's tongue can flick in and out 150 times per minute to catch ants! 👅"},
+  {id:'e_land12',difficulty:'easy',category:'land',emoji:'👑',question:'What is a group of LIONS called?',options:['A pack','A herd','A pride','A flock'],answer:2,funFact:'Female lions (lionesses) do most of the hunting for the whole pride! 👑'},
+  {id:'e_land13',difficulty:'easy',category:'land',emoji:'🦇',question:'Which is the only MAMMAL that can truly fly?',options:['Bat','Flying squirrel','Sugar glider','Eagle'],answer:0,funFact:'Bats use echolocation to navigate in the dark — they send out sounds and listen for the echo! 🦇'},
+  {id:'e_land14',difficulty:'easy',category:'land',emoji:'🐼',question:'What do GIANT PANDAS eat almost exclusively?',options:['Fruit','Bamboo','Leaves','Fish'],answer:1,funFact:'Giant pandas eat up to 38 kg of bamboo a day — about 16 hours of eating! 🎍'},
+  {id:'e_land15',difficulty:'easy',category:'land',emoji:'🐘',question:'Which animal has the BEST memory of any land animal?',options:['Dog','Elephant','Chimpanzee','Dolphin'],answer:1,funFact:'Elephants can remember the faces of hundreds of other elephants for decades! 🧠'},
+  // ── MEDIUM LAND ───────────────────────────────────────────────────────────
+  {id:'m_land01',difficulty:'medium',category:'land',emoji:'🦆',question:'Which MAMMAL lays eggs instead of giving live birth?',options:['Dolphin','Platypus','Koala','Armadillo'],answer:1,funFact:'The platypus is one of only five egg-laying mammals — and it has a bill like a duck! 🦆'},
+  {id:'m_land02',difficulty:'medium',category:'land',emoji:'🏎️',question:'How fast can a CHEETAH run at top speed?',options:['About 50 km/h','About 80 km/h','About 120 km/h','About 160 km/h'],answer:2,funFact:'Cheetahs go from 0 to 100 km/h in just 3 seconds — faster than most sports cars! 🏎️'},
+  {id:'m_land03',difficulty:'medium',category:'land',emoji:'🐺',question:'What is a group of WOLVES called?',options:['A pride','A pack','A troop','A mob'],answer:1,funFact:'Wolf packs have a strict social order — the alpha pair leads the whole group! 🐺'},
+  {id:'m_land04',difficulty:'medium',category:'land',emoji:'🐘',question:'How long does an ELEPHANT pregnancy last?',options:['About 3 months','About 9 months','About 22 months','About 3 years'],answer:2,funFact:'Elephants have the longest pregnancy of any land animal — nearly 2 years! 🐘'},
+  {id:'m_land05',difficulty:'medium',category:'land',emoji:'🦎',question:'Which animal can DETACH and regrow its tail to escape predators?',options:['Lizard','Snake','Frog','Tortoise'],answer:0,funFact:'Some lizards can detach their tail on purpose to distract predators — then grow it back! 🦎'},
+  {id:'m_land06',difficulty:'medium',category:'land',emoji:'🐦',question:'What is it called when birds fly to WARMER places in winter?',options:['Hibernation','Migration','Evacuation','Domestication'],answer:1,funFact:'The Arctic tern migrates from the Arctic to Antarctica and back — 70,000 km every year! 🐦'},
+  {id:'m_land07',difficulty:'medium',category:'land',emoji:'🦍',question:'What is the LARGEST primate (ape family)?',options:['Chimpanzee','Gorilla','Orangutan','Bonobo'],answer:1,funFact:'Eastern gorillas can weigh up to 220 kg and stand 1.8 metres tall — gentle giants! 🦍'},
+  {id:'m_land08',difficulty:'medium',category:'land',emoji:'🦛',question:'Which land animal has the STRONGEST bite force?',options:['Tiger','Spotted hyena','Gorilla','Hippopotamus'],answer:3,funFact:'A hippo\'s bite is so strong it can bite a small boat in half! 💪'},
+  // ── HARD LAND ─────────────────────────────────────────────────────────────
+  {id:'h_land01',difficulty:'hard',category:'land',emoji:'🐸',question:'What is the name for an animal that can live BOTH on land and in water?',options:['Amphibian','Reptile','Mammal','Marsupial'],answer:0,funFact:'Amphibians like frogs and salamanders can breathe through their skin as well as their lungs! 🐸'},
+  {id:'h_land02',difficulty:'hard',category:'land',emoji:'🐧',question:'Which is the ONLY continent with no native land mammals (besides bats and seals)?',options:['Antarctica','Australia','Greenland','Iceland'],answer:0,funFact:'Antarctica has no native land mammals — only marine animals like penguins and seals visit! 🐧'},
+  {id:'h_land03',difficulty:'hard',category:'land',emoji:'🦉',question:'What do we call animals that are active at NIGHT and sleep during the day?',options:['Nocturnal','Diurnal','Crepuscular','Hibernating'],answer:0,funFact:'Owls, bats, and hedgehogs are all nocturnal — perfectly adapted for darkness! 🦉'},
+  {id:'h_land04',difficulty:'hard',category:'land',emoji:'🧬',question:'What is the scientific name for the group of mammals that carry their young in a POUCH?',options:['Placental','Monotreme','Marsupial','Mammalian'],answer:2,funFact:'Marsupials include kangaroos, koalas, wombats and possums — all pouch-bearing mammals! 🦘'},
+  // ── EASY BODY ─────────────────────────────────────────────────────────────
+  {id:'e_body01',difficulty:'easy',category:'body',emoji:'🦴',question:'How many BONES are in the human body?',options:['106','206','306','406'],answer:1,funFact:'Babies are born with about 270 bones — some fuse together as you grow! 🦴'},
+  {id:'e_body02',difficulty:'easy',category:'body',emoji:'❤️',question:'Which organ PUMPS blood around the whole body?',options:['Brain','Lungs','Heart','Stomach'],answer:2,funFact:'Your heart pumps about 2,000 gallons of blood every single day without ever stopping! ❤️'},
+  {id:'e_body03',difficulty:'easy',category:'body',emoji:'🧠',question:'Which organ do we use to THINK and control our body?',options:['Heart','Brain','Stomach','Liver'],answer:1,funFact:'Your brain is still growing and developing until you are about 25 years old! 🧠'},
+  {id:'e_body04',difficulty:'easy',category:'body',emoji:'🫁',question:'What do our LUNGS do?',options:['Pump blood','Help us breathe','Digest food','Filter blood'],answer:1,funFact:'If you spread both lungs flat, they would cover the size of a tennis court! 🎾'},
+  {id:'e_body05',difficulty:'easy',category:'body',emoji:'🌟',question:'What is the BIGGEST organ in the human body?',options:['The heart','The brain','The skin','The liver'],answer:2,funFact:'Your skin is completely replaced with new cells about every 27 days! 🌟'},
+  {id:'e_body06',difficulty:'easy',category:'body',emoji:'👁️',question:'How many SENSES do humans have?',options:['3','4','5','6'],answer:2,funFact:'The five senses are sight, hearing, smell, taste, and touch! 👁️👂👃👅🤚'},
+  {id:'e_body07',difficulty:'easy',category:'body',emoji:'📏',question:'Which is the LONGEST bone in the human body?',options:['Arm bone','Spine','Thigh bone (femur)','Shin bone'],answer:2,funFact:'The femur is about a quarter of your total height! 📏'},
+  {id:'e_body08',difficulty:'easy',category:'body',emoji:'🦷',question:'How many TEETH do most adults have?',options:['20','24','28','32'],answer:3,funFact:'Humans only get two sets of teeth — baby teeth and adult teeth, so look after yours! 🦷'},
+  {id:'e_body09',difficulty:'easy',category:'body',emoji:'🥛',question:'What makes our BONES hard and strong?',options:['Sugar','Calcium','Vitamin C','Iron'],answer:1,funFact:'Drinking milk gives you calcium which builds strong bones — that is why it is so good for you! 🥛'},
+  {id:'e_body10',difficulty:'easy',category:'body',emoji:'❤️',question:'How many CHAMBERS does the heart have?',options:['1','2','4','8'],answer:2,funFact:'The heart has two pumps — the right side pumps to the lungs, the left side pumps everywhere else! ❤️'},
+  {id:'e_body11',difficulty:'easy',category:'body',emoji:'🩸',question:'What is the LIQUID that moves through your body carrying oxygen?',options:['Saliva','Blood','Water','Bile'],answer:1,funFact:"Your body contains about 5 litres of blood — all your blood vessels laid end to end would stretch 100,000 km! 🩸"},
+  {id:'e_body12',difficulty:'easy',category:'body',emoji:'👂',question:'Which body part helps you BALANCE and not fall over?',options:['Eyes','Ears','Nose','Feet'],answer:1,funFact:'The inner ear has fluid that moves when you move — it tells your brain which way is up! 👂'},
+  {id:'e_body13',difficulty:'easy',category:'body',emoji:'🚿',question:'What do our KIDNEYS do?',options:['Pump blood','Help us breathe','Filter our blood','Help us think'],answer:2,funFact:'Your kidneys filter all of your blood about 40 times every day — amazing cleaners! 🚿'},
+  {id:'e_body14',difficulty:'easy',category:'body',emoji:'💎',question:'What do we call the HARD white covering on teeth?',options:['Enamel','Calcium','Bone','Dentine'],answer:0,funFact:'Tooth enamel is the hardest substance in the human body — even harder than bone! 💎'},
+  {id:'e_body15',difficulty:'easy',category:'body',emoji:'🤧',question:'What does your body do when germs get in your nose?',options:['It hiccups','It sneezes','It yawns','It blinks'],answer:1,funFact:'A sneeze can travel at up to 160 km/h — always cover your nose! 💨'},
+  // ── MEDIUM BODY ───────────────────────────────────────────────────────────
+  {id:'m_body01',difficulty:'medium',category:'body',emoji:'💪',question:'How many MUSCLES are in the human body?',options:['About 100','About 300','Over 600','Over 1,000'],answer:2,funFact:'You use about 200 muscles just to take a single step! 🦵'},
+  {id:'m_body02',difficulty:'medium',category:'body',emoji:'❤️',question:'How many times does the HEART beat per day?',options:['About 1,000','About 10,000','About 100,000','About 1 million'],answer:2,funFact:"Your heart beats 100,000 times a day — that's over 2.5 billion times in a lifetime! ❤️"},
+  {id:'m_body03',difficulty:'medium',category:'body',emoji:'💧',question:'What percentage of your body is WATER?',options:['About 20%','About 40%','About 60%','About 80%'],answer:2,funFact:'Babies are about 75% water when born — you dry out a little as you grow! 💧'},
+  {id:'m_body04',difficulty:'medium',category:'body',emoji:'🧠',question:'Which part of the brain controls BALANCE and coordination?',options:['Cerebrum','Cerebellum','Brain stem','Hippocampus'],answer:1,funFact:'The cerebellum means "little brain" in Latin — it coordinates all your movements! 🧠'},
+  {id:'m_body05',difficulty:'medium',category:'body',emoji:'🦒',question:'How long are your INTESTINES when fully stretched out?',options:['About 2 metres','About 4 metres','About 8 metres','About 15 metres'],answer:2,funFact:"Your intestines are about 8 metres long — taller than two giraffes! 🦒"},
+  {id:'m_body06',difficulty:'medium',category:'body',emoji:'💅',question:'What is the protein that makes HAIR and NAILS?',options:['Keratin','Collagen','Melanin','Calcium'],answer:0,funFact:'Your fingernails grow about 3.5 mm per month — toenails grow slower! 💅'},
+  {id:'m_body07',difficulty:'medium',category:'body',emoji:'⚡',question:'How fast can NERVE SIGNALS travel through your body?',options:['1 km/h','10 km/h','100 km/h','430 km/h'],answer:3,funFact:'The fastest nerve signals travel at 430 km/h — that is why you can react so quickly! ⚡'},
+  {id:'m_body08',difficulty:'medium',category:'body',emoji:'🫁',question:'Which organ produces the digestive juice called BILE?',options:['Liver','Stomach','Kidney','Pancreas'],answer:0,funFact:'Your liver is the biggest internal organ and performs over 500 different jobs! 🫁'},
+  // ── HARD BODY ─────────────────────────────────────────────────────────────
+  {id:'h_body01',difficulty:'hard',category:'body',emoji:'👂',question:'What is the name of the SMALLEST bone in the human body?',options:['Stirrup (stapes)','Hammer (malleus)','Anvil (incus)','Kneecap'],answer:0,funFact:'The stirrup bone in your ear is just 3 mm long — the tiniest bone in the whole body! 👂'},
+  {id:'h_body02',difficulty:'hard',category:'body',emoji:'🩸',question:'What is the LIQUID part of blood called (separate from the blood cells)?',options:['Serum','Plasma','Lymph','Haemoglobin'],answer:1,funFact:'Plasma makes up about 55% of your blood and carries nutrients, hormones and proteins! 🩸'},
+  {id:'h_body03',difficulty:'hard',category:'body',emoji:'🧠',question:'How many NEURONS (brain cells) does the human brain have?',options:['About 860 million','About 86 billion','About 86 trillion','About 860 trillion'],answer:1,funFact:'86 billion neurons — each one connecting to thousands of others, making trillions of connections! 🧠'},
+  {id:'h_body04',difficulty:'hard',category:'body',emoji:'🍬',question:'Which organ produces the hormone INSULIN that controls blood sugar?',options:['Liver','Kidney','Spleen','Pancreas'],answer:3,funFact:'The pancreas produces insulin, which tells your cells to absorb sugar from the blood for energy! 🍬'},
+  // ── EASY WEATHER ──────────────────────────────────────────────────────────
+  {id:'e_wx01',difficulty:'easy',category:'weather',emoji:'🌈',question:'How many COLOURS are in a rainbow?',options:['5','6','7','8'],answer:2,funFact:'Red, Orange, Yellow, Green, Blue, Indigo, Violet — remember ROY G BIV! 🌈'},
+  {id:'e_wx02',difficulty:'easy',category:'weather',emoji:'⚡',question:'What causes THUNDER?',options:['Clouds colliding','The sound of lightning heating the air','Wind hitting mountains','Rain hitting the ground'],answer:1,funFact:'Thunder is the BOOM made when lightning superheats the air so fast it expands! ⚡'},
+  {id:'e_wx03',difficulty:'easy',category:'weather',emoji:'🍂',question:'Which season do many trees LOSE their leaves?',options:['Spring','Summer','Autumn','Winter'],answer:2,funFact:'Trees drop leaves to save energy and water during the cold winter months! 🍂'},
+  {id:'e_wx04',difficulty:'easy',category:'weather',emoji:'☁️',question:'What are the white fluffy clouds made of?',options:['Cotton','Water droplets','Ice crystals','Steam'],answer:1,funFact:'A typical cloud weighs about 500,000 kg — but the droplets are so tiny they float! ☁️'},
+  {id:'e_wx05',difficulty:'easy',category:'weather',emoji:'❄️',question:'What is SNOW made of?',options:['Frozen rain','Ice crystals formed in clouds','Compressed water','Frozen clouds'],answer:1,funFact:'No two snowflakes are ever exactly alike — every single one is unique! ❄️'},
+  {id:'e_wx06',difficulty:'easy',category:'weather',emoji:'🌸',question:'Which season comes AFTER winter?',options:['Spring','Summer','Autumn','Another winter'],answer:0,funFact:'Spring starts around March 21st in the Northern Hemisphere — the vernal equinox! 🌸'},
+  {id:'e_wx07',difficulty:'easy',category:'weather',emoji:'⚡',question:'What causes LIGHTNING?',options:['Clouds crashing together','Electrical charges in storm clouds','Rain falling very fast','Wind spinning very fast'],answer:1,funFact:'A single bolt of lightning is about 5 times hotter than the surface of the Sun! ⚡🔥'},
+  {id:'e_wx08',difficulty:'easy',category:'weather',emoji:'🌪️',question:'What do we call a spinning column of air that touches the ground?',options:['Hurricane','Tornado','Cyclone','Blizzard'],answer:1,funFact:'Tornadoes can spin at over 480 km/h — strong enough to pick up a house! 🌪️'},
+  {id:'e_wx09',difficulty:'easy',category:'weather',emoji:'💧',question:'What is the name for water going from ocean to clouds to rain and back again?',options:['The water journey','The water cycle','The rain process','The cloud cycle'],answer:1,funFact:"You might be drinking water that dinosaurs drank millions of years ago! 🦕"},
+  {id:'e_wx10',difficulty:'easy',category:'weather',emoji:'🌈',question:'What causes a RAINBOW to appear?',options:['Rain alone','Sunlight shining through raindrops','Clouds reflecting light','The moon at night'],answer:1,funFact:'You can only see a rainbow when the Sun is behind you and rain is in front! 🌈'},
+  {id:'e_wx11',difficulty:'easy',category:'weather',emoji:'🌫️',question:'What is FOG?',options:['Smoke from cities','A cloud at ground level','Frozen mist','Water from the sea'],answer:1,funFact:'Fog is exactly the same as a cloud — just one that forms at ground level! 🌫️'},
+  {id:'e_wx12',difficulty:'easy',category:'weather',emoji:'🌅',question:'What makes the SKY look BLUE?',options:['The ocean reflects upward','Sunlight scatters off air molecules','Clouds are actually blue','The ozone layer is blue'],answer:1,funFact:"At sunset, light travels further through air, scattering red and orange colours! 🌅"},
+  {id:'e_wx13',difficulty:'easy',category:'weather',emoji:'🏐',question:'What is HAIL?',options:['Frozen raindrops','Ice balls that form in thunderclouds','Snow clumped together','Frozen fog'],answer:1,funFact:'The biggest hailstone ever recorded was the size of a volleyball! 🏐'},
+  {id:'e_wx14',difficulty:'easy',category:'weather',emoji:'🌍',question:'What do we call the sudden shaking of the ground?',options:['Avalanche','Earthquake','Landslide','Thunderstorm'],answer:1,funFact:'There are about 500,000 earthquakes detected around the world every year! 🌍'},
+  {id:'e_wx15',difficulty:'easy',category:'weather',emoji:'🌋',question:'What is the name for the melted rock inside a volcano?',options:['Lava','Magma','Granite','Basalt'],answer:0,funFact:"Lava can reach temperatures of 1,200°C — hot enough to melt most metals instantly! 🌋"},
+  // ── MEDIUM WEATHER ────────────────────────────────────────────────────────
+  {id:'m_wx01',difficulty:'medium',category:'weather',emoji:'📊',question:'What is the RICHTER SCALE used to measure?',options:['Hurricane strength','Rainfall amount','Earthquake strength','Temperature change'],answer:2,funFact:'Each step up the Richter Scale is 10 times more powerful than the last! 📊'},
+  {id:'m_wx02',difficulty:'medium',category:'weather',emoji:'🌕',question:'What causes TIDES (the sea going in and out)?',options:['The wind','The rotation of Earth','The Moon\'s gravity','The Sun\'s heat'],answer:2,funFact:"The Moon's gravity pulls the ocean towards it, creating a bulge of water — that's high tide! 🌕"},
+  {id:'m_wx03',difficulty:'medium',category:'weather',emoji:'🌀',question:'What is the calm CENTRE of a hurricane called?',options:['The core','The eye','The heart','The middle'],answer:1,funFact:'The eye of a hurricane can be completely calm and clear — surrounded by the most violent winds! 🌀'},
+  {id:'m_wx04',difficulty:'medium',category:'weather',emoji:'🌋',question:'What causes VOLCANOES to erupt?',options:['Earthquakes breaking mountains','Melted rock forcing its way up','Too much rain filling caves','Wind eroding the mountaintop'],answer:1,funFact:'Magma is called lava once it comes out of the volcano — it can reach 1,200°C! 🌋'},
+  {id:'m_wx05',difficulty:'medium',category:'weather',emoji:'💧',question:'What percentage of Earth\'s water is FRESH and drinkable?',options:['About 3%','About 20%','About 50%','About 70%'],answer:0,funFact:'Only 3% of Earth\'s water is fresh — and most of that is locked in glaciers! 💧'},
+  {id:'m_wx06',difficulty:'medium',category:'weather',emoji:'🧴',question:'What is the OZONE LAYER?',options:['A layer of clouds','A protective gas layer around Earth','The top of the atmosphere','A shield against meteors'],answer:1,funFact:'The ozone layer absorbs 97-99% of the Sun\'s harmful UV rays — it\'s Earth\'s sunscreen! 🧴'},
+  {id:'m_wx07',difficulty:'medium',category:'weather',emoji:'🌌',question:'What causes the NORTHERN LIGHTS (Aurora Borealis)?',options:['Moonlight reflecting off ice','Sunlight bending at the poles','Charged solar particles hitting the atmosphere','Volcanoes erupting nearby'],answer:2,funFact:'The Northern Lights come in green, pink, red and blue — created 100 km above Earth! 🌌'},
+  {id:'m_wx08',difficulty:'medium',category:'weather',emoji:'🏜️',question:'What is EROSION?',options:['When rivers freeze over','When wind and water wear away rocks and soil','When volcanoes create new land','When earthquakes crack the ground'],answer:1,funFact:'The Grand Canyon was carved by the Colorado River over about 5 million years! 🏜️'},
+  // ── HARD WEATHER ──────────────────────────────────────────────────────────
+  {id:'h_wx01',difficulty:'hard',category:'weather',emoji:'⚡',question:'How HOT is a single bolt of LIGHTNING?',options:['About 5,500°C','About 10,000°C','About 30,000°C','About 1 million°C'],answer:2,funFact:'A lightning bolt is about 5 times hotter than the surface of the Sun — and lasts just 30 microseconds! ⚡'},
+  {id:'h_wx02',difficulty:'hard',category:'weather',emoji:'🌍',question:'What is the name for the point on Earth\'s surface directly above an earthquake\'s origin?',options:['The focus','The epicenter','The hypocenter','The seismic zone'],answer:1,funFact:'The actual underground origin is the hypocenter — the epicenter is the point directly above it! 🌍'},
+  {id:'h_wx03',difficulty:'hard',category:'weather',emoji:'💨',question:'What is the BEAUFORT SCALE used to measure?',options:['Earthquake strength','Rainfall amount','Wind speed','Temperature change'],answer:2,funFact:'The Beaufort Scale goes from 0 (dead calm) to 12 (hurricane force) — invented in 1805! 💨'},
+  {id:'h_wx04',difficulty:'hard',category:'weather',emoji:'⛈️',question:'What is a CUMULONIMBUS cloud?',options:['A thin high-altitude cloud','A flat layer cloud','A massive thunderstorm cloud','A small fair-weather cloud'],answer:2,funFact:'Cumulonimbus clouds can tower up to 18 km high — from ground level to the edge of the stratosphere! ⛈️'},
 ];
 
 const LETTERS = ['A','B','C','D'];
-
-// Sequence: easy, medium, easy, medium, hard, easy, medium, medium, easy, hard
 const SEQUENCE = ['easy','medium','easy','medium','hard','easy','medium','medium','easy','hard'];
+const TOPIC_ORDER = ['dino','space','sea','land','body','weather'];
 
 function shuffle(arr) {
   const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
   }
   return a;
 }
 
-function pickQuestions() {
-  const easy   = shuffle(ALL_QUESTIONS.filter(q => q.difficulty === 'easy'));
-  const medium = shuffle(ALL_QUESTIONS.filter(q => q.difficulty === 'medium'));
-  const hard   = shuffle(ALL_QUESTIONS.filter(q => q.difficulty === 'hard'));
-  const pools  = { easy, medium, hard };
-  const counts = { easy: 0, medium: 0, hard: 0 };
-  return SEQUENCE.map(diff => pools[diff][counts[diff]++]);
+function pickQuestions(selectedTopics) {
+  const pool = ALL_QUESTIONS.filter(q => selectedTopics.includes(q.category));
+  const byDiff = {
+    easy:   shuffle(pool.filter(q => q.difficulty==='easy')),
+    medium: shuffle(pool.filter(q => q.difficulty==='medium')),
+    hard:   shuffle(pool.filter(q => q.difficulty==='hard')),
+  };
+  const counts = {easy:0,medium:0,hard:0};
+  return SEQUENCE.map(diff => {
+    const p = byDiff[diff];
+    return p[counts[diff]++ % p.length];
+  });
 }
 
-function getStars(score, total) {
-  const pct = score / total;
-  if (pct === 1) return 3;
-  if (pct >= 0.6) return 2;
-  if (pct >= 0.3) return 1;
-  return 0;
+function getStars(score,total) {
+  const p = score/total;
+  if (p===1) return 3; if (p>=0.6) return 2; if (p>=0.3) return 1; return 0;
 }
-
 function getMsg(score) {
-  if (score === 10) return { msg: "PERFECT SCORE! You're a legendary Dino Space Champion! 🏆", icon: "🏆" };
-  if (score >= 7)  return { msg: "Wow, you're a dino-space superstar! 🌟", icon: "⭐" };
-  if (score >= 4)  return { msg: "Great job, dino astronaut! You're learning so fast! 🚀", icon: "🦕" };
-  return { msg: "Keep exploring, little explorer! Try again! 🔭", icon: "🌱" };
+  if (score===10) return {msg:"PERFECT SCORE! You're a legendary champion! 🏆",icon:"🏆"};
+  if (score>=7)  return {msg:"Wow, you're a superstar! 🌟",icon:"⭐"};
+  if (score>=4)  return {msg:"Great job! You're learning so fast! 🚀",icon:"🦕"};
+  return {msg:"Keep exploring, little explorer! Try again! 🔭",icon:"🌱"};
 }
-
-const DIFF_LABEL = { easy: '⭐ Easy', medium: '🔥 Medium', hard: '💥 Hard' };
 
 function Confetti() {
-  const pieces = Array.from({length: 60}, (_, i) => ({
-    id: i,
-    color: ['#FFD060','#FF6EB4','#60E0FF','#A0FF80','#C080FF','#FF8060'][i % 6],
-    left: Math.random()*100,
-    dx: (Math.random()-0.5)*140,
-    rot: Math.random()*720 - 360,
-    dur: 2.5 + Math.random()*2.5,
-    delay: Math.random()*1.5,
-  }));
-  return (
-    <>
-      {pieces.map(p => (
-        <div key={p.id} className="confetti-piece" style={{
-          background: p.color, left: `${p.left}%`,
-          '--dx': `${p.dx}px`, '--rot': `${p.rot}deg`,
-          '--fall-d': `${p.dur}s`, '--fall-delay': `${p.delay}s`,
-        }} />
-      ))}
-    </>
-  );
+  const pieces = Array.from({length:60},(_,i)=>({id:i,color:['#FFD060','#FF6EB4','#60E0FF','#A0FF80','#C080FF','#FF8060'][i%6],left:Math.random()*100,dx:(Math.random()-0.5)*140,rot:Math.random()*720-360,dur:2.5+Math.random()*2.5,delay:Math.random()*1.5}));
+  return <>{pieces.map(p=><div key={p.id} className="confetti-piece" style={{background:p.color,left:`${p.left}%`,'--dx':`${p.dx}px`,'--rot':`${p.rot}deg`,'--fall-d':`${p.dur}s`,'--fall-delay':`${p.delay}s`}}/>)}</>;
 }
 
-function IntroScreen({ onStart }) {
+function IntroScreen({onNext}) {
   return (
     <div className="screen">
       <div className="intro-wrap">
-        <div className="intro-mascots"><span>🦕</span><span>🚀</span><span>🦖</span></div>
-        <div className="intro-title">Dino Space Quiz!</div>
-        <div className="intro-sub">Answer 10 questions — how many can you get? 🌟</div>
-        <div className="intro-facts">
-          <div className="fact-pill">🦕 Dinosaurs</div>
-          <div className="fact-pill">🪐 Planets</div>
-          <div className="fact-pill">⭐ Stars</div>
-          <div className="fact-pill">🎲 Different every time!</div>
-        </div>
-        <button className="btn-start" onClick={onStart}>Let's Go! 🚀</button>
+        <div className="intro-mascots"><span>🦕</span><span>🌊</span><span>🚀</span><span>🦁</span><span>🫀</span><span>🌦️</span></div>
+        <div className="intro-title">Fun Quiz!</div>
+        <div className="intro-sub">Pick your topics and answer 10 questions! 🌟</div>
+        <button className="btn-start" onClick={onNext}>Choose Topics 🎯</button>
       </div>
     </div>
   );
 }
 
-function QuizScreen({ questions, onFinish }) {
+function TopicScreen({onStart}) {
+  const [selected, setSelected] = useState([]);
+
+  function toggle(id) {
+    setSelected(prev => {
+      if (prev.includes(id)) return prev.filter(x=>x!==id);
+      if (prev.length>=2) return prev;
+      return [...prev, id];
+    });
+  }
+
+  return (
+    <div className="screen">
+      <div className="topics-wrap">
+        <div className="topics-title">Pick your topics!</div>
+        <div className="topics-sub">Choose 1 or 2 topics — then let's go! 🎲</div>
+        <div className="topics-grid">
+          {TOPIC_ORDER.map(id => {
+            const t = TOPIC_META[id];
+            const isSel = selected.includes(id);
+            const isDisabled = !isSel && selected.length>=2;
+            return (
+              <button
+                key={id}
+                className={`topic-card${isSel?' topic-card--selected':''}${isDisabled?' topic-card--disabled':''}`}
+                onClick={()=>toggle(id)}
+                style={isSel ? {borderColor:t.border,background:t.bg,boxShadow:`0 0 22px ${t.bg}`} : {}}
+              >
+                {isSel && <div className="topic-check">✓</div>}
+                <div className="topic-emoji-lg">{t.emoji}</div>
+                <div className="topic-label">{t.label}</div>
+              </button>
+            );
+          })}
+        </div>
+        <button className="btn-go" disabled={selected.length===0} onClick={()=>onStart(selected)}>
+          {selected.length===0 ? 'Pick a topic first!' : `Start Quiz! 🚀`}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function QuizScreen({questions, onFinish}) {
   const [qIndex, setQIndex] = useState(0);
   const [selected, setSelected] = useState(null);
   const [score, setScore] = useState(0);
-  const [dinoScore, setDinoScore] = useState(0);
-  const [spaceScore, setSpaceScore] = useState(0);
+  const [topicScores, setTopicScores] = useState({});
   const [animKey, setAnimKey] = useState(0);
 
   const q = questions[qIndex];
-  const answered = selected !== null;
-  const isCorrect = selected === q.answer;
+  const answered = selected!==null;
+  const isCorrect = selected===q.answer;
 
   function handleSelect(idx) {
     if (answered) return;
     setSelected(idx);
-    if (idx === q.answer) {
-      setScore(s => s + 1);
-      if (q.category === 'dino') setDinoScore(s => s + 1);
-      else setSpaceScore(s => s + 1);
+    if (idx===q.answer) {
+      setScore(s=>s+1);
+      setTopicScores(prev=>({...prev,[q.category]:(prev[q.category]||0)+1}));
     }
   }
 
   function handleNext() {
-    if (qIndex + 1 >= questions.length) {
-      onFinish({ score, dinoScore, spaceScore });
+    if (qIndex+1>=questions.length) {
+      onFinish({score,topicScores});
     } else {
-      setQIndex(i => i + 1);
+      setQIndex(i=>i+1);
       setSelected(null);
-      setAnimKey(k => k + 1);
+      setAnimKey(k=>k+1);
     }
   }
 
-  const pct = (qIndex / questions.length) * 100;
+  const pct = (qIndex/questions.length)*100;
+  const t = TOPIC_META[q.category];
 
   return (
     <div className="screen" key={animKey}>
       <div className="quiz-header">
         <div className="q-counter"><span>{qIndex+1}</span>/{questions.length}</div>
-        <div className="progress-bar-track">
-          <div className="progress-bar-fill" style={{width:`${pct}%`}}></div>
-        </div>
+        <div className="progress-bar-track"><div className="progress-bar-fill" style={{width:`${pct}%`}}/></div>
         <div className="score-badge">⭐ {score}</div>
       </div>
-
       <div className="q-card">
         <div className="q-badges">
-          <span className={`cat-badge ${q.category}`}>
-            {q.category === 'dino' ? '🦕 Dinosaur' : '🚀 Space'}
+          <span className="cat-badge" style={{background:t.bg,color:t.color,border:`1px solid ${t.border}`}}>
+            {t.emoji} {t.label}
           </span>
           <span className={`diff-badge ${q.difficulty}`}>
-            {DIFF_LABEL[q.difficulty]}
+            {q.difficulty==='easy'?'⭐ Easy':q.difficulty==='medium'?'🔥 Medium':'💥 Hard'}
           </span>
         </div>
         <span className="q-emoji">{q.emoji}</span>
         <div className="q-text">{q.question}</div>
       </div>
-
       <div className="answer-grid">
-        {q.options.map((opt, i) => {
-          let cls = 'answer-btn';
+        {q.options.map((opt,i)=>{
+          let cls='answer-btn';
           if (answered) {
-            if (i === q.answer) cls += ' correct';
-            else if (i === selected) cls += ' wrong';
-            else cls += ' dim';
+            if (i===q.answer) cls+=' correct';
+            else if (i===selected) cls+=' wrong';
+            else cls+=' dim';
           }
           return (
-            <button key={i} className={cls} onClick={() => handleSelect(i)} disabled={answered}>
+            <button key={i} className={cls} onClick={()=>handleSelect(i)} disabled={answered}>
               <div className="answer-letter">{LETTERS[i]}</div>
               <div className="answer-label">{opt}</div>
             </button>
           );
         })}
       </div>
-
       {answered && (
-        <div className={`result-toast ${isCorrect ? 'correct' : 'wrong'}`}>
-          {isCorrect
-            ? `✅ Correct! ${q.funFact}`
-            : `❌ Oops! The answer was ${q.options[q.answer]}! ${q.funFact}`}
+        <div className={`result-toast ${isCorrect?'correct':'wrong'}`}>
+          {isCorrect ? `✅ Correct! ${q.funFact}` : `❌ Oops! The answer was ${q.options[q.answer]}! ${q.funFact}`}
         </div>
       )}
-
-      <button className={`btn-next ${answered ? 'visible' : ''}`} onClick={handleNext}>
-        {qIndex + 1 >= questions.length ? 'See My Score! 🎉' : 'Next Question →'}
+      <button className={`btn-next ${answered?'visible':''}`} onClick={handleNext}>
+        {qIndex+1>=questions.length ? 'See My Score! 🎉' : 'Next Question →'}
       </button>
     </div>
   );
 }
 
-function ScoreScreen({ score, dinoScore, spaceScore, total, onRetry }) {
-  const stars = getStars(score, total);
-  const { msg, icon } = getMsg(score);
+function ScoreScreen({score, topicScores, selectedTopics, total, onRetry}) {
+  const stars = getStars(score,total);
+  const {msg,icon} = getMsg(score);
   const [starsLit, setStarsLit] = useState(0);
 
-  useEffect(() => {
-    let i = 0;
-    const t = setInterval(() => { i++; setStarsLit(i); if (i >= 3) clearInterval(t); }, 400);
-    return () => clearInterval(t);
-  }, []);
+  useEffect(()=>{
+    let i=0;
+    const t = setInterval(()=>{i++;setStarsLit(i);if(i>=3)clearInterval(t);},400);
+    return ()=>clearInterval(t);
+  },[]);
 
   return (
     <div className="screen">
-      {score >= 7 && <Confetti />}
+      {score>=7 && <Confetti/>}
       <div className="score-screen">
         <div className="score-planet">{icon}</div>
-        <div className="score-title">
-          {score === total ? 'PERFECT!' : score >= 7 ? 'Awesome!' : score >= 4 ? 'Well done!' : 'Good try!'}
-        </div>
+        <div className="score-title">{score===total?'PERFECT!':score>=7?'Awesome!':score>=4?'Well done!':'Good try!'}</div>
         <div className="score-number">{score}<span className="denom">/{total}</span></div>
         <div className="stars-row">
-          {[0,1,2].map(i => (
-            <span key={i} className={`star-icon ${i < stars && i < starsLit ? 'lit' : ''}`}>⭐</span>
-          ))}
+          {[0,1,2].map(i=><span key={i} className={`star-icon ${i<stars&&i<starsLit?'lit':''}`}>⭐</span>)}
         </div>
         <div className="score-message">{msg}</div>
         <div className="score-breakdown">
-          <div className="breakdown-pill">🦕 Dino: <strong>{dinoScore}</strong></div>
-          <div className="breakdown-pill">🚀 Space: <strong>{spaceScore}</strong></div>
+          {selectedTopics.map(id=>{
+            const t = TOPIC_META[id];
+            return <div key={id} className="breakdown-pill">{t.emoji} {t.label}: <strong>{topicScores[id]||0}</strong></div>;
+          })}
         </div>
         <button className="btn-retry" onClick={onRetry}>Play Again! 🔄</button>
       </div>
@@ -943,30 +599,28 @@ function ScoreScreen({ score, dinoScore, spaceScore, total, onRetry }) {
 
 function App() {
   const [screen, setScreen] = useState('intro');
-  const [results, setResults] = useState(null);
+  const [selectedTopics, setSelectedTopics] = useState([]);
   const [questions, setQuestions] = useState([]);
+  const [results, setResults] = useState(null);
 
-  function startQuiz() {
-    setQuestions(pickQuestions());
+  function handleTopicStart(topics) {
+    setSelectedTopics(topics);
+    setQuestions(pickQuestions(topics));
     setScreen('quiz');
   }
 
-  function handleFinish(res) { setResults(res); setScreen('score'); }
-  function handleRetry() { setResults(null); setScreen('intro'); }
-
   return (
     <div>
-      {screen === 'intro' && <IntroScreen onStart={startQuiz} />}
-      {screen === 'quiz' && <QuizScreen questions={questions} onFinish={handleFinish} />}
-      {screen === 'score' && results && (
-        <ScoreScreen score={results.score} dinoScore={results.dinoScore} spaceScore={results.spaceScore} total={10} onRetry={handleRetry} />
-      )}
+      {screen==='intro' && <IntroScreen onNext={()=>setScreen('topics')}/>}
+      {screen==='topics' && <TopicScreen onStart={handleTopicStart}/>}
+      {screen==='quiz' && <QuizScreen questions={questions} onFinish={r=>{setResults(r);setScreen('score');}}/>}
+      {screen==='score' && results && <ScoreScreen score={results.score} topicScores={results.topicScores} selectedTopics={selectedTopics} total={10} onRetry={()=>setScreen('intro')}/>}
     </div>
   );
 }
 
 const root = ReactDOM.createRoot(document.getElementById('app'));
-root.render(<App />);
+root.render(<App/>);
 </script>
 </body>
 </html>
